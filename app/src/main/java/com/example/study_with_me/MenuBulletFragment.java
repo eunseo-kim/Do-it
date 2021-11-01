@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import com.example.study_with_me.activity.BulletRegisterActivity;
+import com.example.study_with_me.activity.MainActivity;
 
 public class MenuBulletFragment extends Fragment implements View.OnClickListener{
     TextView allBtn;
@@ -42,6 +44,11 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
         picBtn.setOnClickListener(this);
         fileBtn.setOnClickListener(this);
         writeBtn.setOnClickListener(this);
+
+        // 상단 액션바 설정
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("게시판");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         return root;
     }
