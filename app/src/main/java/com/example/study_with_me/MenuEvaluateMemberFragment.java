@@ -15,7 +15,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_menu_evaluate_member, container, false);
+        View root = inflater.inflate(R.layout.evaluate_member, container, false);
         return root;
     }
 }
