@@ -25,10 +25,7 @@
             android:label="BulletNotificationActivity">
         </activity>
 
-        <activity
-            android:name=".activity.BulletRegisterActivity"
-            android:label="BulletRegisterActivity">
-        </activity>
+        <activity android:name=".activity.BulletRegisterActivity"></activity>
     </application>
 
 </manifest>
