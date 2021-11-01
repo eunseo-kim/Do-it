@@ -3,45 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/alarm_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/border_bottom.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/border_line.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/bottom_navigation_shadow.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/box_shadow.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/bullet_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/calendar_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/edit_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/file_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/gray_box_radius.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/radius.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/thumb_up_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/activity_attend_register.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/authorize_attendance.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_file_item.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_notification.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_notification_item.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_register.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/evaluate_member.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/evaluate_member_display.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/evaluate_member_item.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/evaluate_member_rating.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/fragment_menu_bullet.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/fragment_menu_evaluate_member.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/member_attendance_item.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/member_attendance_title.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/schedule_management.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/team_member_attendance.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/authorize_attendance.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14_PREVIEW" project-jdk-name="14" project-jdk-type="JavaSDK" />
 </project>
