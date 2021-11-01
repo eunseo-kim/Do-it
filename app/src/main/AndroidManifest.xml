@@ -10,13 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Study_With_Me">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.BulletActivity"
+            android:label="BulletActivity">
+        </activity>
+        <activity android:name=".activity.BulletNotificationActivity"
+            android:label="BulletNotificationActivity">
+        </activity>
+
+        <activity
+            android:name=".activity.BulletRegisterActivity"
+            android:label="BulletRegisterActivity">
         </activity>
     </application>
 
