@@ -6,19 +6,28 @@
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/alarm_icon.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/arrow_back_icon.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/backgroundbox.xml" value="0.14791666666666667" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/backgroundresource.xml" value="0.14791666666666667" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/bell.xml" value="0.14791666666666667" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/border_line.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/bullet_icon.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/calendar_icon.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/down_arrow.xml" value="0.14791666666666667" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/studysearch.xml" value="0.32395833333333335" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/thumb_up_icon.xml" value="0.2175925925925926" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/tmp_person_icon.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/drawable/up_arrow.xml" value="0.14791666666666667" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.264" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet_notification.xml" value="0.1" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet_notification_item.xml" value="0.176" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet_register.xml" value="0.2" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/evaluate_member.xml" value="0.264" />
-        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search.xml" value="0.264" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/studysearch.xml" value="0.264" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/menu/action_bar.xml" value="0.264" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.176" />
         <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.25416666666666665" />
       </map>
     </option>

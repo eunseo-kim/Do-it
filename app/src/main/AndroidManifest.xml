@@ -29,6 +29,9 @@
             android:name=".activity.BulletRegisterActivity"
             android:label="BulletRegisterActivity">
         </activity>
+        <activity
+            android:name=".activity.StudySearch"
+            android:label="스터디검색"></activity>
     </application>
 
 </manifest>
