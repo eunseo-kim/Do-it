@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.BulletActivity"
-            android:label="BulletActivity">
-        </activity>
+            android:label="BulletActivity"></activity>
         <activity android:name=".activity.BulletNotificationActivity"
-            android:label="BulletNotificationActivity">
-        </activity>
+            android:label="BulletNotificationActivity"></activity>
+        <activity android:name=".activity.EvaluateMemberActivity"
+            android:label="EvaluateMemberActivity"></activity>
         <activity android:name=".activity.StudySearchActivity"></activity>
         <activity android:name=".activity.AlarmActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
