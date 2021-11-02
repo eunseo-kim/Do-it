@@ -28,34 +28,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alarm);
-//
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-//
-//        // 첫 화면 지정
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                switch (item.getItemId()) {
-//                    case R.id.navBullet:
-//                        transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
-//                        break;
-//                    case R.id.navEvaluateMember:
-//                        transaction.replace(R.id.frame_layout, evaluateMemberFragment).commitAllowingStateLoss();
-//                        break;
-//                    case R.id.navAuthAttendance:
-//                        transaction.replace(R.id.frame_layout, authAttendanceFragment).commitAllowingStateLoss();
-//                        break;
-//                    case R.id.navManageSchedule:
-//                        transaction.replace(R.id.frame_layout, scheduleManagementFragment).commitAllowingStateLoss();
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
+        setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        // 첫 화면 지정
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                switch (item.getItemId()) {
+                    case R.id.navBullet:
+                        transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.navEvaluateMember:
+                        transaction.replace(R.id.frame_layout, evaluateMemberFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.navAuthAttendance:
+                        transaction.replace(R.id.frame_layout, authAttendanceFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.navManageSchedule:
+                        transaction.replace(R.id.frame_layout, scheduleManagementFragment).commitAllowingStateLoss();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 }
