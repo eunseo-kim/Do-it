@@ -3,20 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/alarm_icon.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/gray_box_radius.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/lightgray_box_radius.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/map_pin.xml" value="0.1953125" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/alarm.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/alarm_item.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/attendance_authorize.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/attendance_register.xml" value="0.22" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/authorize_attendance.xml" value="0.14666666666666667" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.11730072463768115" />
-        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_file_item.xml" value="0.24003707136237257" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/drawable/bottom_navigation_shadow.xml" value="0.22083333333333333" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.2046875" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/bullet_file_item.xml" value="0.26132246376811596" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/bullet_notification.xml" value="0.1" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/bullet_notification_item.xml" value="0.33" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/evaluate_member.xml" value="0.33" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/evaluate_member_item.xml" value="0.26132246376811596" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/member_attendance_item.xml" value="0.33" />
+        <entry key="..\:/Study-With-Me/app/src/main/res/layout/member_attendance_title.xml" value="0.25" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_14_PREVIEW" project-jdk-name="14" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
