@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
@@ -18,6 +20,16 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.alarm);
+
+        // 상단 메뉴바
+        getSupportActionBar().setTitle("알림");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // ListView adapter
+        ListView listView = findViewById(R.id.alarmListView);
+        String[] nameList = {"김은서", "박정용", "고다혜", "김진욱"}; // 임의로 이름 4개만 전달
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.alarm_item, R.id.alarmMemberName, nameList) ; //어댑터를 리스트 뷰에 적용
+        listView.setAdapter(adapter);
     }
 
     @Override
