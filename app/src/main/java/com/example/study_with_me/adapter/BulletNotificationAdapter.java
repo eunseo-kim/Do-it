@@ -18,17 +18,17 @@ import java.util.ArrayList;
 public class BulletNotificationAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    ArrayList<MemberNotification> noti;
+    ArrayList<MemberNotification> notiList;
 
-    public BulletNotificationAdapter(Context context, ArrayList<MemberNotification> noti) {
+    public BulletNotificationAdapter(Context context, ArrayList<MemberNotification> notiList) {
         this.context = context;
-        this.noti = noti;
+        this.notiList = notiList;
         this.layoutInflater = LayoutInflater.from(this.context);
     }
 
     @Override
     public int getCount() {
-        return noti.size();
+        return notiList.size();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class BulletNotificationAdapter extends BaseAdapter {
 
     @Override
     public MemberNotification getItem(int position) {
-        return noti.get(position);
+        return notiList.get(position);
     }
 
     @Override
@@ -50,13 +50,13 @@ public class BulletNotificationAdapter extends BaseAdapter {
         TextView date = (TextView)view.findViewById(R.id.notiDate);
         TextView comment = (TextView)view.findViewById(R.id.notiComment);
 
-        memberImage.setImageResource(noti.get(position).getMemberImage());
+        memberImage.setImageResource(notiList.get(position).getMemberImage());
         memberImage.setBackground(new ShapeDrawable(new OvalShape()));
         memberImage.setClipToOutline(true);
 
-        memberName.setText(noti.get(position).getName());
-        date.setText(noti.get(position).getDate());
-        comment.setText(noti.get(position).getComment());
+        memberName.setText(notiList.get(position).getName());
+        date.setText(notiList.get(position).getDate());
+        comment.setText(notiList.get(position).getComment());
 
         return view;
     }

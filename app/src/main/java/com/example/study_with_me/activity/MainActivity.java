@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
+        transaction.replace(R.id.frame_layout, authAttendanceFragment).commitAllowingStateLoss();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
