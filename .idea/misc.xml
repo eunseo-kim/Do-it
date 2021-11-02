@@ -4,9 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/alarm_icon.xml" value="0.1953125" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/border.xml" value="0.1953125" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/border_left.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/border_line.xml" value="0.1953125" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/box_solid_border_radius.xml" value="0.1953125" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/delete_icon.xml" value="0.1953125" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/gray_box_radius.xml" value="0.1953125" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/lightgray_box_radius.xml" value="0.1953125" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/drawable/map_pin.xml" value="0.1953125" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout-v24/schedule_management.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/alarm.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/alarm_item.xml" value="0.22" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/attendance_authorize.xml" value="0.22" />
@@ -14,6 +20,11 @@
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/authorize_attendance.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.11730072463768115" />
         <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/bullet_file_item.xml" value="0.24003707136237257" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/evaluate_member.xml" value="0.12228260869565218" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/member_attendance_item.xml" value="0.16576086956521738" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/schedule_item.xml" value="0.375968992248062" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/schedule_management.xml" value="0.22" />
+        <entry key="..\:/Users/eunse/Desktop/my workspace/Study-With-Me/app/src/main/res/layout/schedule_managment.xml" value="0.12454710144927536" />
       </map>
     </option>
   </component>
