@@ -24,14 +24,10 @@
         <activity android:name=".activity.BulletNotificationActivity"
             android:label="BulletNotificationActivity">
         </activity>
+        <activity android:name=".activity.StudySearchActivity"></activity>
+        <activity android:name=".activity.AlarmActivity"></activity>
+        <activity android:name=".activity.BulletRegisterActivity"></activity>
 
-        <activity
-            android:name=".activity.BulletRegisterActivity"
-            android:label="BulletRegisterActivity">
-        </activity>
-        <activity
-            android:name=".activity.StudySearch"
-            android:label="스터디검색"></activity>
     </application>
 
 </manifest>

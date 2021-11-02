@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_bell"
+        android:id="@+id/alarmBell"
         android:title="alarm"
         android:icon = "@drawable/bell"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_mypage"
-        android:title="my_page"
-        android:icon = "@drawable/tmp_person_icon"
+        android:id="@+id/myPage"
+        android:icon="@drawable/tmp_person_icon"
+        android:title="myPage"
         app:showAsAction="always" />
 </menu>
