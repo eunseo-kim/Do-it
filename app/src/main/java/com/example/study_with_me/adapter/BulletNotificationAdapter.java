@@ -46,7 +46,7 @@ public class BulletNotificationAdapter extends BaseAdapter {
         View view = layoutInflater.inflate(R.layout.bullet_notification_item, null);
 
         ImageView memberImage = (ImageView)view.findViewById(R.id.member_profile);
-        TextView memberName = (TextView)view.findViewById(R.id.memberName);
+        TextView memberName = (TextView)view.findViewById(R.id.alarmMemberName);
         TextView date = (TextView)view.findViewById(R.id.notiDate);
         TextView comment = (TextView)view.findViewById(R.id.notiComment);
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/alarmBell"
+        android:title="alarm"
+        android:icon = "@drawable/bell"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/myPage"
+        android:icon="@drawable/tmp_person_icon"
+        android:title="myPage"
+        app:showAsAction="always" />
+</menu>
