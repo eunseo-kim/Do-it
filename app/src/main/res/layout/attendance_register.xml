@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--출석 시간 설정-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/white_box_radius"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="출석 시간 설정"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <!--border bottom(구분선)-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#BABABA" />
+
+        <!--출석 시간 설정-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/hourEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:ems="2"
+                android:gravity="center"
+                android:hint="시"
+                android:inputType="time"
+                android:maxLines="1"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="40dp" />
+
+            <EditText
+                android:id="@+id/minuteEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:ems="2"
+                android:gravity="center"
+                android:hint="분"
+                android:inputType="time"
+                android:maxLines="1"
+                android:textSize="30dp" />
+
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textOff="PM"
+                android:textOn="AM"
+                android:textSize="25dp"
+                android:layout_marginLeft="10dp"></ToggleButton>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--인증 위치 설정-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:background="@drawable/white_box_radius"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="인증 위치 설정"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <!--border bottom(구분선)-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#BABABA" />
+
+        <!--주소 검색창-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/lightgray_box_radius"
+            android:padding="7dp">
+
+            <ImageView
+                android:id="@+id/AttendEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/map_pin"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="14dp"
+                android:background="#ececec"
+                android:hint="주소를 검색해보세요"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <!--gps, 등록 시간, 위치 table-->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"
+                    android:text="GPS 좌표">
+                </TextView>
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:padding="5dp"
+                    android:layout_margin="5dp">
+                </TextView>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"
+                    android:text="등록 장소">
+                </TextView>
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:scrollbars="vertical"
+                    android:singleLine="true"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical">
+                </TextView>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:text="출석 인정 범위"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical">
+                </TextView>
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:textSize="14dp"
+                        android:hint=""
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/lightgray_box_radius"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:inputType="number"
+                        android:ems="5">
+                    </EditText>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="m"
+                        android:layout_gravity="center_vertical">
+                    </TextView>
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="등록하기"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
