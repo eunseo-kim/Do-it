@@ -57,75 +57,70 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/bulletMenuAllBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            android:onClick="onBulletMenuClicked"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="전체"
-            android:textColor="#000000"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/bulletMenuNotiBtn"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            android:onClick="onBulletMenuClicked"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="프로그래밍"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bulletMenuPicBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            android:onClick="onBulletMenuClicked"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="취업"
-            tools:ignore="TouchTargetSizeCheck" />
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:checked="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:text="전체"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/bulletMenuFileBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            android:onClick="onBulletMenuClicked"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="어학"
-            tools:ignore="TouchTargetSizeCheck" />
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:text="프로그래밍"
+                android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            android:onClick="onBulletMenuClicked"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="기타"
-            tools:ignore="TouchTargetSizeCheck" />
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:text="취업"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:text="어학"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:text="기타"
+                android:textAlignment="center" />
+        </RadioGroup>
 
         <TextView
             android:id="@+id/textView"

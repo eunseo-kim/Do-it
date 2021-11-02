@@ -17,48 +17,45 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/bulletMenuNotiBtn"
+        <RadioGroup
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
+            android:layout_height="wrap_content" >
 
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="공지"
-            android:textColor="#000000"
-            tools:ignore="TouchTargetSizeCheck" />
+            <RadioButton
+                android:id="@+id/radioButton8"
+                android:checked="true"
+                android:button="@null"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="공지"
+                android:textAlignment="center"/>
 
-        <TextView
-            android:id="@+id/bulletMenuPicBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
+            <RadioButton
+                android:id="@+id/radioButton9"
+                android:button="@null"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="사진"
+                android:textAlignment="center"/>
 
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="사진"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/bulletMenuFileBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:text="파일"
-            tools:ignore="TouchTargetSizeCheck" />
+            <RadioButton
+                android:id="@+id/radioButton10"
+                android:button="@null"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="파일"
+                android:textAlignment="center"/>
+        </RadioGroup>
 
     </LinearLayout>
 
