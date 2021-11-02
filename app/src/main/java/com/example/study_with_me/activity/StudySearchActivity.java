@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +17,13 @@ public class StudySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search);
+
+        ListView listView = findViewById(R.id.lv_comment_view);
     }
 
+//    class MyAdapter extends BaseAdapter {
+//
+//    }
     @Override
     // action_bar
     public boolean onCreateOptionsMenu(Menu menu) {

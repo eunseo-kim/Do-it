@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="@drawable/border_line"
         android:orientation="horizontal"
         android:paddingTop="10dp"
@@ -44,9 +44,33 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="412dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/border_line"
+        android:paddingLeft="26dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <TextView
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/backgroundresource"
+            android:hint="검색어를 입력해주세요."
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
 
         android:background="@drawable/border_line"
@@ -139,32 +163,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/down_arrow" />
+
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="412dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+
+
         android:background="@drawable/border_line"
-        android:paddingLeft="26dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="MissingConstraints">
 
-        <TextView
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/backgroundresource"
-            android:hint="검색어를 입력해주세요."
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
 
+        <ListView
+            android:id="@+id/lv_comment_view"
+            android:layout_width="match_parent"
+            android:layout_height="237dp" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
