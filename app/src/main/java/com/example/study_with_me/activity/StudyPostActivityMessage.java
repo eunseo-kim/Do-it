@@ -20,13 +20,14 @@ public class StudyPostActivityMessage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.study_post);
 
         dialog01 = new Dialog(StudyPostActivityMessage.this);
         dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog01.setContentView(R.layout.apply_message);
 
-        findViewById(R.id.applyButton).setOnClickListener(new View.OnClickListener() {
+        Button applyButton = (Button) findViewById(R.id.applyButton);
+        applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog01();
