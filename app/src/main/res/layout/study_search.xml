@@ -24,6 +24,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingRight="20dp"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -106,6 +107,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/down_arrow" />
+
     </LinearLayout>
 
     <!--태그 고르기(전체, 프로그래밍, 취업, 어학, 기타) -->
@@ -247,5 +249,21 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="#E3E3E3"
+        app:borderWidth="0dp"
+        android:contentDescription="Register study"
+        android:src="@drawable/edit_icon"
+        android:tint="@null"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+  </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </LinearLayout>
