@@ -3,7 +3,12 @@ package com.example.study_with_me.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,6 +21,26 @@ public class StudySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search);
+
+        // 상단 메뉴바
+        getSupportActionBar().setTitle("스터디 검색");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // 펼치기 버튼(expandButton) 클릭 시 필터링 검색 창 펼침
+        ImageView expandButton = (ImageView)findViewById(R.id.expandButton);
+        LinearLayout filteringScreen = (LinearLayout)findViewById(R.id.filteringScreen);
+        expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (filteringScreen.getVisibility() == View.VISIBLE) {
+                    filteringScreen.setVisibility(View.GONE);
+                } else {
+                    filteringScreen.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
 
         final Button button1 = (Button) findViewById(R.id.applyButton);
         button1.setOnClickListener(new View.OnClickListener() {
