@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -50,15 +50,15 @@
 
             <RadioButton
                 android:id="@+id/radioButton3"
-                android:checked="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
+                android:checked="true"
                 android:text="전체"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
@@ -66,10 +66,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="프로그래밍"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
@@ -78,10 +78,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="취업"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
@@ -90,10 +90,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="어학"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton7"
@@ -102,10 +102,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="기타"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
         </RadioGroup>
 
         <TextView
@@ -137,5 +137,22 @@
         tools:ignore="MissingConstraints">
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="#E3E3E3"
+        app:borderWidth="0dp"
+        android:contentDescription="Register study"
+        android:src="@drawable/edit_icon"
+        android:tint="@null"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+  </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
