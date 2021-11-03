@@ -10,9 +10,15 @@
         android:layout_margin="5dp"
         android:gravity="center_vertical">
         <View
+<<<<<<< HEAD
              android:layout_height="4dp"
              android:layout_width="4dp"
              android:background="#618AD8"
+=======
+            android:layout_height="4dp"
+            android:layout_width="4dp"
+            android:background="#618AD8"
+>>>>>>> 511a4dcc872864a59fc49f8e489f1b99ecc97e57
             android:layout_gravity="center_vertical"/>
 
         <TextView
