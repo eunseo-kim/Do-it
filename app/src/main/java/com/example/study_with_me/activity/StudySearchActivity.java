@@ -39,7 +39,7 @@ public class StudySearchActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+
 
 
         final Button button1 = (Button) findViewById(R.id.applyButton);
