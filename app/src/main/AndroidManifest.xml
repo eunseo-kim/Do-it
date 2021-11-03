@@ -21,15 +21,9 @@
         <activity android:name=".activity.BulletActivity"
             android:label="BulletActivity"></activity>
         <activity android:name=".activity.BulletNotificationActivity"
-<<<<<<< HEAD
             android:label="BulletNotificationActivity"></activity>
         <activity android:name=".activity.EvaluateMemberActivity"
             android:label="EvaluateMemberActivity"></activity>
-        <activity android:name=".activity.StudySearchActivity"></activity>
-=======
-            android:label="BulletNotificationActivity">
-        </activity>
->>>>>>> 511a4dcc872864a59fc49f8e489f1b99ecc97e57
         <activity android:name=".activity.AlarmActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>

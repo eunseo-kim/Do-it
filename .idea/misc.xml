@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/bullet.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/evaluate_member.xml" value="0.12129629629629629" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/evaluate_member_rating.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/login.xml" value="0.12129629629629629" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/my_study_room.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/my_study_room_item.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/my_study_room_main.xml" value="0.2" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/schedule_item.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/schedule_management.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/signup.xml" value="0.16770833333333332" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/signup_complete.xml" value="0.16770833333333332" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_post.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_register.xml" value="0.16770833333333332" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search.xml" value="0.176" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search_item.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search_main.xml" value="0.152" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search_user_click.xml" value="0.1" />
+        <entry key="..\:/Users/kodhd/AndroidStudioProjects/Study-With-Me/app/src/main/res/layout/study_search_user_click_item.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

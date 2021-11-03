@@ -18,6 +18,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:layout_editor_absoluteX="198dp"></include>
+        tools:layout_editor_absoluteX="0dp"></include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

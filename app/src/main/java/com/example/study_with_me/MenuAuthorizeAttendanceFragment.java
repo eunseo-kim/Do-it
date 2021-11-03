@@ -15,10 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.ListFragment;
 
-import com.example.study_with_me.activity.AlarmActivity;
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
-import com.example.study_with_me.activity.StudySearchActivity;
 
 public class MenuAuthorizeAttendanceFragment extends ListFragment {
     @Nullable

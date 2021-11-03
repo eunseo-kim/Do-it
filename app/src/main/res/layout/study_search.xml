@@ -256,14 +256,13 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:backgroundTint="#E3E3E3"
-        app:borderWidth="0dp"
         android:contentDescription="Register study"
         android:src="@drawable/edit_icon"
         android:tint="@null"
+        app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-  </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:layout_constraintEnd_toEndOf="parent"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </LinearLayout>
