@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"></include>
 
     <include
+        android:id="@+id/myStudyRoomItem"
         layout="@layout/my_study_room_item"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
