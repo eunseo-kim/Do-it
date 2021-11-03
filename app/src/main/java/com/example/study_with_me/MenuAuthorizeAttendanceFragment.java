@@ -18,6 +18,7 @@ import androidx.fragment.app.ListFragment;
 import com.example.study_with_me.activity.AlarmActivity;
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
+import com.example.study_with_me.activity.StudySearchActivity;
 
 public class MenuAuthorizeAttendanceFragment extends ListFragment {
     @Nullable
@@ -60,7 +61,8 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                // Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                Intent intent = new Intent(view.getContext(), StudySearchActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

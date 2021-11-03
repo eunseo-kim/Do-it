@@ -1,61 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_line"
-        android:orientation="horizontal"
+        android:background="#c2c2c2"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            app:srcCompat="@drawable/arrow_back_icon" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:text="스터디 검색"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="22dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/backgroundresource"
+            android:hint="검색어를 입력해주세요."
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="20dp"/>
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
         android:background="@drawable/border_line"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
-        tools:ignore="MissingConstraints">
+        android:orientation="horizontal">
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -64,102 +40,212 @@
 
             <RadioButton
                 android:id="@+id/radioButton3"
-                android:checked="true"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
+                android:checked="true"
                 android:text="전체"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="프로그래밍"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="취업"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="어학"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
 
             <RadioButton
                 android:id="@+id/radioButton7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
                 android:button="@null"
                 android:text="기타"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_text" />
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="55dp" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="49dp"
+            android:id="@+id/expandButton"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/down_arrow" />
     </LinearLayout>
 
-
+    <!--태그 고르기(전체, 프로그래밍, 취업, 어학, 기타) -->
     <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="412dp"
+        android:id="@+id/filteringScreen"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/border_line"
-        android:paddingLeft="26dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        android:background="#E6E6E6"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
 
+        <!--인원 고르기-->
         <TextView
-            android:layout_width="360dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/backgroundresource"
-            android:hint="검색어를 입력해주세요."
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:textColor="@color/black"
+            android:text="인원" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:textColor="@drawable/selector_text"
+                android:text="1명"/>
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:textColor="@drawable/selector_text"
+                android:text="2명"
+                android:textSize="13dp" />
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:textColor="@drawable/selector_text"
+                android:text="3명"
+                android:textSize="13dp" />
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:textColor="@drawable/selector_text"
+                android:button="@null"
+                android:gravity="center"
+                android:text="기타"
+                android:textSize="13dp" />
+        </RadioGroup>
+
+        <!--기간 고르기-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="스터디 기간" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:text="1개월"
+                android:textSize="13dp"
+                android:textColor="@drawable/selector_text"/>
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:text="2개월"
+                android:textSize="13dp"
+                android:textColor="@drawable/selector_text" />
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:text="6개월"
+                android:textSize="13dp"
+                android:textColor="@drawable/selector_text" />
+
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:text="기타"
+                android:textSize="13dp"
+                android:textColor="@drawable/selector_text" />
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
