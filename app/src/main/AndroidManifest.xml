@@ -24,7 +24,6 @@
         <activity android:name=".activity.BulletNotificationActivity"
             android:label="BulletNotificationActivity">
         </activity>
-        <activity android:name=".activity.StudySearchActivity"></activity>
         <activity android:name=".activity.AlarmActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
 
