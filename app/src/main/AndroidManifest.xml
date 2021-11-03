@@ -28,7 +28,6 @@
         <activity android:name=".activity.AlarmActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>
-
     </application>
 
 </manifest>
