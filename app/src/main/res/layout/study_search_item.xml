@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/fieldButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/studyRecuit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/gray_box_radius"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="모집중"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/studyField"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/gray_box_radius"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="프로그래밍"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <TableRow>
+
+            <TextView
+                android:id="@+id/studyTitle"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:text="모바일 프로그래밍 성실한 그터디 그룹원 구합니다."
+                android:textColor="@color/black" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/studyRegister"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:text="오늘 04:12"
+                android:textColor="#9D9D9D" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

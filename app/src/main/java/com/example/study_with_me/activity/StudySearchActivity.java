@@ -1,13 +1,14 @@
 package com.example.study_with_me.activity;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.study_with_me.R;
 
 public class StudySearchActivity extends AppCompatActivity {
@@ -15,25 +16,20 @@ public class StudySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search);
-    }
 
-    @Override
-    // action_bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    public boolean onOptionsItemsSelected(MenuItem item) {
-        if(item.getItemId() == R.id.alarmBell) {
-            Intent intent = new Intent(StudySearchActivity.this, AlarmActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        else {
-            return super.onOptionsItemSelected(item);
-        }
+        final Button button1 = (Button) findViewById(R.id.applyButton);
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(StudySearchActivity.this);
+                dlg.setTitle("스터디를 신청하겠습니까?");
+                dlg.setMessage("스터디 수락까지\n시간이 걸릴 수 있습니다.");
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(StudySearchActivity.this, "신청되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
+            }
+        });
     }
 }
-
