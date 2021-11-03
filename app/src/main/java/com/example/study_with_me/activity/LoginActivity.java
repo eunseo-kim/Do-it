@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         TextView Textview;
+        TextView Textview2;
         Textview = findViewById(R.id.textView6);
 
         Textview.setOnClickListener(new View.OnClickListener() {
