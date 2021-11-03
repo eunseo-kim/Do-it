@@ -44,56 +44,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_radio_button"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:checked="true"
                 android:text="전체"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_radio_button"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:text="프로그래밍"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_radio_button"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:text="취업"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_radio_button"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:text="어학"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:id="@+id/radioButton7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_radio_button"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:text="기타"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
         </RadioGroup>
 
         <TextView
@@ -146,7 +146,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="1명"/>
 
             <RadioButton
@@ -156,7 +156,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="2명"
                 android:textSize="13dp" />
 
@@ -167,7 +167,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="3명"
                 android:textSize="13dp" />
 
@@ -175,7 +175,7 @@
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:background="@drawable/white_box_radius"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:button="@null"
                 android:gravity="center"
                 android:text="기타"
@@ -205,7 +205,7 @@
                 android:layout_marginRight="20dp"
                 android:text="1개월"
                 android:textSize="13dp"
-                android:textColor="@drawable/selector_text"/>
+                android:textColor="@drawable/selector_top_menu_text"/>
 
             <RadioButton
                 android:layout_width="60dp"
@@ -216,7 +216,7 @@
                 android:layout_marginRight="20dp"
                 android:text="2개월"
                 android:textSize="13dp"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:layout_width="60dp"
@@ -227,7 +227,7 @@
                 android:layout_marginRight="20dp"
                 android:text="6개월"
                 android:textSize="13dp"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:layout_width="60dp"
@@ -237,7 +237,7 @@
                 android:gravity="center"
                 android:text="기타"
                 android:textSize="13dp"
-                android:textColor="@drawable/selector_text" />
+                android:textColor="@drawable/selector_top_menu_text" />
         </RadioGroup>
 
 
