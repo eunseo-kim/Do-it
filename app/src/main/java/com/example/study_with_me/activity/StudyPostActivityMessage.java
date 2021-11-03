@@ -33,6 +33,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
             }
         });
     }
+
     public void showDialog01() {
         dialog01.show();
 

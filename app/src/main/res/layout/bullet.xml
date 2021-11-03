@@ -27,8 +27,8 @@
                 android:layout_marginRight="5dp"
                 android:button="@null"
                 android:checked="true"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="전체"
                 android:textAlignment="center" />
 
@@ -38,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:button="@null"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="공지"
                 android:textAlignment="center" />
 
@@ -49,8 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:button="@null"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="사진"
                 android:textAlignment="center" />
 
@@ -60,8 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:button="@null"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_text"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="파일"
                 android:textAlignment="center" />
         </RadioGroup>
