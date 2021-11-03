@@ -15,7 +15,7 @@ public class StudySearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.study_search);
+        setContentView(R.layout.study_post);
 
         final Button button1 = (Button) findViewById(R.id.applyButton);
         button1.setOnClickListener(new View.OnClickListener() {
