@@ -3,4 +3,3 @@
     <item android:state_checked="true" android:color="#FFFFFF" />
     <item android:state_checked="false" android:color="#000000" />
 </selector>
-
