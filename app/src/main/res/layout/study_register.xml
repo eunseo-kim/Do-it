@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.120000005" />
+        app:layout_constraintVertical_bias="0.110000014" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -88,7 +88,7 @@
         app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.287" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32">
+        app:layout_constraintVertical_bias="0.31">
 
         <RadioButton
             android:id="@+id/radioButton3"
@@ -106,10 +106,10 @@
             android:layout_height="30dp"
             android:layout_marginEnd="17dp"
             android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
             android:button="@null"
             android:text="1명"
             android:textAlignment="center"
+            android:textColor="@drawable/selector_radio_text"
             tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
@@ -118,10 +118,10 @@
             android:layout_height="30dp"
             android:layout_marginEnd="17dp"
             android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
             android:button="@null"
             android:text="2명"
             android:textAlignment="center"
+            android:textColor="@drawable/selector_radio_text"
             tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
@@ -130,10 +130,10 @@
             android:layout_height="30dp"
             android:layout_marginEnd="17dp"
             android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
             android:button="@null"
             android:text="3명"
             android:textAlignment="center"
+            android:textColor="@drawable/selector_radio_text"
             tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
@@ -141,10 +141,10 @@
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
             android:button="@null"
             android:text="기타"
             android:textAlignment="center"
+            android:textColor="@drawable/selector_radio_text"
             tools:ignore="TouchTargetSizeCheck" />
     </RadioGroup>
 
@@ -159,7 +159,7 @@
         app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.39999998" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -233,7 +233,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
@@ -252,7 +252,7 @@
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
+        app:layout_constraintVertical_bias="0.901" />
 
     <Button
         android:id="@+id/button7"
