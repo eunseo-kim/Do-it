@@ -6,11 +6,10 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/fieldButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_margin="6dp">
 
         <TextView
             android:id="@+id/studyRecuit"
@@ -38,6 +37,7 @@
             android:textSize="16dp" />
     </LinearLayout>
 
+    <!--출석 시간, 등록 장소 table-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,28 +46,33 @@
 
             <TextView
                 android:id="@+id/studyTitle"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:text="모바일 프로그래밍 성실한 그터디 그룹원 구합니다."
-                android:textColor="@color/black" />
+                android:text="모바일 프로그래밍 성실한 스터디 그룹원 구합니다."
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content" />
 
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:id="@+id/studyRegister"
+                android:id="@+id/studyRegisterDay"
                 android:layout_height="match_parent"
                 android:padding="3dp"
-                android:text="오늘 04:12"
+                android:text="2021.10.15"
                 android:textColor="#9D9D9D" />
-
         </TableRow>
+
     </TableLayout>
 
     <ListView
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
