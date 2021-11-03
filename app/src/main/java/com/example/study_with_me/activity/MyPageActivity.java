@@ -6,27 +6,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
 
-public class MyStudyRoomActivity extends AppCompatActivity {
+public class MyPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_study_room_main);
-        getSupportActionBar().setTitle("내 스터디 목록");
+        setContentView(R.layout.mypage);
+
+        // 상단 메뉴바
+        getSupportActionBar().setTitle("마이페이지");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        View myStudyRoomItem = (View)findViewById(R.id.myStudyRoomItem);
-        myStudyRoomItem.setOnClickListener(new View.OnClickListener() {
+
+        // myStudyRoomButton 누르면 내 스터디룸으로 이동
+        Button myStudyRoomButton = (Button)findViewById(R.id.myStudyRoomButton);
+        myStudyRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
+                Intent studyroom = new Intent(view.getContext(), MyStudyRoomActivity.class);
+                startActivity(studyroom);
             }
         });
     }

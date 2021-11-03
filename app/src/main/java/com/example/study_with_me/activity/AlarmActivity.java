@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,9 +22,10 @@ public class AlarmActivity extends AppCompatActivity {
         Intent intent = getIntent();
         setContentView(R.layout.alarm);
 
-//        // 상단 메뉴바
-//        getSupportActionBar().setTitle("알림");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // 상단 메뉴바
+        getSupportActionBar().setTitle("알림");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       
 //        // ListView adapter
 //        ListView listView = findViewById(R.id.alarmListView);
@@ -43,5 +45,20 @@ public class AlarmActivity extends AppCompatActivity {
     public void InitalizeAlarmData() {
         alarmDataList.add(new AlarmSampledata("kodahye", "14:33"));
         alarmDataList.add(new AlarmSampledata("kodahmi", "13:33"));
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.alarmBell:
+                Intent intent1 = new Intent(this, AlarmActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.myPage:
+                Intent intent2 = new Intent(this, MyPageActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
