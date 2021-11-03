@@ -32,10 +32,6 @@ public class MenuScheduleManagementFragment extends ListFragment {
         //editText 키보드 가림 문제 해결X
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 511a4dcc872864a59fc49f8e489f1b99ecc97e57
         // 상단 액션바 설정
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("일정 관리");
