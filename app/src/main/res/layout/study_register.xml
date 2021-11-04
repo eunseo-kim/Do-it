@@ -68,7 +68,8 @@
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
-                    android:id="@+id/radioButton10"
+                    android:onClick="ectButtonClicked"
+                    android:id="@+id/ectCategoryButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -134,7 +135,8 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:onClick="ectButtonClicked"
+                android:id="@+id/ectPeopleCountButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -199,7 +201,8 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
-                android:id="@+id/radioButton14"
+                android:onClick="ectButtonClicked"
+                android:id="@+id/ectDateButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
