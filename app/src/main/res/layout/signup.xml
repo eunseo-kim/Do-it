@@ -57,10 +57,10 @@
 
 
     <EditText
-        android:id="@+id/signUpName"
+        android:id="@+id/signUpEmail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="이름"
+        android:hint="이메일"
         android:background="@drawable/lightgray_box_radius"
         android:gravity="center_vertical"
         android:textColor="#000000"
@@ -85,7 +85,7 @@
 
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/signUpButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -94,6 +94,7 @@
         android:elevation="5dp"
         android:padding="10dp"
         android:text="회원가입"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:onClick="signUp"/>
 
 </LinearLayout>
