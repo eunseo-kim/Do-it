@@ -61,8 +61,8 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
-                Intent intent = new Intent(view.getContext(), StudySearchActivity.class);
+                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                // Intent intent = new Intent(view.getContext(), StudySearchActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

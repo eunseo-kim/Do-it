@@ -18,12 +18,21 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        TextView Textview;
-        Textview = findViewById(R.id.textView6);
+        TextView signUpButton = findViewById(R.id.signUpButton);
 
-        Textview.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // [test] 일단 '로그인' 버튼 누르면 바로 첫화면(스터디 검색) 보이게 했어요
+        Button loginButton = (Button)findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
                 startActivity(intent);
             }
         });
