@@ -1,269 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="분야"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100000024" />
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:paddingBottom="30dp"
+        android:background="@drawable/border_line">
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="분야"
+                android:textColor="#000000"/>
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="17dp"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="@null"
+                    android:text="프로그래밍"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:id="@+id/radioButton8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="17dp"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="@null"
+                    android:text="취업"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:id="@+id/radioButton9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="17dp"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="@null"
+                    android:text="어학"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:onClick="ectButtonClicked"
+                    android:id="@+id/ectCategoryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="@null"
+                    android:text="기타"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인원"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="1명"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="2명"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="3명"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:onClick="ectButtonClicked"
+                android:id="@+id/ectPeopleCountButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="기타"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="스터디 기간"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="1개월"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="2개월"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="17dp"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="6개월"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:onClick="ectButtonClicked"
+                android:id="@+id/ectDateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:text="기타"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003">
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/border_line">
 
-        <RadioButton
-            android:id="@+id/radioButton7"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="프로그래밍"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@null"
+            android:textSize="17dp"
+            android:hint="제목"
+            android:inputType="textPersonName"/>
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:background="@null"
+            android:textSize="15dp"
+            android:gravity="top"
+            android:hint="내용을 입력하세요"
+            android:inputType="textPersonName" />
 
-        <RadioButton
-            android:id="@+id/radioButton8"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="취업"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton9"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="어학"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton10"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="기타"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="인원"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24000001" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32">
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="1명"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="2명"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="3명"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton6"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="기타"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="스터디 기간"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002">
-
-        <RadioButton
-            android:id="@+id/radioButton11"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="1개월"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton12"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="2개월"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton13"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="6개월"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <RadioButton
-            android:id="@+id/radioButton14"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:background="@drawable/selector_radio_button"
-            android:textColor="@drawable/selector_radio_text"
-            android:button="@null"
-            android:text="기타"
-            android:textAlignment="center"
-            tools:ignore="TouchTargetSizeCheck" />
-    </RadioGroup>
-
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="350dp"
-        android:layout_height="48dp"
-        android:background="@null"
-        android:ems="10"
-        android:hint="제목"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="350dp"
-        android:layout_height="174dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@null"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="내용을 입력하세요"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="추가하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.902"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        android:layout_gravity="right"
+        android:layout_margin="20dp"
+        android:text="추가하기"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
