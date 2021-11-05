@@ -16,7 +16,6 @@ public class StudyRegisterDialog extends Dialog implements View.OnClickListener 
     private Button negativeBtn;
     private EditText etcTextContent;
     private TextView etcGuideText;
-    private String guideText;
     private Context context;
     private StudyRegisterActivity.etcType type;
 

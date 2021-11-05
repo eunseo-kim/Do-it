@@ -1,8 +1,10 @@
 package com.example.study_with_me.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,19 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.dialog.StudyRegisterDialog;
+import com.example.study_with_me.model.StudyGroup;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class StudyRegisterActivity extends AppCompatActivity {
     /** 스터디 그룹 클래스에 저장할 데이터 **/
-    private String type;
-    private int numOfMember;
-    private Date startDate = new Date();
-    private Date endDate;
-    private Button button;
-    private TextView etcContent;
+    private ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+    private String type;                    // 스터디 종류
+    private int numOfMember = 0;            // 스터디 인원
+    private Date startDate = new Date();    // 스터디 시작날짜 (오늘)
+    private Date endDate;                   // 스터디 종료날짜
+    private String studyName;               // 스터디 이름
+    private String studyDescription;        // 스터디 설명
 
     public enum etcType {CATEGORY, PEOPLE, DATE};
 
@@ -31,23 +36,37 @@ public class StudyRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_register);
-        TextView studyName = findViewById(R.id.studyName);
-
         /** 상단 바 설정 **/
         getSupportActionBar().setTitle("스터디 등록");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /** 스터디 분야 **/
-        RadioGroup studyType = findViewById(R.id.studyType);
-        setStudyType(studyType);
+        setStudyInfo();
 
-        /** 스터디 인원 **/
-        RadioGroup studyMember = findViewById(R.id.studyMemberNum);
-        setStudyNumbOfMember(studyMember);
+        Button studyRegisterBtn = findViewById(R.id.studyRegisterBtn);
+        studyRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isValid()) {
+                    StudyGroup studyGroup = new StudyGroup(studyName, studyDescription, type, numOfMember, startDate, endDate);
+                    studyGroups.add(studyGroup);
+                    Intent intent = new Intent(getApplicationContext(), StudyRegisterCompleteActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
-        /** 스터디 기간 **/
-        RadioGroup studyTerm = findViewById(R.id.studyTerm);
-        setStudyTerm(studyTerm);
+    /** 정보가 모두 입력됐는지 확인하는 함수 **/
+    private boolean isValid() {
+        if(type == null) return false;
+        if(numOfMember == 0) return false;
+        if(endDate == null) return false;
+        if(studyName == null) return false;
+        if(studyDescription == null) return false;
+
+        return true;
     }
 
     /** 기타 버튼 누르면 id 비교해서 각각 팝업창 뜨도록 **/
@@ -165,5 +184,24 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /** 스터디 정보 설정하는 함수 **/
+    private void setStudyInfo() {
+        /** 스터디 이름, 설명 **/
+        studyName = findViewById(R.id.studyName).toString();
+        studyDescription = findViewById(R.id.studyDescription).toString();
+
+        /** 스터디 분야 **/
+        RadioGroup studyType = findViewById(R.id.studyType);
+        setStudyType(studyType);
+
+        /** 스터디 인원 **/
+        RadioGroup studyMember = findViewById(R.id.studyMemberNum);
+        setStudyNumbOfMember(studyMember);
+
+        /** 스터디 기간 **/
+        RadioGroup studyTerm = findViewById(R.id.studyTerm);
+        setStudyTerm(studyTerm);
     }
 }
