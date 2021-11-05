@@ -31,11 +31,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     // 비밀번호 유효성 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
-    private EditText signUpID;
     private EditText signUpPassword;
     private EditText signUpConfirmPassword;
     private EditText signUpEmail;
-    private EditText signUpPhone;
     FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -44,23 +42,18 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
-        getSupportActionBar().setTitle("회원가입");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
-        signUpID = (EditText)findViewById(R.id.signUpID);
         signUpPassword = (EditText)findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUpEmail = (EditText)findViewById(R.id.signUpEmail);
-        signUpPhone = (EditText)findViewById(R.id.signUpPhone);
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void signUp(View view) {
-        final String id = signUpID.getText().toString().trim();
         final String pwd = signUpPassword.getText().toString().trim();
         final String checkpwd = signUpConfirmPassword.getText().toString().trim();
         final String email = signUpEmail.getText().toString().trim();
-        final String phone = signUpPhone.getText().toString().trim();
 
         if(isValidEmail(email) && isValidPasswd(pwd, checkpwd)) {
             createUser(email, pwd);
