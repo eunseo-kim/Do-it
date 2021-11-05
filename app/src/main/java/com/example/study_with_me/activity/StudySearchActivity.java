@@ -56,14 +56,12 @@ public class StudySearchActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getApplicationContext(), "결제 진행하겠습니다.", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+            }
+        });
 
         // floatingActionButton 누르면 스터디 생성 화면
         FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
@@ -129,6 +127,7 @@ public class StudySearchActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void InitializeStudyData() {
         studyDataList = new ArrayList<Studydata>();
         studyDataList.add(new Studydata("모집중", "취업", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12"));
