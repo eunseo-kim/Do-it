@@ -15,6 +15,7 @@
         android:padding="10dp">
 
         <EditText
+            android:id="@+id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,8 +23,8 @@
             android:hint="검색어를 입력해주세요."
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp" />
 
     </LinearLayout>
 
@@ -40,57 +41,62 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:checked="true"
+                android:onClick="onClick"
                 android:text="전체"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/programming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
+                android:onClick="onClick"
                 android:text="프로그래밍"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
-                android:id="@+id/radioButton5"
+                android:id="@+id/employ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
+                android:onClick="onClick"
                 android:text="취업"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:id="@+id/language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
+                android:onClick="onClick"
                 android:text="어학"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
-                android:id="@+id/radioButton7"
+                android:id="@+id/ect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
+                android:onClick="onClick"
                 android:text="기타"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_top_menu_text" />
@@ -111,11 +117,6 @@
     </LinearLayout>
 
     <!--태그 고르기(전체, 프로그래밍, 취업, 어학, 기타) -->
-    <ListView
-        android:id="@+id/studyListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
     <LinearLayout
         android:id="@+id/filteringScreen"
         android:layout_width="match_parent"
@@ -254,21 +255,26 @@
 
     </LinearLayout>
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:backgroundTint="#E3E3E3"
-        app:borderWidth="0dp"
-        android:contentDescription="Register study"
-        android:src="@drawable/edit_icon"
-        android:tint="@null"
-        app:elevation="6dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-  </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textFilterEnabled="true" />
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:backgroundTint="#E3E3E3"
+            app:borderWidth="0dp"
+            android:contentDescription="Register study"
+            android:src="@drawable/edit_icon"
+            android:tint="@null"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+      </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
 
 </LinearLayout>
