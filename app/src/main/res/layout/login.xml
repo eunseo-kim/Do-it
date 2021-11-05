@@ -35,7 +35,7 @@
 
 
         <EditText
-            android:id="@+id/IDEditText"
+            android:id="@+id/emailLogin"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/white_round_transparency_background"
@@ -47,7 +47,7 @@
             android:layout_marginTop="30dp"/>
 
         <EditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/passwordLogin"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/white_round_transparency_background"
@@ -67,7 +67,8 @@
             android:text="로그인"
             android:textColor="#0667e5"
             android:textSize="18sp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:onClick="login"/>
     </LinearLayout>
 
     <LinearLayout

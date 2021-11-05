@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
-
     // 비밀번호 유효성 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
     private EditText signUpPassword;
