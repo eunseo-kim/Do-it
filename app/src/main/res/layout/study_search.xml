@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#c2c2c2"
-        android:paddingTop="10dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/textView2"
@@ -112,7 +111,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/expandButton"
@@ -128,22 +127,22 @@
         android:id="@+id/filteringScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:background="#E6E6E6"
+        android:elevation="4dp"
+        android:orientation="vertical"
         android:paddingLeft="30dp"
         android:paddingTop="15dp"
         android:paddingRight="30dp"
         android:paddingBottom="15dp"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true"
         android:visibility="gone">
 
         <!--인원 고르기-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="인원" />
+            android:text="인원"
+            android:textColor="@color/black" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -155,43 +154,43 @@
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_top_menu_text"
-                android:text="1명"/>
+                android:text="1명"
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_top_menu_text"
                 android:text="2명"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:textSize="13dp" />
 
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
-                android:textColor="@drawable/selector_top_menu_text"
                 android:text="3명"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:textSize="13dp" />
 
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:background="@drawable/white_box_radius"
-                android:textColor="@drawable/selector_top_menu_text"
                 android:button="@null"
                 android:gravity="center"
                 android:text="기타"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:textSize="13dp" />
         </RadioGroup>
 
@@ -199,8 +198,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="스터디 기간" />
+            android:text="스터디 기간"
+            android:textColor="@color/black" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -212,35 +211,35 @@
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
                 android:text="1개월"
-                android:textSize="13dp"
-                android:textColor="@drawable/selector_top_menu_text"/>
+                android:textColor="@drawable/selector_top_menu_text"
+                android:textSize="13dp" />
 
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
                 android:text="2개월"
-                android:textSize="13dp"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:textColor="@drawable/selector_top_menu_text"
+                android:textSize="13dp" />
 
             <RadioButton
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/white_box_radius"
                 android:button="@null"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
                 android:text="6개월"
-                android:textSize="13dp"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:textColor="@drawable/selector_top_menu_text"
+                android:textSize="13dp" />
 
             <RadioButton
                 android:layout_width="60dp"
@@ -249,8 +248,8 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="기타"
-                android:textSize="13dp"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:textColor="@drawable/selector_top_menu_text"
+                android:textSize="13dp" />
         </RadioGroup>
 
 
@@ -259,14 +258,9 @@
             android:layout_height="wrap_content">
 
         </LinearLayout>
-
+        <!---->
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textFilterEnabled="true" />
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_btn"
             android:layout_width="wrap_content"
