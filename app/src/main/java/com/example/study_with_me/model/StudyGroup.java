@@ -1,5 +1,7 @@
 package com.example.study_with_me.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class StudyGroup {
@@ -19,9 +21,17 @@ public class StudyGroup {
         this.endDate = endDate;
     }
 
-    private String getName() { return name; }
-    private String getDescription() { return description; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
     public String getType() { return type; }
+    public String getStartDate() {
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        return df.format(startDate);
+    }
+    public String getEndDate() {
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        return df.format(endDate);
+    }
     public int getMember() { return numOfMember; }
 
 }

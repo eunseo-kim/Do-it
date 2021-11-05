@@ -111,6 +111,11 @@
     </LinearLayout>
 
     <!--태그 고르기(전체, 프로그래밍, 취업, 어학, 기타) -->
+    <ListView
+        android:id="@+id/studyListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
     <LinearLayout
         android:id="@+id/filteringScreen"
         android:layout_width="match_parent"

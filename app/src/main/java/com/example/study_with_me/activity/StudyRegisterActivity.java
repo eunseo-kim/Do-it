@@ -2,6 +2,7 @@ package com.example.study_with_me.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +21,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/** 스터디 등록 액티비티 **/
 public class StudyRegisterActivity extends AppCompatActivity {
     /** 스터디 그룹 클래스에 저장할 데이터 **/
-    private ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+    public static ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+
     private String type;                    // 스터디 종류
     private int numOfMember = 0;            // 스터디 인원
     private Date startDate = new Date();    // 스터디 시작날짜 (오늘)
@@ -36,16 +39,26 @@ public class StudyRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_register);
+
+        /** 스터디 이름, 설명 **/
+        EditText name = findViewById(R.id.studyName);
+        EditText description = findViewById(R.id.studyDescription);
+
         /** 상단 바 설정 **/
         getSupportActionBar().setTitle("스터디 등록");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /** 스터디 정보 설정 **/
         setStudyInfo();
 
         Button studyRegisterBtn = findViewById(R.id.studyRegisterBtn);
+
+        /** 스터디 등록 버튼 이벤트 처리 **/
         studyRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                studyName = name.getText().toString();
+                studyDescription = description.getText().toString();
                 if(isValid()) {
                     StudyGroup studyGroup = new StudyGroup(studyName, studyDescription, type, numOfMember, startDate, endDate);
                     studyGroups.add(studyGroup);
@@ -56,6 +69,17 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /** 상단 바 뒤로가기 버튼 처리 **/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /** 정보가 모두 입력됐는지 확인하는 함수 **/
@@ -129,13 +153,13 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 switch(checkedId) {
                     case R.id.studyTypeProgramming:
                         Toast.makeText(getApplicationContext(), "selected", Toast.LENGTH_SHORT).show();
-                        type = "Programming";
+                        type = "프로그래밍";
                         break;
                     case R.id.studyTypeEmployment:
-                        type = "Employment";
+                        type = "취업";
                         break;
                     case R.id.studyTypeLanguage:
-                        type = "Language";
+                        type = "어학";
                         break;
                 }
             }
@@ -170,15 +194,15 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 Calendar cal = Calendar.getInstance();
                 switch (checkedId) {
                     case R.id.studyTermOneMonth:
-                        cal.add(Calendar.DAY_OF_MONTH, 1);
+                        cal.add(Calendar.MONTH, 1);
                         endDate = cal.getTime();
                         break;
                     case R.id.studyTermTwoMonth:
-                        cal.add(Calendar.DAY_OF_MONTH, 2);
+                        cal.add(Calendar.MONTH, 2);
                         endDate = cal.getTime();
                         break;
                     case R.id.studyTermSixMonth:
-                        cal.add(Calendar.DAY_OF_MONTH, 6);
+                        cal.add(Calendar.MONTH, 6);
                         endDate = cal.getTime();
                         break;
                 }
@@ -188,10 +212,6 @@ public class StudyRegisterActivity extends AppCompatActivity {
 
     /** 스터디 정보 설정하는 함수 **/
     private void setStudyInfo() {
-        /** 스터디 이름, 설명 **/
-        studyName = findViewById(R.id.studyName).toString();
-        studyDescription = findViewById(R.id.studyDescription).toString();
-
         /** 스터디 분야 **/
         RadioGroup studyType = findViewById(R.id.studyType);
         setStudyType(studyType);

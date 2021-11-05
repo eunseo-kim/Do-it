@@ -11,11 +11,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
+import com.example.study_with_me.adapter.StudyGroupAdapter;
+import com.example.study_with_me.adapter.TeamEvaluationAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class StudySearchActivity extends AppCompatActivity {
@@ -28,6 +31,44 @@ public class StudySearchActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("스터디 검색");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // floatingActionButton 누르면 스터디 생성 화면
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ListView listView = (ListView) findViewById(R.id.studyGroupListView);
+        // Adapter 설정
+        final StudyGroupAdapter studyGroupAdapter = new StudyGroupAdapter(getApplicationContext(), StudyRegisterActivity.studyGroups);
+        listView.setAdapter(studyGroupAdapter);
+
+        /**
+        // 스터디 모집글 누르면 StudyPostActivityMessage 창 보이기 (임시로 맨 처음꺼 연결)
+        View alarmItem = (View)findViewById(R.id.alarm_item);
+        alarmItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StudyPostActivityMessage.class);
+                startActivity(intent);
+            }
+        });
+         */
+    }
+
+    // 액션바 오버라이딩
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /** 펼치기 버튼 클릭시 이벤트 처리 **/
+    private void expandButtonClicked() {
         // 펼치기 버튼(expandButton) 클릭 시 필터링 검색 창 펼침
         ImageView expandButton = (ImageView)findViewById(R.id.expandButton);
         LinearLayout filteringScreen = (LinearLayout)findViewById(R.id.filteringScreen);
@@ -41,34 +82,6 @@ public class StudySearchActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // floatingActionButton 누르면 스터디 생성 화면
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // 스터디 모집글 누르면 StudyPostActivityMessage 창 보이기 (임시로 맨 처음꺼 연결)
-        View alarmItem = (View)findViewById(R.id.alarm_item);
-        alarmItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StudyPostActivityMessage.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    // 액션바 오버라이딩
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
