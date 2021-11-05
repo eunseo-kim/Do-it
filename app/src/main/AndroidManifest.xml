@@ -33,9 +33,10 @@
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>
         <activity android:name=".activity.StudySearchActivity"></activity>
         <activity android:name=".activity.StudyPostActivityMessage"></activity>
+        <activity android:name=".activity.StudyRegisterActivity"/>
+        <activity android:name=".activity.StudyRegisterCompleteActivity"></activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".activity.MyPageActivity" />
-        <activity android:name=".activity.StudyRegisterActivity"/>
     </application>
 
 </manifest>
