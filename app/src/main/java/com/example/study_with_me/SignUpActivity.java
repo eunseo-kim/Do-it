@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.activity.LoginActivity;
-import com.example.study_with_me.activity.MyPageActivity;
-import com.example.study_with_me.activity.StudySearchActivity;
+import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,13 +28,13 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     // 비밀번호 유효성 정규식
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
-    private EditText signUpPassword;
-    private EditText signUpConfirmPassword;
-    private EditText signUpEmail;
-    FirebaseAuth firebaseAuth;
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{6,16}$");
+    private EditText signUpPassword, signUpConfirmPassword, signUpEmail, signUpName;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private FirebaseAuth firebaseAuth;
+    private String userID; // 사용자 구분하는 키 → firebaseAuth.getCurrentUser().getUid()
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +45,20 @@ public class SignUpActivity extends AppCompatActivity {
         signUpPassword = (EditText)findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUpEmail = (EditText)findViewById(R.id.signUpEmail);
+        signUpName = (EditText)findViewById(R.id.signUpName);
+
         firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
     }
 
     public void signUp(View view) {
-        final String pwd = signUpPassword.getText().toString().trim();
-        final String checkpwd = signUpConfirmPassword.getText().toString().trim();
-        final String email = signUpEmail.getText().toString().trim();
+         String pwd = signUpPassword.getText().toString().trim();
+         String checkpwd = signUpConfirmPassword.getText().toString().trim();
+         String email = signUpEmail.getText().toString().trim();
+         String name = signUpName.getText().toString().trim();
 
-        if(isValidEmail(email) && isValidPasswd(pwd, checkpwd)) {
-            createUser(email, pwd);
+        if(isValidEmail(email) && isValidPasswd(pwd, checkpwd) && isValidName(name)) {
+            createUser(email, pwd, name);
         }
     }
 
@@ -93,15 +96,25 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void createUser(String email, String password) {
+    private boolean isValidName(String name) {
+        if (name.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void createUser(String email, String password, String name) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        // 회원가입 성공
+                        // 회원가입 성공 →  데이터베이스에 사용자 추가
+                        addDatabase(email, password, name);
+
                         Log.d(TAG, "createUserWithEmail:success");
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
                         Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
@@ -111,6 +124,29 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            }
+        );
+    }
+
+    // 데이터베이스에 사용자 [이메일/비번/닉네임] 추가
+    // 데이터베이스에서 사용자 식별 키는 userID(현재 user의 getUid())
+    public void addDatabase(String email, String password, String name) {
+        UserModel usermodel = new UserModel(email, password, name);
+        /* "users"
+             └ userID
+               └ usermodel
+        */
+        databaseReference.child("users").child(userID).setValue(usermodel)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"저장을 실패했습니다", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
