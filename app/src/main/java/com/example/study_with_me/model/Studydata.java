@@ -6,10 +6,17 @@ public class Studydata {
     private String title;
     private String date;
 
-    public Studydata(String recuit, String field, String title, String date) {
+
+    public void setRecuit(String recuit) {
         this.recuit = recuit;
+    }
+    public void setField(String field) {
         this.field = field;
+    }
+    public void setTitle(String title) {
         this.title = title;
+    }
+    public void setDate(String date) {
         this.date = date;
     }
 
