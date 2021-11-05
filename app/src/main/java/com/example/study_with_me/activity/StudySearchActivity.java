@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Button;
@@ -55,6 +56,15 @@ public class StudySearchActivity extends AppCompatActivity {
             }
         });
 
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getApplicationContext(), "결제 진행하겠습니다.", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
         // floatingActionButton 누르면 스터디 생성 화면
         FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -66,14 +76,14 @@ public class StudySearchActivity extends AppCompatActivity {
         });
 
         // 스터디 모집글 누르면 StudyPostActivityMessage 창 보이기 (임시로 맨 처음꺼 연결)
-        View alarmItem = (View)findViewById(R.id.alarm_item);
-        alarmItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StudyPostActivityMessage.class);
-                startActivity(intent);
-            }
-        });
+//        View alarmItem = (View)findViewById(R.id.alarm_item);
+//        alarmItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), StudyPostActivityMessage.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     // 액션바 오버라이딩
@@ -96,6 +106,27 @@ public class StudySearchActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // 분류하는거 구현해야됨,,
+    public void onClick(View v) {
+        int viewId = v.getId();
+
+        if(viewId == R.id.all) {
+            Toast.makeText(getApplicationContext(),"halo", Toast.LENGTH_SHORT).show();
+        }
+        else if(viewId == R.id.programming) {
+            Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
+        }
+        else if(viewId == R.id.employ) {
+            Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
+        }
+        else if(viewId == R.id.language) {
+            Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
+        }
+        else if(viewId == R.id.ect) {
+            Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
         }
     }
     public void InitializeStudyData() {
