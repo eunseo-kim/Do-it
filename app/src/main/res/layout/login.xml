@@ -35,19 +35,19 @@
 
 
         <EditText
-            android:id="@+id/IDEditText"
+            android:id="@+id/emailLogin"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/white_round_transparency_background"
             android:gravity="center_vertical"
-            android:hint="아이디"
+            android:hint="이메일"
             android:textSize="18sp"
             android:padding="10dp"
             android:textColorHint="@color/white"
             android:layout_marginTop="30dp"/>
 
         <EditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/passwordLogin"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/white_round_transparency_background"
@@ -65,41 +65,60 @@
             android:layout_height="48dp"
             android:background="@drawable/white_round_background"
             android:text="로그인"
-            android:textColor="#0EA378"
+            android:textColor="#0667e5"
             android:textSize="18sp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:onClick="login"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="10dp">
-
         <TextView
-            android:id="@+id/findIDButton"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="아이디 찾기"
-            android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="right"
+            android:text="도움이 필요하세요?"
+            android:textColor="#092835" />
 
         <TextView
             android:id="@+id/findPwdButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="비밀번호 찾기"
+            android:text="비밀번호찾기"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="left"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="#092835"
+            android:text="계정이 없으신가요?"/>
 
         <TextView
             android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="회원가입"
+            android:text="회원가입하기"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="left"/>
     </LinearLayout>
 </LinearLayout>
