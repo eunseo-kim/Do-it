@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                             userID = firebaseAuth.getCurrentUser().getUid();
                             Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
                             // Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
-                            Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
 
                             intent.putExtra("userID", userID);
                             startActivity(intent);
