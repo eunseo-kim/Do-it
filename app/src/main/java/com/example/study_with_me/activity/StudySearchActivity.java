@@ -36,7 +36,7 @@ public class StudySearchActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
 
-        adapter.addItem("모집중", "취업", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12");
+        adapter.addItem("모집중", "프로그래밍", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12");
         adapter.addItem("모집중", "취업", "청주 공기업 NCS스터디 모집합니다.", "2021.10.17");
         adapter.addItem("모집중", "프로그래밍", "코테준비하실분", "2021.10.15");
         adapter.addItem("모집중", "어학", "한기대 TOEIC스터디 하실 분!", "2021.10.13");
@@ -110,12 +110,14 @@ public class StudySearchActivity extends AppCompatActivity {
         }
     }
 
+
     // 분류하는거 구현해야됨,,
     public void onClick(View v) {
         int viewId = v.getId();
 
         if(viewId == R.id.all) {
             Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
+
         }
         else if(viewId == R.id.programming) {
             Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
@@ -128,6 +130,11 @@ public class StudySearchActivity extends AppCompatActivity {
         }
         else if(viewId == R.id.ect) {
             Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
+        }
+        else if (viewId ==  R.id.studyArea) {
+            // 각각 글에 맞는 글이 매치되어야 됨!
+            Intent intent = new Intent(this, StudyPostActivityMessage.class);
+            startActivity(intent);
         }
     }
 }

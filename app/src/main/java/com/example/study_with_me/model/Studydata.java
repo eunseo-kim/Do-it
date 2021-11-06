@@ -1,3 +1,4 @@
+// Study그룹의 아이벹에 표시될 데이터 클래스 정의
 package com.example.study_with_me.model;
 
 public class Studydata {
