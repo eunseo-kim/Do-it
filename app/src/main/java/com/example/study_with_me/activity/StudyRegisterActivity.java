@@ -15,11 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.dialog.StudyRegisterDialog;
 import com.example.study_with_me.model.StudyGroup;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /** 스터디 등록 액티비티 **/
 public class StudyRegisterActivity extends AppCompatActivity {
@@ -34,6 +38,10 @@ public class StudyRegisterActivity extends AppCompatActivity {
     private String studyDescription;        // 스터디 설명
 
     public enum etcType {CATEGORY, PEOPLE, DATE};
+
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference ref = firebaseDatabase.getReference();
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +68,8 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 studyName = name.getText().toString();
                 studyDescription = description.getText().toString();
                 if(isValid()) {
-                    StudyGroup studyGroup = new StudyGroup(studyName, studyDescription, type, numOfMember, startDate, endDate);
-                    studyGroups.add(studyGroup);
+                    writeStudyGroup();
+
                     Intent intent = new Intent(getApplicationContext(), StudyRegisterCompleteActivity.class);
                     startActivity(intent);
                 } else {
@@ -69,6 +77,14 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void writeStudyGroup() {
+        String userID = fAuth.getUid();
+        long time= System.currentTimeMillis();
+        StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
+        ref.child("studygroups").child(userID+String.valueOf(time)).push();
+        ref.child("studygroups").child(userID+String.valueOf(time)).setValue(studyGroup);
     }
 
     /** 상단 바 뒤로가기 버튼 처리 **/

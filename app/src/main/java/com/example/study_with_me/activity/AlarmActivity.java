@@ -19,6 +19,7 @@ import com.example.study_with_me.R;
 
 import java.util.ArrayList;
 
+// https://github.com/baoyongzhang/SwipeMenuListView 여기 링크 참고해서 만들었습니다!
 public class AlarmActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     @Override

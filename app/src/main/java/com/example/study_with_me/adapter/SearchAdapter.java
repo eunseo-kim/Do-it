@@ -40,7 +40,9 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return position;
     }
 
+
     @Override
+    // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
@@ -50,11 +52,13 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.study_search_item , parent, false);
         }
 
+        // 화면에 표시될 View로부터 위젯에 대한 참조 획득
         TextView recuitTextView = (TextView) convertView.findViewById(R.id.studyRegisterDay);
         TextView fieldTextView = (TextView) convertView.findViewById(R.id.studyField);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.studyTitle);
         TextView dateTextView = (TextView) convertView.findViewById(R.id.studyRegisterDay);
 
+        // Dataset(filteredItemdList) 에서 positiond에 위치한 데이터 참조 획득
         Studydata studydata = filterStudyList.get(position);
 
         recuitTextView.setText(studydata.getStudyTitle());

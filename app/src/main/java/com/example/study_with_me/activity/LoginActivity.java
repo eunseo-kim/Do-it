@@ -11,6 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.study_with_me.R;
+
+import com.example.study_with_me.activity.SignUpActivity;
+import com.example.study_with_me.model.UserModel;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -66,11 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 로그인 성공하면 시작화면으로 userID 전달
                             userID = firebaseAuth.getCurrentUser().getUid();
-
-
                             Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
                             // Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
                             Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+
                             intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else {
