@@ -33,5 +33,4 @@ public class StudyGroup {
         return df.format(endDate);
     }
     public int getMember() { return numOfMember; }
-
 }
