@@ -68,13 +68,7 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 studyName = name.getText().toString();
                 studyDescription = description.getText().toString();
                 if(isValid()) {
-                    StudyGroup studyGroup = new StudyGroup(studyName, studyDescription, type, numOfMember, startDate, endDate);
-                    studyGroups.add(studyGroup);
-                    String userID = fAuth.getUid();
-
-                    /** DB에 스터디 데이터 작성 **/
-                    ref.child("studygroups").child(userID+startDate.toString()).push();
-                    ref.child("studygroups").child(userID+startDate.toString()).setValue(studyGroup);
+                    writeStudyGroup();
 
                     Intent intent = new Intent(getApplicationContext(), StudyRegisterCompleteActivity.class);
                     startActivity(intent);
@@ -83,6 +77,14 @@ public class StudyRegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void writeStudyGroup() {
+        String userID = fAuth.getUid();
+        long time= System.currentTimeMillis();
+        StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
+        ref.child("studygroups").child(userID+String.valueOf(time)).push();
+        ref.child("studygroups").child(userID+String.valueOf(time)).setValue(studyGroup);
     }
 
     /** 상단 바 뒤로가기 버튼 처리 **/
