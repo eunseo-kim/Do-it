@@ -121,15 +121,27 @@ public class StudySearchActivity extends AppCompatActivity {
         }
         else if(viewId == R.id.programming) {
             Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
+            if(viewId == R.id.two) {
+
+            } else if(viewId == R.id.three) {
+
+            } else if(viewId == R.id.three) {
+
+            } else if(viewId == R.id.moreFour) {
+
+            }
         }
         else if(viewId == R.id.employ) {
             Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
+
         }
         else if(viewId == R.id.language) {
             Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
+
         }
         else if(viewId == R.id.ect) {
             Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
+
         }
         else if (viewId ==  R.id.studyArea) {
             // 각각 글에 맞는 글이 매치되어야 됨!
