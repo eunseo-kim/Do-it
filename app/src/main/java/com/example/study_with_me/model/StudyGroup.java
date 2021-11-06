@@ -7,17 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class StudyGroup {
-    class Application {
-        String userID;
-        String registerTime;
 
-        public String getUserID() {
-            return userID;
-        }
-        public String getRegisterTime() {
-            return registerTime;
-        }
-    }
     private String name;        // 스터디 이름
     private String description; // 스터디 설명
     private String type;        // 스터디 종류
@@ -25,7 +15,7 @@ public class StudyGroup {
     private Date startDate;     // 스터디 시작 날짜
     private Date endDate;       // 스터디 종료 날짜
     private String leader;      // 스터디 방장 정보
-    private List<Application> applicationList = new ArrayList<>();   // 스터디 신청자 리스트
+    private List<Applicant> applicantList = new ArrayList<>();   // 스터디 신청자 리스트
     private List<String> memberList = new ArrayList<>();        // 스터디 멤버 리스트
 
     public StudyGroup(String uid, String name, String description, String type, int numOfMember, Date startDate, Date endDate) {
@@ -37,6 +27,7 @@ public class StudyGroup {
         this.endDate = endDate;
         this.leader = uid;
         memberList.add(leader);
+        applicantList.add(new Applicant(leader, "02:14", name));
     }
 
     public String getName() { return name; }
@@ -52,6 +43,6 @@ public class StudyGroup {
     }
     public int getMember() { return numOfMember; }
     public String getLeader() { return leader; }
-    public List<Application> getApplicationList() { return applicationList; }
+    public List<Applicant> getApplicationList() { return applicantList; }
     public List<String> getMemberList() { return memberList; }
 }

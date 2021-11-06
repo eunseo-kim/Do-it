@@ -29,9 +29,6 @@ public class UserModel {
     public void setUsername(String name) {
         this.username = name;
     }
-    public String setUsername() {
-        return username;
-    }
     public void setEmail(String email) {
         this.email = email;
     }
