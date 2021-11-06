@@ -10,11 +10,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.dialog.StudyRegisterDialog;
 import com.example.study_with_me.model.StudyGroup;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -79,12 +83,24 @@ public class StudyRegisterActivity extends AppCompatActivity {
         });
     }
 
+    /** DB에 스터디 정보를 등록하는 함수 **/
     private void writeStudyGroup() {
         String userID = fAuth.getUid();
         long time= System.currentTimeMillis();
         StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
         ref.child("studygroups").child(userID+String.valueOf(time)).push();
-        ref.child("studygroups").child(userID+String.valueOf(time)).setValue(studyGroup);
+        ref.child("studygroups").child(userID+String.valueOf(time)).setValue(studyGroup)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(getApplicationContext(), "스터디 등록을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "스터디 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                }
+        });
     }
 
     /** 상단 바 뒤로가기 버튼 처리 **/
