@@ -72,9 +72,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 로그인 성공하면 시작화면으로 userID 전달
                             userID = firebaseAuth.getCurrentUser().getUid();
-                            Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
-                            // Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
-                            Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+//                            Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
+                             Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
+//                            Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
                             intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else {

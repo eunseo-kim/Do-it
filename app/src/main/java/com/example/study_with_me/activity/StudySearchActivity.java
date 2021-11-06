@@ -110,6 +110,7 @@ public class StudySearchActivity extends AppCompatActivity {
         }
     }
 
+
     // 분류하는거 구현해야됨,,
     public void onClick(View v) {
         int viewId = v.getId();
@@ -129,6 +130,11 @@ public class StudySearchActivity extends AppCompatActivity {
         }
         else if(viewId == R.id.ect) {
             Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
+        }
+        else if (viewId ==  R.id.studyArea) {
+            // 각각 글에 맞는 글이 매치되어야 됨!
+            Intent intent = new Intent(this, StudyPostActivityMessage.class);
+            startActivity(intent);
         }
     }
 }
