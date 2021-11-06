@@ -116,6 +116,7 @@ public class StudySearchActivity extends AppCompatActivity {
 
         if(viewId == R.id.all) {
             Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
+
         }
         else if(viewId == R.id.programming) {
             Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
