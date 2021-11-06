@@ -84,18 +84,18 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"/>
 
-    <!-- <EditText
-        android:id="@+id/signUpPhone"
+    <EditText
+        android:id="@+id/signUpName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="휴대전화번호 ('-' 제외)"
+        android:hint="닉네임"
         android:textColorHint="@color/white"
         android:background="@drawable/white_round_transparency_background"        android:gravity="center_vertical"
         android:textColor="#000000"
         android:textSize="18sp"
         android:padding="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/> -->
+        android:layout_marginBottom="5dp"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
