@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 /** 스터디 등록 액티비티 **/
 public class StudyRegisterActivity extends AppCompatActivity {
@@ -184,7 +182,6 @@ public class StudyRegisterActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 switch(checkedId) {
                     case R.id.studyTypeProgramming:
-                        Toast.makeText(getApplicationContext(), "selected", Toast.LENGTH_SHORT).show();
                         type = "프로그래밍";
                         break;
                     case R.id.studyTypeEmployment:
@@ -204,13 +201,13 @@ public class StudyRegisterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 switch(checkedId) {
-                    case R.id.studyMemberNumOne:
+                    case R.id.studyMemberNumTwo:
                         numOfMember = 1;
                         break;
-                    case R.id.studyMemberNumTwo:
+                    case R.id.studyMemberNumThree:
                         numOfMember = 2;
                         break;
-                    case R.id.studyMemberNumThree:
+                    case R.id.studyMemberNumFour:
                         numOfMember = 3;
                         break;
                 }
