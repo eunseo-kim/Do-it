@@ -81,6 +81,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="15dp"
+        android:background="@drawable/border_line"
+        android:paddingBottom="15dp"
         android:id="@+id/linearLayout16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -94,9 +97,7 @@
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp">
+            >
 
             <TableRow
                 android:layout_width="match_parent"
@@ -111,6 +112,7 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -136,6 +138,7 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -160,6 +163,7 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
