@@ -1,4 +1,4 @@
-package com.example.study_with_me;
+package com.example.study_with_me.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.study_with_me.R;
 import com.example.study_with_me.activity.LoginActivity;
 import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +49,6 @@ public class SignUpActivity extends AppCompatActivity {
         signUpName = (EditText)findViewById(R.id.signUpName);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        userID = firebaseAuth.getCurrentUser().getUid();
     }
 
     public void signUp(View view) {
@@ -131,11 +131,13 @@ public class SignUpActivity extends AppCompatActivity {
     // 데이터베이스에 사용자 [이메일/비번/닉네임] 추가
     // 데이터베이스에서 사용자 식별 키는 userID(현재 user의 getUid())
     public void addDatabase(String email, String password, String name) {
+        userID = firebaseAuth.getCurrentUser().getUid();
         UserModel usermodel = new UserModel(email, password, name);
         /* "users"
              └ userID
                └ usermodel
         */
+        Log.d("tag", "userID : " + userID);
         databaseReference.child("users").child(userID).setValue(usermodel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
