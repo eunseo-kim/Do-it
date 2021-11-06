@@ -131,6 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
     // 데이터베이스에 사용자 [이메일/비번/닉네임] 추가
     // 데이터베이스에서 사용자 식별 키는 userID(현재 user의 getUid())
     public void addDatabase(String email, String password, String name) {
+
         userID = firebaseAuth.getCurrentUser().getUid();
         UserModel usermodel = new UserModel(email, password, name);
         /* "users"

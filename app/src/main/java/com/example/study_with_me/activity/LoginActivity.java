@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.study_with_me.R;
-import com.example.study_with_me.SignUpActivity;
+import com.example.study_with_me.activity.SignUpActivity;
 import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
