@@ -73,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
                             // Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
                             Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
-
-                            intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else {
                             // 로그인 실패
