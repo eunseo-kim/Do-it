@@ -41,4 +41,5 @@ public class StudyGroup {
     public int getMember() { return numOfMember; }
     public String getLeader() { return leader; }
     public List<String> getApplicationList() { return applicationList; }
+
 }

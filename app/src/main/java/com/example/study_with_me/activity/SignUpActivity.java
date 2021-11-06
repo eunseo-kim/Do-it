@@ -43,6 +43,11 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
         getSupportActionBar().hide();
 
+        //test
+        // long time= System.currentTimeMillis();
+        // databaseReference.child("example").setValue(time);
+        ///
+
         signUpPassword = (EditText)findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUpEmail = (EditText)findViewById(R.id.signUpEmail);
