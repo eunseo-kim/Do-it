@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="300dp"
+    android:layout_gravity="center"
+    android:background="@drawable/white_box_radius"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <ImageView
+        android:id="@+id/user"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/user" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="김진욱"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/studyRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="님의 스터디 기록"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:scaleX="1.1"
+        android:scaleY="1.1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="스터디 참여 횟수 : "
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/joinCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:text="x"
+            android:textColor="#0667e5"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="중도포기 횟수 : "
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/dropCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:text="x"
+            android:textColor="#0667e5"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/myPagePositiveBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:backgroundTint="#00000000"
+        android:text="확인"
+        android:textColor="#000000"
+        android:textSize="13dp" />
+
+</LinearLayout>
