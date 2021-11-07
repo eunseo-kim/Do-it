@@ -32,7 +32,7 @@ public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private Intent intent;
-    private TextView nameTextView, emailTextView, joinCountTextView, dropCountTextView;
+    private TextView nameTextView, emailTextView, joinCountTextView, dropCountTextView, ratingNumber;
     private RatingBar ratingBar;
     private String currentUserID;
 
@@ -63,6 +63,7 @@ public class MyPageActivity extends AppCompatActivity {
         joinCountTextView = (TextView)findViewById(R.id.joinCount);
         dropCountTextView = (TextView)findViewById(R.id.dropCount);
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        ratingNumber = (TextView) findViewById(R.id.ratingNumber);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         // 로그인 화면으로부터 currentUserID 인텐트로 데이터 받기
@@ -90,6 +91,7 @@ public class MyPageActivity extends AppCompatActivity {
                 joinCountTextView.setText(String.valueOf(joinCount));
                 dropCountTextView.setText(String.valueOf(dropCount));
                 ratingBar.setRating(userRating);
+                ratingNumber.setText(String.valueOf(userRating));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
