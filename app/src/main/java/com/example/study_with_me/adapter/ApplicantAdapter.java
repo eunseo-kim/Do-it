@@ -26,17 +26,17 @@ public class ApplicantAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     ArrayList<Applicant> applicants;
+    ArrayList<String> usernameList;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference UserRef = databaseReference.child("users");
     private String username;
 
-    public ApplicantAdapter(Context context, ArrayList<Applicant> studyGroups) {
+    public ApplicantAdapter(Context context, ArrayList<Applicant> studyGroups, ArrayList<String> usernameList) {
         this.context = context;
         this.applicants = studyGroups;
         this.layoutInflater = LayoutInflater.from(this.context);
-
-        Log.d("applicants adapter >>> ", applicants.toString());
+        this.usernameList = usernameList;
     }
 
     @Override
@@ -56,24 +56,11 @@ public class ApplicantAdapter extends BaseAdapter {
         TextView alarmMemberName = (TextView) view.findViewById(R.id.alarmMemberName);
         TextView alarmRegisterTime = (TextView) view.findViewById(R.id.alarmRegisterTime);
 
-        Log.d("applicants getView >>>", applicants.toString());
-        UserRef.child(applicants.get(position).getUserID())
-                .addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                username = snapshot.child("username").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //
-            }
-        });
+        username = usernameList.get(0);
 
         studyTitle.setText(applicants.get(position).getStudyGroupTitle());
         alarmMemberName.setText(username);
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
-        Log.d("studyTitle >>>", studyTitle.getText().toString());
 
         return view;
     }
