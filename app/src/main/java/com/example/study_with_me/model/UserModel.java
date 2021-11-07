@@ -15,10 +15,10 @@ public class UserModel {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.rating = 5.0F;
+        this.rating = 3.0F;
         this.studyGroupList = new ArrayList();
-        this.dropCount = 0;
-        this.joinCount = 0;
+        this.dropCount = 1;
+        this.joinCount = 3;
     }
 
     public void addDropCount() { this.dropCount += 1; }

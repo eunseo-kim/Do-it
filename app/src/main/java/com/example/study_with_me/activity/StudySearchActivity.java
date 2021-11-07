@@ -108,6 +108,7 @@ public class StudySearchActivity extends AppCompatActivity {
                 return true;
             case R.id.myPage:
                 Intent intent2 = new Intent(this, MyPageActivity.class);
+                intent2.putExtra("userID", userID);
                 startActivity(intent2);
                 return true;
             default:

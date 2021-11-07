@@ -17,21 +17,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Study with me"
+            android:text="Do it!"
             android:textColor="@color/white"
-            android:textSize="35sp"
-            android:gravity="center"
+            android:textSize="45sp"
+            android:gravity="left"
             android:textStyle="bold"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="스윗미"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            android:gravity="left"
+            android:text="스터디모임 어플, 두잇"
+            android:textColor="#B2FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
 
         <EditText
