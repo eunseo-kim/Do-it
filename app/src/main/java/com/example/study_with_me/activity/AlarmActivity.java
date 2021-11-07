@@ -2,6 +2,7 @@ package com.example.study_with_me.activity;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -29,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -46,13 +49,12 @@ public class AlarmActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String userID, username;
     private ArrayList<Applicant> applicants = new ArrayList<>();
-
+    private ArrayList<String> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm);
-
         // 상단 메뉴바
         getSupportActionBar().setTitle("알림");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,6 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
         // userID = "ipgJmDBRNmObUqHM1xsd1AJo39Q2";
         Log.d("userID", userID);
 
+        setUserDataChangedListener();
         setApplicants();
     }
 
@@ -70,61 +73,44 @@ public class AlarmActivity extends AppCompatActivity {
 
     /* DB에서 전체 스터디 그룹 돌면서 => 내가 방장인 스터디그룹의 모든 Applicant 리스트 */
     public void setApplicants() {
-        synchronized (this) {
-            // DB에서 현재 사용자가 방장인 스터디 그룹 가져오기
-            studyGroupRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d("snapshot.getChildren()", snapshot.getChildren().toString());
-
-                    for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
-                        // studyGroupSnapshot.child("leader")과 userID 비교
-                        // 만약 같으면? [applicant list + 스터디 이름] 가져오기
-                        Log.d("tag", "wow~");
-                        Log.d("Snapshot.child(leader)", studyGroupSnapshot.child("leader").getValue(String.class));
-                        if (userID.equals(studyGroupSnapshot.child("leader").getValue(String.class))) {
-                            for (DataSnapshot applicantSnapshot : studyGroupSnapshot.child("applicantList").getChildren()) {
-
-                                Log.d("applicant Class", "" + applicantSnapshot.getValue().getClass());
-                                Log.d("applicant", "" + applicantSnapshot.getValue());
-
-                                /** getValue → return only native types **/
-                                /* Applicant applicant1 = applicantSnapshot.getValue(applicant1:Applicant.class); */
-
-                                String studyGroupTitle = applicantSnapshot.child("studyGroupTitle").getValue(String.class);
-                                String registerTime = applicantSnapshot.child("registerTime").getValue(String.class);
-                                String userID = applicantSnapshot.child("userID").getValue(String.class);
-                                Log.d("applicant userID", "" + userID);
-
-                                applicants.add(new Applicant(userID, registerTime, studyGroupTitle));
-                                Log.d("applicants", "" + applicants);
-                            }
-
-                        /* if (applicantList != null) {
-                            for (Applicant curApplicant : applicantList) {
-                                Log.d("t", "" + curApplicant);
-                                if (curApplicant instanceof Applicant) {
-                                    applicants.add((Applicant) curApplicant);
-                                    Log.e("tag", "applicants : " + applicants);
-                                }
-                            }
-                        }*/
+        // DB에서 현재 사용자가 방장인 스터디 그룹 가져오기
+        studyGroupRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
+                    // studyGroupSnapshot.child("leader")과 userID 비교
+                    // 만약 같으면? [applicant list + 스터디 이름] 가져오기
+                    if (userID.equals(studyGroupSnapshot.child("leader").getValue(String.class))) {
+                        for (DataSnapshot applicantSnapshot : studyGroupSnapshot.child("applicantList").getChildren()) {
+                            String studyGroupTitle = applicantSnapshot.child("studyGroupTitle").getValue(String.class);
+                            String registerTime = applicantSnapshot.child("registerTime").getValue(String.class);
+                            String userID = applicantSnapshot.child("userID").getValue(String.class);
+                            applicants.add(new Applicant(userID, registerTime, studyGroupTitle));
                         }
                     }
+                }
+                setListView();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //
+            }
+        });
+    }
 
-                    for (Applicant test : applicants) {
-                        Log.d("applicants TEST : ", test.getUserID());
+    private void setUserDataChangedListener() {
+        userRef.child(userID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        userList.add(snapshot.child("username").getValue(String.class));
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    //
-                }
-            });
-        }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-        setListView();
+                    }
+                });
     }
 
     /** userID로 username 가져오기 **/
@@ -145,12 +131,10 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     public void setListView() {
-        Log.d("applicants setList >>>", applicants.toString());
-
         SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.swipeMenulistView);
 
         ListView listView = (ListView)findViewById(R.id.alarmListView);
-        ApplicantAdapter adapter = new ApplicantAdapter(this, applicants);
+        ApplicantAdapter adapter = new ApplicantAdapter(this, applicants, userList);
         listView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
