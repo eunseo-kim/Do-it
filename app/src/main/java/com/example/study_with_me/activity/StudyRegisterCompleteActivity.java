@@ -11,10 +11,13 @@ import com.example.study_with_me.R;
 
 /** 스터디 등록 완료 액티비티 **/
 public class StudyRegisterCompleteActivity extends AppCompatActivity {
+    private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_creation_complete);
+        userID = getIntent().getStringExtra("userID");
 
         Button myPageGoBtn = findViewById(R.id.myPageGoBtn);
 
@@ -23,6 +26,7 @@ public class StudyRegisterCompleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
         });

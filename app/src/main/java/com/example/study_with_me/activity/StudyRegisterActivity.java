@@ -38,6 +38,7 @@ public class StudyRegisterActivity extends AppCompatActivity {
     private Date endDate;                   // 스터디 종료날짜
     private String studyName;               // 스터디 이름
     private String studyDescription;        // 스터디 설명
+    private String userID;
 
     public enum etcType {CATEGORY, PEOPLE, DATE};
 
@@ -49,6 +50,7 @@ public class StudyRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_register);
+        userID = getIntent().getStringExtra("userID");
 
         /** 스터디 이름, 설명 **/
         EditText name = findViewById(R.id.studyName);
@@ -73,6 +75,7 @@ public class StudyRegisterActivity extends AppCompatActivity {
                     writeStudyGroup();
 
                     Intent intent = new Intent(getApplicationContext(), StudyRegisterCompleteActivity.class);
+                    intent.putExtra("userID", userID);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -83,7 +86,6 @@ public class StudyRegisterActivity extends AppCompatActivity {
 
     /** DB에 스터디 정보를 등록하는 함수 **/
     private void writeStudyGroup() {
-        String userID = fAuth.getUid();
         long time= System.currentTimeMillis();
         StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
         ref.child("studygroups").child(userID+String.valueOf(time)).push();

@@ -43,6 +43,6 @@ public class StudyGroup {
     }
     public int getMember() { return numOfMember; }
     public String getLeader() { return leader; }
-    public List<Applicant> getApplicationList() { return applicantList; }
+    public List<Applicant> getApplicantList() { return applicantList; }
     public List<String> getMemberList() { return memberList; }
 }
