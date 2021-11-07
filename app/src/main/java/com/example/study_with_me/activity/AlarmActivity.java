@@ -131,11 +131,9 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     public void setListView() {
-        SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.swipeMenulistView);
-
-        ListView listView = (ListView)findViewById(R.id.alarmListView);
+        SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.alarmListView);
         ApplicantAdapter adapter = new ApplicantAdapter(this, applicants, userList);
-        listView.setAdapter(adapter);
+        swipeMenuListView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
