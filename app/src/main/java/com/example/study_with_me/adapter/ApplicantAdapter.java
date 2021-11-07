@@ -1,6 +1,7 @@
 package com.example.study_with_me.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicantAdapter extends BaseAdapter {
     Context context;
@@ -26,12 +28,15 @@ public class ApplicantAdapter extends BaseAdapter {
     ArrayList<Applicant> applicants;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference UserRef = databaseReference.child("users");
     private String username;
 
     public ApplicantAdapter(Context context, ArrayList<Applicant> studyGroups) {
         this.context = context;
         this.applicants = studyGroups;
         this.layoutInflater = LayoutInflater.from(this.context);
+
+        Log.d("applicants adapter >>> ", applicants.toString());
     }
 
     @Override
@@ -51,7 +56,8 @@ public class ApplicantAdapter extends BaseAdapter {
         TextView alarmMemberName = (TextView) view.findViewById(R.id.alarmMemberName);
         TextView alarmRegisterTime = (TextView) view.findViewById(R.id.alarmRegisterTime);
 
-        databaseReference.child(applicants.get(position).getUserID())
+        Log.d("applicants getView >>>", applicants.toString());
+        UserRef.child(applicants.get(position).getUserID())
                 .addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -67,6 +73,7 @@ public class ApplicantAdapter extends BaseAdapter {
         studyTitle.setText(applicants.get(position).getStudyGroupTitle());
         alarmMemberName.setText(username);
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
+        Log.d("studyTitle >>>", studyTitle.getText().toString());
 
         return view;
     }

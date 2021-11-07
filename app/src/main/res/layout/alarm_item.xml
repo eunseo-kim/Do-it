@@ -58,10 +58,4 @@
     </LinearLayout>
 
     <!--출석 시간, 등록 장소 table-->
-
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>

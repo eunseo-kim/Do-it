@@ -19,10 +19,13 @@ import com.example.study_with_me.adapter.SearchAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class StudySearchActivity extends AppCompatActivity {
+    private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search_main);
+        userID = getIntent().getStringExtra("userID");
 
         // 상단 메뉴바
         getSupportActionBar().setTitle("스터디 검색");
@@ -69,6 +72,7 @@ public class StudySearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
+                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
         });
@@ -99,6 +103,7 @@ public class StudySearchActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
+                intent1.putExtra("userID", userID);
                 startActivity(intent1);
                 return true;
             case R.id.myPage:

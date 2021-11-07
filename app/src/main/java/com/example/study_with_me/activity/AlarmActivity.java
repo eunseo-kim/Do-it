@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -40,24 +41,27 @@ public class AlarmActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
+    private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
-    private String userID;
-    final String STUDY_GROUP_KEY = "studygroups";
+    private String userID, username;
     private ArrayList<Applicant> applicants = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alarm_new);
+        setContentView(R.layout.alarm);
 
         // 상단 메뉴바
         getSupportActionBar().setTitle("알림");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userID = firebaseAuth.getCurrentUser().getUid();
+        userID = getIntent().getStringExtra("userID");
+        // userID = "ipgJmDBRNmObUqHM1xsd1AJo39Q2";
+        Log.d("userID", userID);
+
         setApplicants();
-        setListView();
     }
 
     /* StudyApplicant applicants 알림 화면에 띄워주기 */
@@ -66,33 +70,86 @@ public class AlarmActivity extends AppCompatActivity {
 
     /* DB에서 전체 스터디 그룹 돌면서 => 내가 방장인 스터디그룹의 모든 Applicant 리스트 */
     public void setApplicants() {
-        // DB에서 현재 사용자가 방장인 스터디 그룹 가져오기
-        databaseReference.child(STUDY_GROUP_KEY).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
-                    // studyGroupSnapshot.child("leader")과 userID 비교
-                    // 만약 같으면? [applicant list + 스터디 이름] 가져오기
-                    if (studyGroupSnapshot.child("leader").getValue(String.class) == userID) {
-                        GenericTypeIndicator<List<Applicant>> t = new GenericTypeIndicator<List<Applicant>>() {};
-                        List<Applicant> applicantList = studyGroupSnapshot.child("applicantList").getValue(t);
-                        for (Applicant curApplicant : applicantList) {
-                            applicants.add(curApplicant);
+        synchronized (this) {
+            // DB에서 현재 사용자가 방장인 스터디 그룹 가져오기
+            studyGroupRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("snapshot.getChildren()", snapshot.getChildren().toString());
+
+                    for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
+                        // studyGroupSnapshot.child("leader")과 userID 비교
+                        // 만약 같으면? [applicant list + 스터디 이름] 가져오기
+                        Log.d("tag", "wow~");
+                        Log.d("Snapshot.child(leader)", studyGroupSnapshot.child("leader").getValue(String.class));
+                        if (userID.equals(studyGroupSnapshot.child("leader").getValue(String.class))) {
+                            for (DataSnapshot applicantSnapshot : studyGroupSnapshot.child("applicantList").getChildren()) {
+
+                                Log.d("applicant Class", "" + applicantSnapshot.getValue().getClass());
+                                Log.d("applicant", "" + applicantSnapshot.getValue());
+
+                                /** getValue → return only native types **/
+                                /* Applicant applicant1 = applicantSnapshot.getValue(applicant1:Applicant.class); */
+
+                                String studyGroupTitle = applicantSnapshot.child("studyGroupTitle").getValue(String.class);
+                                String registerTime = applicantSnapshot.child("registerTime").getValue(String.class);
+                                String userID = applicantSnapshot.child("userID").getValue(String.class);
+                                Log.d("applicant userID", "" + userID);
+
+                                applicants.add(new Applicant(userID, registerTime, studyGroupTitle));
+                                Log.d("applicants", "" + applicants);
+                            }
+
+                        /* if (applicantList != null) {
+                            for (Applicant curApplicant : applicantList) {
+                                Log.d("t", "" + curApplicant);
+                                if (curApplicant instanceof Applicant) {
+                                    applicants.add((Applicant) curApplicant);
+                                    Log.e("tag", "applicants : " + applicants);
+                                }
+                            }
+                        }*/
                         }
                     }
+
+                    for (Applicant test : applicants) {
+                        Log.d("applicants TEST : ", test.getUserID());
+                    }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    //
+                }
+            });
+        }
+
+        setListView();
+    }
+
+    /** userID로 username 가져오기 **/
+    public void setUserNameByID(String userID) {
+        userRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                username = snapshot.child(userID).child("username").getValue(String.class);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //
+
             }
         });
+
     }
 
     public void setListView() {
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView);
+        Log.d("applicants setList >>>", applicants.toString());
 
+        SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.swipeMenulistView);
+
+        ListView listView = (ListView)findViewById(R.id.alarmListView);
         ApplicantAdapter adapter = new ApplicantAdapter(this, applicants);
         listView.setAdapter(adapter);
 
@@ -133,9 +190,9 @@ public class AlarmActivity extends AppCompatActivity {
                 menu.addMenuItem(deleteItem);
             }
         };
-        listView.setMenuCreator(creator);
+        swipeMenuListView.setMenuCreator(creator);
 
-        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
@@ -165,6 +222,7 @@ public class AlarmActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
+                intent1.putExtra("userID", userID);
                 startActivity(intent1);
                 return true;
             case R.id.myPage:
