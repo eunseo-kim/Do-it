@@ -4,18 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <!--사용자-->
-
-    <!--구분선-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="20dp">
+        android:gravity="left"
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="60dp"
@@ -23,12 +19,12 @@
             app:srcCompat="@drawable/tmp_person_icon" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -38,7 +34,13 @@
                     android:gravity="center"
                     android:text="닉네임"
                     android:textColor="#000000"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
@@ -46,18 +48,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:backgroundTint="#00ff0000"
+                    android:onClick="editUserInfo"
                     android:text="정보수정"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textColor="#656565"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/userEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
                 android:inputType="textNoSuggestions"
-                 android:textColor="@color/black"
+                android:text="test@test.com"
+                android:textColor="#7E7E7E"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
@@ -65,16 +69,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#c2c2c2"/>
+        android:background="#cccccc"/>
 
     <!--스터디 그룹 평가점수-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +88,7 @@
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="스터디 그룹 평가점수"
+                android:text="팀원 평가"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -194,11 +196,13 @@
         </LinearLayout>
     </LinearLayout>
 
+
     <!--구분선-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#c2c2c2"/>
+        android:background="#cccccc"/>
+
 
     <LinearLayout
         android:id="@+id/myStudyRoomButton"
@@ -210,6 +214,13 @@
         android:onClick="myStudyRoomButtonClicked"
         android:background="?attr/selectableItemBackground">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/book_icon"
+            android:paddingLeft="10dp"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -218,7 +229,7 @@
             android:backgroundTint="#00ff0000"
             android:textStyle="bold"
             android:textSize="16sp"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -229,20 +240,92 @@
             android:id="@+id/myStudyRoomShortCut"
             android:src="@drawable/arrow_forward"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
 
+    <!--구분선-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
 
-    <Button
+    <LinearLayout
         android:id="@+id/logoutButton"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="#0667e5"
-        android:text="로그아웃"/>
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:onClick="signOut"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/log_out_icon"
+            android:paddingLeft="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="로그아웃"
+            android:textColor="@color/black"
+            android:backgroundTint="#00ff0000"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!--구분선-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
+
+    <LinearLayout
+        android:id="@+id/removeUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:onClick="removeUser"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/user_remove_icon"
+            android:paddingLeft="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="회원탈퇴"
+            android:textColor="@color/black"
+            android:backgroundTint="#00ff0000"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!--구분선-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
 
 </LinearLayout>

@@ -43,21 +43,19 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
         getSupportActionBar().hide();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        userID = firebaseAuth.getCurrentUser().getUid();
-
         signUpPassword = (EditText)findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUpEmail = (EditText)findViewById(R.id.signUpEmail);
         signUpName = (EditText)findViewById(R.id.signUpName);
 
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void signUp(View view) {
-         String pwd = signUpPassword.getText().toString().trim();
-         String checkpwd = signUpConfirmPassword.getText().toString().trim();
-         String email = signUpEmail.getText().toString().trim();
-         String name = signUpName.getText().toString().trim();
+        String pwd = signUpPassword.getText().toString().trim();
+        String checkpwd = signUpConfirmPassword.getText().toString().trim();
+        String email = signUpEmail.getText().toString().trim();
+        String name = signUpName.getText().toString().trim();
 
         if(isValidEmail(email) && isValidPasswd(pwd, checkpwd) && isValidName(name)) {
             createUser(email, pwd, name);
@@ -109,30 +107,32 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void createUser(String email, String password, String name) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // 회원가입 성공 →  데이터베이스에 사용자 추가
-                        addDatabase(email, password, name);
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // 회원가입 성공 →  데이터베이스에 사용자 추가
+                                    addDatabase(email, password, name);
 
-                        Log.d(TAG, "createUserWithEmail:success");
-                        Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // 회원가입 실패
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        );
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    // 회원가입 실패
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                );
     }
 
     // 데이터베이스에 사용자 [이메일/비번/닉네임] 추가
     // 데이터베이스에서 사용자 식별 키는 userID(현재 user의 getUid())
     public void addDatabase(String email, String password, String name) {
+
+        userID = firebaseAuth.getCurrentUser().getUid();
         UserModel usermodel = new UserModel(email, password, name);
         Log.d("tag", "userID : " + userID);
         databaseReference.child("users").child(userID).setValue(usermodel)
