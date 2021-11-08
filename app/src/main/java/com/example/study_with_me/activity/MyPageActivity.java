@@ -128,4 +128,11 @@ public class MyPageActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void signOut(View view) {
+        firebaseAuth.signOut();
+        Toast.makeText(getApplicationContext(),"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
