@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -127,5 +129,35 @@ public class MyPageActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /** 로그아웃 **/
+    public void signOut(View view) {
+        firebaseAuth.signOut();
+        Toast.makeText(MyPageActivity.this,"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    /** 회원 탈퇴 **/
+    public void removeUser(View view) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        user.delete()
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+    }
+
+    /** 회원 정보 수정 **/
+    public void editUserInfo(View view) {
+        Intent intent = new Intent(MyPageActivity.this, EditUserInfoActivity.class);
+        startActivity(intent);
     }
 }

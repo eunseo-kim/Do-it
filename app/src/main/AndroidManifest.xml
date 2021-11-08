@@ -37,6 +37,7 @@
         <activity android:name=".activity.StudyRegisterCompleteActivity"></activity>
         <activity android:name=".activity.SignUpActivity"></activity>
         <activity android:name=".activity.MyPageActivity" />
+        <activity android:name=".activity.EditUserInfoActivity"/>
     </application>
 
 </manifest>
