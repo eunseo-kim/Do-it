@@ -31,7 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
-    private Intent intent;
+    private FirebaseAuth firebaseAuth;
+
     private TextView nameTextView, emailTextView, joinCountTextView, dropCountTextView, ratingNumber;
     private RatingBar ratingBar;
     private String currentUserID;
@@ -58,6 +59,11 @@ public class MyPageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("마이페이지");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null){
+            currentUserID = firebaseAuth.getCurrentUser().getUid();
+        }
+
         nameTextView = (TextView) findViewById(R.id.userName);
         emailTextView = (TextView)findViewById(R.id.userEmail);
         joinCountTextView = (TextView)findViewById(R.id.joinCount);
@@ -65,11 +71,6 @@ public class MyPageActivity extends AppCompatActivity {
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
         ratingNumber = (TextView) findViewById(R.id.ratingNumber);
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-        // 로그인 화면으로부터 currentUserID 인텐트로 데이터 받기
-        intent = getIntent();
-        currentUserID = intent.getStringExtra("userID");
-        Log.d("tag", "currentUserID : " + currentUserID);
 
         setUserInfo();
     }

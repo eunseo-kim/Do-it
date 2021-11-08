@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,15 +18,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.SearchAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class StudySearchActivity extends AppCompatActivity {
     private String userID;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search_main);
-        userID = getIntent().getStringExtra("userID");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null){
+            userID = firebaseAuth.getCurrentUser().getUid();
+        }
 
         // 상단 메뉴바
         getSupportActionBar().setTitle("스터디 검색");
@@ -72,7 +79,6 @@ public class StudySearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
-                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
         });
@@ -103,12 +109,10 @@ public class StudySearchActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
-                intent1.putExtra("userID", userID);
                 startActivity(intent1);
                 return true;
             case R.id.myPage:
                 Intent intent2 = new Intent(this, MyPageActivity.class);
-                intent2.putExtra("userID", userID);
                 startActivity(intent2);
                 return true;
             default:

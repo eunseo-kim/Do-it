@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private FirebaseAuth firebaseAuth;
-    private String userID; // 사용자 구분하는 키 → firebaseAuth.getCurrentUser().getUid()
+    private String userID; // 사용자 구분하는 키
 
 
     @Override
@@ -43,17 +43,14 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
         getSupportActionBar().hide();
 
-        //test
-        // long time= System.currentTimeMillis();
-        // databaseReference.child("example").setValue(time);
-        ///
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
 
         signUpPassword = (EditText)findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUpEmail = (EditText)findViewById(R.id.signUpEmail);
         signUpName = (EditText)findViewById(R.id.signUpName);
 
-        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void signUp(View view) {
@@ -136,13 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
     // 데이터베이스에 사용자 [이메일/비번/닉네임] 추가
     // 데이터베이스에서 사용자 식별 키는 userID(현재 user의 getUid())
     public void addDatabase(String email, String password, String name) {
-
-        userID = firebaseAuth.getCurrentUser().getUid();
         UserModel usermodel = new UserModel(email, password, name);
-        /* "users"
-             └ userID
-               └ usermodel
-        */
         Log.d("tag", "userID : " + userID);
         databaseReference.child("users").child(userID).setValue(usermodel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

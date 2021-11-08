@@ -59,9 +59,10 @@ public class AlarmActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("알림");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userID = getIntent().getStringExtra("userID");
-        // userID = "ipgJmDBRNmObUqHM1xsd1AJo39Q2";
-        Log.d("userID", userID);
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null){
+            userID = firebaseAuth.getCurrentUser().getUid();
+        }
 
         setUserDataChangedListener();
         setApplicants();
@@ -204,7 +205,6 @@ public class AlarmActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
-                intent1.putExtra("userID", userID);
                 startActivity(intent1);
                 return true;
             case R.id.myPage:
