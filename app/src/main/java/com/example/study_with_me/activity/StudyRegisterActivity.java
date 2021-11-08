@@ -44,13 +44,15 @@ public class StudyRegisterActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference();
-    FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_register);
-        userID = getIntent().getStringExtra("userID");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
 
         /** 스터디 이름, 설명 **/
         EditText name = findViewById(R.id.studyName);
@@ -75,7 +77,6 @@ public class StudyRegisterActivity extends AppCompatActivity {
                     writeStudyGroup();
 
                     Intent intent = new Intent(getApplicationContext(), StudyRegisterCompleteActivity.class);
-                    intent.putExtra("userID", userID);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();

@@ -8,16 +8,20 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 /** 스터디 등록 완료 액티비티 **/
 public class StudyRegisterCompleteActivity extends AppCompatActivity {
     private String userID;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_creation_complete);
-        userID = getIntent().getStringExtra("userID");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
 
         Button myPageGoBtn = findViewById(R.id.myPageGoBtn);
 
@@ -26,7 +30,6 @@ public class StudyRegisterCompleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
-                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
         });

@@ -1,10 +1,13 @@
 package com.example.study_with_me.activity;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,16 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // 로그인 성공하면 시작화면으로 userID 전달
-                            userID = firebaseAuth.getCurrentUser().getUid();
-                            Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
-                            // Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
                             Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
-                            intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else {
-                            // 로그인 실패
-                            Toast.makeText(getApplicationContext(), "로그인 정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
