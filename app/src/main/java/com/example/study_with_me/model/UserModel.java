@@ -1,12 +1,13 @@
 package com.example.study_with_me.model;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UserModel {
     public String email;
     public String password;
     public String username;
     public float rating;
-    public ArrayList<String> studyGroupList;
+    public ArrayList<String> studyGroupIDList;
     public int dropCount;
     public int joinCount;
     public String userID;
@@ -15,10 +16,10 @@ public class UserModel {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.rating = 3.0F;
-        this.studyGroupList = new ArrayList();
-        this.dropCount = 1;
-        this.joinCount = 3;
+        this.rating = 0.0F;
+        this.dropCount = 0;
+        this.joinCount = 0;
+        studyGroupIDList = new ArrayList<>();
     }
 
     public void addDropCount() { this.dropCount += 1; }
@@ -46,7 +47,6 @@ public class UserModel {
     public void setUserID(String userID) {
         this.userID = userID;
     }
-
     public String getUserID() {
         return userID;
     }

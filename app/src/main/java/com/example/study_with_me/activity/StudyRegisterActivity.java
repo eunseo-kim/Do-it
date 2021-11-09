@@ -19,8 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,12 +42,14 @@ public class StudyRegisterActivity extends AppCompatActivity {
     private String studyName;               // 스터디 이름
     private String studyDescription;        // 스터디 설명
     private String userID;
+    private String studyGroupID;            // userID + 현재 시각
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
+    private DatabaseReference userRef = databaseReference.child("users");
+    FirebaseAuth firebaseAuth;
 
     public enum etcType {CATEGORY, PEOPLE, DATE};
-
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference ref = firebaseDatabase.getReference();
-    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +94,9 @@ public class StudyRegisterActivity extends AppCompatActivity {
     private void writeStudyGroup() {
         long time= System.currentTimeMillis();
         StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
-        ref.child("studygroups").child(userID+String.valueOf(time)).push();
-        ref.child("studygroups").child(userID+String.valueOf(time)).setValue(studyGroup)
+        studyGroupID = userID+String.valueOf(time);
+        studyGroupRef.child(studyGroupID).push();
+        studyGroupRef.child(studyGroupID).setValue(studyGroup)
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -102,6 +108,15 @@ public class StudyRegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "스터디 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 }
         });
+
+        addStudyGroupList();
+    }
+
+    /** DB의 users-userID-studyGroupList에 생성한 studyGroupID 저장하기 **/
+    public void addStudyGroupList() {
+        ArrayList<String> studyGroupList = new ArrayList<>();
+        studyGroupList.add(studyGroupID);
+        userRef.child(userID).child("studyGroupIDList").push().setValue(studyGroupID);
     }
 
     /** 상단 바 뒤로가기 버튼 처리 **/
