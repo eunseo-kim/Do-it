@@ -1,2 +1,2 @@
-# Study-With-Me
-스윗미(Study With Me) | 2021 Mobile Programming Team Project
+# Do-it!
+Do-it!(Application for study) | 2021 Mobile Programming Team Project
