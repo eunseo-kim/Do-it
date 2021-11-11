@@ -15,8 +15,8 @@ public class StudyGroup {
     private Date startDate;     // 스터디 시작 날짜
     private Date endDate;       // 스터디 종료 날짜
     private String leader;      // 스터디 방장 정보
-    private List<Applicant> applicantList = new ArrayList<>();   // 스터디 신청자 리스트
-    private List<String> memberList = new ArrayList<>();        // 스터디 멤버 리스트
+    private ArrayList<Applicant> applicantList = new ArrayList<>();   // 스터디 신청자 리스트
+    private ArrayList<String> memberList = new ArrayList<>();        // 스터디 멤버 리스트
 
     public StudyGroup(String uid, String name, String description, String type, int numOfMember, Date startDate, Date endDate) {
         this.name = name;
@@ -27,7 +27,13 @@ public class StudyGroup {
         this.endDate = endDate;
         this.leader = uid;
         memberList.add(leader);
-        applicantList.add(new Applicant(leader, "02:14", name));
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
+        String registerTime = dateFormat.format(date);
+
+        applicantList.add(new Applicant(leader, registerTime, name));
     }
 
     public String getName() { return name; }

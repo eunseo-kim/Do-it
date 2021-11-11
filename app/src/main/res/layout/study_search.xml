@@ -152,16 +152,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="60dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/white_box_radius"
-                android:button="@null"
-                android:gravity="center"
-                android:text="1명"
-                android:textColor="@drawable/selector_top_menu_text" />
-
-            <RadioButton
+                android:id="@+id/two"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="20dp"
@@ -169,10 +160,10 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="2명"
-                android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
+                android:id="@+id/three"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="20dp"
@@ -184,6 +175,19 @@
                 android:textSize="13dp" />
 
             <RadioButton
+                android:id="@+id/four"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/white_box_radius"
+                android:button="@null"
+                android:gravity="center"
+                android:text="4명"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:textSize="13dp" />
+
+            <RadioButton
+                android:id="@+id/moreFour"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:background="@drawable/white_box_radius"
@@ -209,6 +213,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/oneMonth"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="20dp"
@@ -220,6 +225,7 @@
                 android:textSize="13dp" />
 
             <RadioButton
+                android:id="@+id/twoMonth"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="20dp"
@@ -231,6 +237,7 @@
                 android:textSize="13dp" />
 
             <RadioButton
+                android:id="@+id/sixMonth"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="20dp"
@@ -242,6 +249,7 @@
                 android:textSize="13dp" />
 
             <RadioButton
+                android:id="@+id/moreSizMonth"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:background="@drawable/white_box_radius"

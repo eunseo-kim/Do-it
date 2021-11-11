@@ -7,18 +7,16 @@
     android:onClick="onClick"
     android:orientation="vertical">
 
+    <!--출석 시간, 등록 장소 table-->
     <LinearLayout
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
+        android:layout_margin="10dp"
         android:gravity="center_vertical">
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/studyRecuit"
-            android:layout_width="40dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
@@ -27,36 +25,32 @@
             android:padding="5dp"
             android:text="모집중"
             android:textColor="@color/white"
-            android:textSize="10dp" />
+            android:textSize="16dp" />
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/studyField"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/gray_box_radius"
             android:gravity="center"
             android:padding="5dp"
             android:text="프로그래밍"
             android:textColor="@color/white"
-            android:textSize="10dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
-    <!--출석 시간, 등록 장소 table-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
-
+        android:layout_margin="10dp">
         <TableRow>
 
             <TextView
                 android:id="@+id/studyTitle"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
+                android:layout_height="match_parent"
                 android:padding="3dp"
-                android:text="모바일 프로그래밍 성실한 스터디 그룹원 구합니다."
+                android:text="모바일 프로그래밍"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -65,12 +59,25 @@
                 android:layout_width="210dp"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/studyPeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="4 / 5" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/right_arrow" />
+
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_marginBottom="7dp"
                 android:id="@+id/studyRegisterDay"
                 android:layout_height="match_parent"
                 android:padding="3dp"
