@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/memberNumber"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:padding = "10dp"
-        android:background="@drawable/border_line"
         android:id="@+id/linearLayout13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_line"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -26,7 +27,7 @@
             app:srcCompat="@drawable/tmp_person_icon" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/postLeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -69,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/postTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -81,13 +82,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="15dp"
-        android:background="@drawable/border_line"
-        android:paddingBottom="15dp"
         android:id="@+id/linearLayout16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/border_line"
         android:orientation="horizontal"
+        android:paddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +97,7 @@
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -112,12 +112,12 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:id="@+id/textView17"
+                    android:id="@+id/studyField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="취업" />
+                    android:text="취업"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -138,11 +138,12 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
-                    android:textStyle="bold"
+                    android:id="@+id/memberListNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="5명" />
+                    android:text="5명"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -163,11 +164,12 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
-                    android:textStyle="bold"
+                    android:id="@+id/studyPeriod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="1개월" />
+                    android:text="1개월"
+                    android:textStyle="bold" />
             </TableRow>
 
 
@@ -186,7 +188,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout16">
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/studyDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"

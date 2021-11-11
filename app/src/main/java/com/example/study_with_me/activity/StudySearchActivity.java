@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,8 +41,8 @@ public class StudySearchActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private ListView studySearchListView;
-
     private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +56,6 @@ public class StudySearchActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("스터디 검색");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        adapter.addItem("모집중", "프로그래밍", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12");
-//        adapter.addItem("모집중", "취업", "청주 공기업 NCS스터디 모집합니다.", "2021.10.17");
-//        adapter.addItem("모집중", "프로그래밍", "코테준비하실분", "2021.10.15");
-//        adapter.addItem("모집중", "어학", "한기대 TOEIC스터디 하실 분!", "2021.10.13");
-//        adapter.addItem("모짐중", "프로그래밍", "딥러닝 스터디 구해요~", "2021.10.15");
-        
         /** 검색창에 입력했을 때 필터링 처리 **/
         filteringSearchBar();
 
@@ -69,6 +66,8 @@ public class StudySearchActivity extends AppCompatActivity {
         expandButtonClickedListener();
 
         setStudyGroupsChangedListener();
+
+
     }
     /** 액션바 오버라이딩 **/
     @Override
@@ -91,6 +90,7 @@ public class StudySearchActivity extends AppCompatActivity {
     }
 
     private void setStudyGroupsChangedListener() {
+        TextView addMessage = findViewById(R.id.addMessage);
         studyGroupRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -99,6 +99,10 @@ public class StudySearchActivity extends AppCompatActivity {
                             collectAllStudyGroups((Map<String, Object>) snapshot.getValue());
                             Log.d("studyList >>> ", studyList.toString());
                             setListView();
+
+                            if(studyList.size() != 0) {
+                                addMessage.setVisibility(View.INVISIBLE);
+                            }
                         }
                     }
 
