@@ -14,22 +14,37 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.SearchAdapter;
+import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class StudySearchActivity extends AppCompatActivity {
     private String userID;
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
+    private ListView studySearchListView;
 
+    private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search_main);
-
-        firebaseAuth = FirebaseAuth.getInstance();
+        studySearchListView = (ListView) findViewById(R.id.studySearchListView);
         if(firebaseAuth.getCurrentUser() != null){
             userID = firebaseAuth.getCurrentUser().getUid();
         }
@@ -38,20 +53,65 @@ public class StudySearchActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("스터디 검색");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView listView;
-        SearchAdapter adapter;
+//        adapter.addItem("모집중", "프로그래밍", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12");
+//        adapter.addItem("모집중", "취업", "청주 공기업 NCS스터디 모집합니다.", "2021.10.17");
+//        adapter.addItem("모집중", "프로그래밍", "코테준비하실분", "2021.10.15");
+//        adapter.addItem("모집중", "어학", "한기대 TOEIC스터디 하실 분!", "2021.10.13");
+//        adapter.addItem("모짐중", "프로그래밍", "딥러닝 스터디 구해요~", "2021.10.15");
+        
+        /** 검색창에 입력했을 때 필터링 처리 **/
+        filteringSearchBar();
 
-        adapter = new SearchAdapter();
+        /** floatingActionButton 누르면 스터디 생성 화면 **/
+        floatingButtonClickedListener();
+        
+        /** 펼치기 버튼(expandButton) 클릭 시 필터링 검색 창 펼침 **/
+        expandButtonClickedListener();
 
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
+        setStudyGroupsChangedListener();
+    }
+    /** 액션바 오버라이딩 **/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        adapter.addItem("모집중", "프로그래밍", "모바일 프로그래밍 성실한 스터디 그룹원 구합니다.", "오늘 04:12");
-        adapter.addItem("모집중", "취업", "청주 공기업 NCS스터디 모집합니다.", "2021.10.17");
-        adapter.addItem("모집중", "프로그래밍", "코테준비하실분", "2021.10.15");
-        adapter.addItem("모집중", "어학", "한기대 TOEIC스터디 하실 분!", "2021.10.13");
-        adapter.addItem("모짐중", "프로그래밍", "딥러닝 스터디 구해요~", "2021.10.15");
+    private void setListView() {
+        SearchAdapter adapter = new SearchAdapter(this, studyList);
+        studySearchListView.setAdapter(adapter);
+    }
 
+    private void collectAllStudyGroups(Map<String, Object> studygroups) {
+        for(Map.Entry<String, Object> entry : studygroups.entrySet()) {
+            Map singleStudyGroup = (Map) entry.getValue();
+            studyList.add(singleStudyGroup);
+        }
+    }
+
+    private void setStudyGroupsChangedListener() {
+        studyGroupRef.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getValue() != null) {
+                            collectAllStudyGroups((Map<String, Object>) snapshot.getValue());
+                            Log.d("studyList >>> ", studyList.toString());
+                            setListView();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                }
+        );
+    }
+
+    /** 필터링 처리 함수 **/
+    private void filteringSearchBar() {
         EditText editTextFilter = (EditText)findViewById(R.id.editText);
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,14 +126,16 @@ public class StudySearchActivity extends AppCompatActivity {
             public void afterTextChanged(Editable edit) {
                 String filterText = edit.toString();
                 if(filterText.length() > 0) {
-                    listView.setFilterText(filterText);
+                    studySearchListView.setFilterText(filterText);
                 } else {
-                    listView.clearTextFilter();
+                    studySearchListView.clearTextFilter();
                 }
             }
         });
+    }
 
-        // floatingActionButton 누르면 스터디 생성 화면
+    /** floatingButton 처리 함수 **/
+    private void floatingButtonClickedListener() {
         FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +144,10 @@ public class StudySearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // 펼치기 버튼(expandButton) 클릭 시 필터링 검색 창 펼침
+    }
+
+    /** 펼치기 버튼 처리 함수 **/
+    private void expandButtonClickedListener() {
         ImageView expandButton = (ImageView)findViewById(R.id.expandButton);
         LinearLayout filteringScreen = (LinearLayout)findViewById(R.id.filteringScreen);
         expandButton.setOnClickListener(new View.OnClickListener() {
@@ -95,16 +160,9 @@ public class StudySearchActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
-    // 액션바 오버라이딩
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
+    
+    /** 상단 바 마이페이지, 알림 버튼 **/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.alarmBell:
@@ -119,7 +177,6 @@ public class StudySearchActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     // 분류하는거 구현해야됨,,
     public void onClick(View v) {

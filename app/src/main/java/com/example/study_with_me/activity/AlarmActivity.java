@@ -47,7 +47,7 @@ public class AlarmActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
-    private String userID, username;
+    private String userID;
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<String> userList = new ArrayList<>();
 
@@ -108,27 +108,8 @@ public class AlarmActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) { }
                 });
-    }
-
-    /** userID로 username 가져오기 **/
-    public void setUserNameByID(String userID) {
-        userRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                username = snapshot.child(userID).child("username").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 
     public void setListView() {
