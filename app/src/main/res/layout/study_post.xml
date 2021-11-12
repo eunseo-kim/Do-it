@@ -20,13 +20,13 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/studySearchUserImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/tmp_person_icon" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/studySearchWriter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/studySearchTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -113,7 +113,7 @@
 
                 <TextView
                     android:textStyle="bold"
-                    android:id="@+id/textView17"
+                    android:id="@+id/studySearchType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -138,11 +138,12 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
-                    android:textStyle="bold"
+                    android:id="@+id/studySearchMember"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="5명" />
+                    android:text="5명"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -163,11 +164,12 @@
                     android:textColor="#9D9D9D" />
 
                 <TextView
-                    android:textStyle="bold"
+                    android:id="@+id/studySearchEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="1개월" />
+                    android:text="1개월"
+                    android:textStyle="bold" />
             </TableRow>
 
 
@@ -186,7 +188,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout16">
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/studySearchDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
