@@ -53,22 +53,33 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView10"
-                android:layout_width="210dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/studyPeople"
+                android:id="@+id/currentMemberCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:text="4 / 5" />
+                android:text="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/maxMemberCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="5" />
 
             <ImageView
-                android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 app:srcCompat="@drawable/right_arrow" />
 
         </TableRow>
@@ -85,8 +96,4 @@
 
     </TableLayout>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>
