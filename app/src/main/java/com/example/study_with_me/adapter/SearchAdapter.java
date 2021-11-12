@@ -54,12 +54,19 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.study_search_item, null);
 
-        TextView recruitTextView = (TextView) view.findViewById(R.id.studyRegisterDay);
+        TextView recruitTextView = (TextView) view.findViewById(R.id.studyRecuit);
         TextView fieldTextView = (TextView) view.findViewById(R.id.studyField);
         TextView titleTextView = (TextView) view.findViewById(R.id.studyTitle);
         TextView dateTextView = (TextView) view.findViewById(R.id.studyRegisterDay);
 
-        recruitTextView.setText(String.valueOf(studyList.get(position).get("startDate")));
+        boolean closed = new Boolean(String.valueOf(studyList.get(position).get("closed")));
+        String currentRecruit;
+        if (closed) {
+            currentRecruit = "모집마감";
+        } else {
+            currentRecruit = "모집중";
+        }
+        recruitTextView.setText(currentRecruit);
         fieldTextView.setText(String.valueOf(studyList.get(position).get("type")));
         titleTextView.setText(String.valueOf(studyList.get(position).get("name")));
         dateTextView.setText(String.valueOf(studyList.get(position).get("endDate")));

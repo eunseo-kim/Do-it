@@ -17,7 +17,7 @@
         <TextView
             android:textStyle="bold"
             android:id="@+id/studyRecuit"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
