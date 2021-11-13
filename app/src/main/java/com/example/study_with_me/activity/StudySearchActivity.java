@@ -243,7 +243,7 @@ public class StudySearchActivity extends AppCompatActivity {
             case R.id.ect:
                 Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
                 for (Map<String, StudyGroup> sg : studyList) {
-                    if (String.valueOf(sg.get("type")).equals("기타")) {
+                    if (!String.valueOf(sg.get("type")).equals("프로그래밍") && !String.valueOf(sg.get("type")).equals("취업") && !String.valueOf(sg.get("type")).equals("어학")) {
                         filteredStudyList.add(sg);
                     }
                 }
@@ -263,16 +263,15 @@ public class StudySearchActivity extends AppCompatActivity {
      * 인원수 필터링
      **/
     public void filterCount(View view) {
+
         ArrayList<Map<String, StudyGroup>> filterCountList = new ArrayList<Map<String, StudyGroup>>();
+        ArrayList<Map<String, StudyGroup>> finalFilterList = new ArrayList<Map<String, StudyGroup>>();
         switch (view.getId()) {
             case R.id.two:
                 for (Map<String, StudyGroup> sg : filteredStudyList) {
                     if (Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
                         filterCountList.add(sg);
-
-
                     }
-
                 }
                 setListView(filterCountList);
                 break;
