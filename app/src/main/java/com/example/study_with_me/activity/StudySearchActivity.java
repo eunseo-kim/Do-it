@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
+import com.example.study_with_me.adapter.FilteringAdapter;
 import com.example.study_with_me.adapter.SearchAdapter;
 import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,17 +47,20 @@ public class StudySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_search_main);
+
         studySearchListView = (ListView) findViewById(R.id.studySearchListView);
+
+        // ListView에 filter 기능이 되는 adapter 연결
+        FilteringAdapter filterAdpater;
+        filterAdpater = new FilteringAdapter();
+        studySearchListView.setAdapter(filterAdpater);
+
         if(firebaseAuth.getCurrentUser() != null){
             userID = firebaseAuth.getCurrentUser().getUid();
         }
-
         // 상단 메뉴바
         getSupportActionBar().setTitle("스터디 검색");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        /** 검색창에 입력했을 때 필터링 처리 **/
-        filteringSearchBar();
 
         /** floatingActionButton 누르면 스터디 생성 화면 **/
         floatingButtonClickedListener();
@@ -66,6 +70,30 @@ public class StudySearchActivity extends AppCompatActivity {
 
         /** DB의 studygroups의 변화가 생겼을 때 감지하는 listener **/
         setStudyGroupsChangedListener();
+
+
+        EditText editText = (EditText)findViewById(R.id.editText) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString();
+                if(filterText.length() > 0) {
+                    studySearchListView.setFilterText(filterText);
+                    Log.d("studySearch >>", String.valueOf(studySearchListView.getCount()));
+
+                } else {
+                    studySearchListView.clearTextFilter();
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
     }
     /** 액션바 오버라이딩 **/
     @Override
@@ -107,12 +135,16 @@ public class StudySearchActivity extends AppCompatActivity {
                         if(snapshot.getValue() != null) {
                             collectAllStudyGroups((Map<String, Object>) snapshot.getValue());
                             setListView();
+
+                            // 스터디 목록 없으면 addMessage("스터디를 등록해주세요")출력하도록
+                            if(studyList.size() != 0) {
+                                findViewById(R.id.addMessage).setVisibility(View.INVISIBLE);
+                            }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 }
         );
@@ -144,10 +176,10 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /** floatingButton 처리 함수 **/
     private void floatingButtonClickedListener() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
                 startActivity(intent);
             }

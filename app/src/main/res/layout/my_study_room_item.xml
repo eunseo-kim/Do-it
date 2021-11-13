@@ -6,15 +6,18 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="3dp"
         android:gravity="center_vertical">
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/studyRecuit"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             android:background="@drawable/gray_box_radius"
@@ -22,26 +25,29 @@
             android:padding="5dp"
             android:text="모집중"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="10dp" />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/studyField"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:background="@drawable/gray_box_radius"
             android:gravity="center"
             android:padding="5dp"
             android:text="프로그래밍"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="10dp" />
     </LinearLayout>
 
     <!--출석 시간, 등록 장소 table-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
         <TableRow>
 
             <TextView
@@ -54,8 +60,8 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/currentMemberCount"
@@ -78,13 +84,16 @@
                 android:text="5" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/right_arrow" />
 
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/studyRegisterDay"
