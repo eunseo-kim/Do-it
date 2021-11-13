@@ -38,7 +38,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         setContentView(R.layout.study_post);
 
         /** intent 값 받기 (study group에 대한 map 형태의 정보) **/
-        Map<String, StudyGroup> studyGroupInfo = new HashMap<>();
+        Map<String, Object> studyGroupInfo = new HashMap<>();
         studyGroupInfo = (Map) getIntent().getSerializableExtra("studyGroup");
 
         setUserRefListener(studyGroupInfo);
@@ -56,7 +56,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         });
     }
 
-    private void setUserRefListener(Map<String, StudyGroup> studyGroup) {
+    private void setUserRefListener(Map<String, Object> studyGroup) {
         userRef.child(String.valueOf(studyGroup.get("leader"))).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -69,7 +69,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         });
     }
 
-    private void setView(Map<String, StudyGroup> studyGroup, String writerName) {
+    private void setView(Map<String, Object> studyGroup, String writerName) {
         TextView writer = findViewById(R.id.studySearchWriter);
         TextView title = findViewById(R.id.studySearchTitle);
         TextView type = findViewById(R.id.studySearchType);

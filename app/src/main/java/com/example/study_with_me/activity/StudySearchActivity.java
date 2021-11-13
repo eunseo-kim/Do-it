@@ -41,8 +41,8 @@ public class StudySearchActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private ListView studySearchListView;
 
-    private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>(); // 전체 스터디 리스트
-    private ArrayList<Map<String, StudyGroup>> filteredStudyList = new ArrayList<>(); // 필터링된 스터디 리스트
+    private ArrayList<Map<String, Object>> studyList = new ArrayList<>(); // 전체 스터디 리스트
+    private ArrayList<Map<String, Object>> filteredStudyList = new ArrayList<>(); // 필터링된 스터디 리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +97,13 @@ public class StudySearchActivity extends AppCompatActivity {
     }
 
     /** 스터디 검색화면 리스트 뷰 처리 **/
-    private void setListView(ArrayList<Map<String, StudyGroup>> list) {
+    private void setListView(ArrayList<Map<String, Object>> list) {
         SearchAdapter adapter = new SearchAdapter(this, list);
         studySearchListView.setAdapter(adapter);
         studySearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Map<String, StudyGroup> item = (Map<String, StudyGroup>) adapter.getItem(position);
+                Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
                 Intent intent = new Intent(StudySearchActivity.this, StudyPostActivityMessage.class);
                 intent.putExtra("studyGroup", (Serializable) item);
                 startActivity(intent);
@@ -128,7 +128,7 @@ public class StudySearchActivity extends AppCompatActivity {
                         if(snapshot.getValue() != null) {
                             collectAllStudyGroups((Map<String, Object>) snapshot.getValue());
                             setListView(studyList);
-                            filteredStudyList = (ArrayList<Map<String, StudyGroup>>) studyList.clone();
+                            filteredStudyList = (ArrayList<Map<String, Object>>) studyList.clone();
 
                             // 스터디 목록 없으면 addMessage("스터디를 등록해주세요")출력하도록
                             if(studyList.size() != 0) {
@@ -191,15 +191,18 @@ public class StudySearchActivity extends AppCompatActivity {
     /** 분류 필터링 **/
     public void onClick(View v) {
         filteredStudyList.clear();
+        Log.d("studyList >>> ", studyList.get(0).toString());
+        Boolean b = (Boolean) studyList.get(0).get("closed");
+
 
         switch (v.getId()) {
             case R.id.all:
                 Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
-                filteredStudyList = (ArrayList<Map<String, StudyGroup>>) studyList.clone();
+                filteredStudyList = (ArrayList<Map<String, Object>>) studyList.clone();
                 break;
             case R.id.programming:
                 Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, StudyGroup> sg : studyList) {
+                for (Map<String, Object> sg : studyList) {
                     if(String.valueOf(sg.get("type")).equals("프로그래밍")) {
                         filteredStudyList.add(sg);
                     }
@@ -207,7 +210,7 @@ public class StudySearchActivity extends AppCompatActivity {
                 break;
             case R.id.employ:
                 Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, StudyGroup> sg : studyList) {
+                for (Map<String, Object> sg : studyList) {
                     if(String.valueOf(sg.get("type")).equals("취업")) {
                         filteredStudyList.add(sg);
                     }
@@ -215,7 +218,7 @@ public class StudySearchActivity extends AppCompatActivity {
                 break;
             case R.id.language:
                 Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, StudyGroup> sg : studyList) {
+                for (Map<String, Object> sg : studyList) {
                     if(String.valueOf(sg.get("type")).equals("어학")) {
                         filteredStudyList.add(sg);
                     }
@@ -223,7 +226,7 @@ public class StudySearchActivity extends AppCompatActivity {
                 break;
             case R.id.ect:
                 Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, StudyGroup> sg : studyList) {
+                for (Map<String, Object> sg : studyList) {
                     if(String.valueOf(sg.get("type")).equals("기타")) {
                         filteredStudyList.add(sg);
                     }
@@ -241,10 +244,10 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /**인원수 필터링**/
     public void filterCount(View view) {
-        ArrayList<Map<String, StudyGroup>> filterCountList = new ArrayList<Map<String, StudyGroup>>();
+        ArrayList<Map<String, Object>> filterCountList = new ArrayList<Map<String, Object>>();
         switch (view.getId()) {
             case R.id.two:
-                for (Map<String, StudyGroup> sg : filteredStudyList) {
+                for (Map<String, Object> sg : filteredStudyList) {
                     if(Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
                         filterCountList.add(sg);
                     }
