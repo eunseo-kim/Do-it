@@ -17,7 +17,7 @@ import com.example.study_with_me.model.Studydata;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SearchAdapter extends BaseAdapter implements Filterable {
+public class SearchAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrList(원본 데이터 리스트)
@@ -35,6 +35,9 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         this.layoutInflater = LayoutInflater.from(this.context);
     }
 
+    public SearchAdapter() {
+    }
+
     @Override
     public int getCount() {
         return studyList.size();
@@ -50,106 +53,70 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return position;
     }
 
-
-
-    /**
-    @Override
-    // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
-
-        if(convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.study_search_item , parent, false);
-        }
-
-        // 화면에 표시될 View로부터 위젯에 대한 참조 획득
-        TextView recuitTextView = (TextView) convertView.findViewById(R.id.studyRegisterDay);
-        TextView fieldTextView = (TextView) convertView.findViewById(R.id.studyField);
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.studyTitle);
-        TextView dateTextView = (TextView) convertView.findViewById(R.id.studyRegisterDay);
-
-        // Dataset(filteredItemdList) 에서 positiond에 위치한 데이터 참조 획득
-        Studydata studydata = filterStudyList.get(position);
-
-        recuitTextView.setText(studydata.getStudyTitle());
-        fieldTextView.setText(studydata.getStudyField());
-        titleTextView.setText(studydata.getStudyTitle());
-        dateTextView.setText(studydata.getStudydate());
-
-        return convertView;
-    }
-    **/
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.study_search_item, null);
 
-        TextView recruitTextView = (TextView) view.findViewById(R.id.studyRegisterDay);
+        TextView recruitTextView = (TextView) view.findViewById(R.id.studyRecuit);
         TextView fieldTextView = (TextView) view.findViewById(R.id.studyField);
         TextView titleTextView = (TextView) view.findViewById(R.id.studyTitle);
         TextView dateTextView = (TextView) view.findViewById(R.id.studyRegisterDay);
 
-        recruitTextView.setText(String.valueOf(studyList.get(position).get("startDate")));
+        boolean closed = new Boolean(String.valueOf(studyList.get(position).get("closed")));
+        String currentRecruit;
+        if (closed) {
+            currentRecruit = "모집마감";
+        } else {
+            currentRecruit = "모집중";
+        }
+        recruitTextView.setText(currentRecruit);
         fieldTextView.setText(String.valueOf(studyList.get(position).get("type")));
         titleTextView.setText(String.valueOf(studyList.get(position).get("name")));
         dateTextView.setText(String.valueOf(studyList.get(position).get("endDate")));
 
         return view;
     }
+//
+//    @Override
+//    public Filter getFilter() {
+//        if(listFilter == null) {
+//            listFilter = new ListFilter();
+//        }
+//        return listFilter;
+//    }
 
-    public void addItem(String recuit, String field, String title, String date) {
-        Studydata item = new Studydata();
-
-        item.setRecuit(recuit);
-        item.setTitle(title);
-        item.setField(field);
-        item.setDate(date);
-
-        StudydataList.add(item);
-    }
-
-    @Override
-    public Filter getFilter() {
-        if(listFilter == null) {
-            listFilter = new ListFilter();
-        }
-        return listFilter;
-    }
-
-    private class ListFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if(constraint == null || constraint.length() == 0) {
-                results.values = StudydataList;
-                results.count = StudydataList.size();
-            } else {
-                ArrayList<Studydata> itemList = new ArrayList<Studydata>();
-
-                for(Studydata item : StudydataList) {
-                    if(item.getStudyTitle().toUpperCase().contains(constraint.toString().toUpperCase())) {
-                        itemList.add(item);
-                    }
-                }
-                results.values = itemList;
-                results.count = itemList.size();
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filterStudyList = (ArrayList<Studydata>) results.values;
-
-            if(results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
-    }
+//    private class ListFilter extends Filter {
+//
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            FilterResults results = new FilterResults();
+//
+//            if(constraint == null || constraint.length() == 0) {
+//                results.values = StudydataList;
+//                results.count = StudydataList.size();
+//            } else {
+//                ArrayList<Studydata> itemList = new ArrayList<Studydata>();
+//
+//                for(Studydata item : StudydataList) {
+//                    if(item.getStudyTitle().toUpperCase().contains(constraint.toString().toUpperCase())) {
+//                        itemList.add(item);
+//                    }
+//                }
+//                results.values = itemList;
+//                results.count = itemList.size();
+//            }
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            filterStudyList = (ArrayList<Studydata>) results.values;
+//
+//            if(results.count > 0) {
+//                notifyDataSetChanged();
+//            } else {
+//                notifyDataSetInvalidated();
+//            }
+//        }
+//    }
 }
