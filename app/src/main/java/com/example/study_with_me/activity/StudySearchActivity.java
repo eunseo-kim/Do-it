@@ -227,7 +227,7 @@ public class StudySearchActivity extends AppCompatActivity {
             case R.id.ect:
                 Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
                 for (Map<String, Object> sg : studyList) {
-                    if(String.valueOf(sg.get("type")).equals("기타")) {
+                    if (!String.valueOf(sg.get("type")).equals("프로그래밍")  && !String.valueOf(sg.get("type")).equals("취업") && !String.valueOf(sg.get("type")).equals("어학")) {
                         filteredStudyList.add(sg);
                     }
                 }
@@ -248,24 +248,127 @@ public class StudySearchActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.two:
                 for (Map<String, Object> sg : filteredStudyList) {
-                    if(Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
+                    if (Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
                         filterCountList.add(sg);
                     }
                 }
                 setListView(filterCountList);
                 break;
             case R.id.three:
+                for (Map<String, Object> sg : filteredStudyList) {
+                    if (Integer.valueOf(String.valueOf(sg.get("member"))) == 3) {
+                        filterCountList.add(sg);
+                    }
+                }
+                setListView(filterCountList);
                 break;
             case R.id.four:
+                for (Map<String, Object> sg : filteredStudyList) {
+                    if (Integer.valueOf(String.valueOf(sg.get("member"))) == 4) {
+                        filterCountList.add(sg);
+                    }
+                }
+                setListView(filterCountList);
                 break;
             case R.id.moreFour:
+                for (Map<String, Object> sg : filteredStudyList) {
+                    if (Integer.valueOf(String.valueOf(sg.get("member"))) > 4) {
+                        filterCountList.add(sg);
+                    }
+                }
+                setListView(filterCountList);
                 break;
         }
     }
 
     /**스터디 기간 필터링**/
     public void filerDate(View view) {
+        String startDate;
+        String endDate;
+        int month;
+        ArrayList<Map<String, Object>> filterCountList = new ArrayList<Map<String, Object>>();
+        switch(view.getId()) {
+            case R.id.oneMonth:
+                for(Map<String, Object> sg: filteredStudyList) {
+                    startDate = String.valueOf(sg.get("startDate"));
+                    endDate = String.valueOf(sg.get("endDate"));
 
+                    if(Integer.parseInt(endDate.substring(2,4)) > Integer.parseInt(startDate.substring(2,4))) {
+                        month = 12 - Integer.parseInt(startDate.substring(5,7)) + Integer.parseInt(endDate.substring(5,7));
+                        if(month == 1) {
+                            Log.d("기간", Integer.toString(month));
+                            filterCountList.add(sg);
+                        }
+                    } else {
+                        month = Integer.parseInt(endDate.substring(5,7)) - Integer.parseInt(startDate.substring(5,7));
+                        if(month == 1) {
+                            filterCountList.add(sg);
+                        }
+                    }
+                }
+                setListView(filterCountList);
+                break;
+            case R.id.twoMonth:
+                for(Map<String, Object> sg: filteredStudyList) {
+                    startDate = String.valueOf(sg.get("startDate"));
+                    endDate = String.valueOf(sg.get("endDate"));
+
+                    if(Integer.parseInt(endDate.substring(2,4)) > Integer.parseInt(startDate.substring(2,4))) {
+                        month = 12 - Integer.parseInt(startDate.substring(5,7)) + Integer.parseInt(endDate.substring(5,7));
+                        if(month == 2) {
+                            Log.d("기간", Integer.toString(month));
+                            filterCountList.add(sg);
+                        }
+                    } else {
+                        month = Integer.parseInt(endDate.substring(5,7)) - Integer.parseInt(startDate.substring(5,7));
+                        if(month == 2) {
+                            filterCountList.add(sg);
+                        }
+                    }
+                }
+                setListView(filterCountList);
+                break;
+            case R.id.sixMonth:
+                for(Map<String, Object> sg: filteredStudyList) {
+                    startDate = String.valueOf(sg.get("startDate"));
+                    endDate = String.valueOf(sg.get("endDate"));
+
+                    if(Integer.parseInt(endDate.substring(2,4)) > Integer.parseInt(startDate.substring(2,4))) {
+                        month = 12 - Integer.parseInt(startDate.substring(5,7)) + Integer.parseInt(endDate.substring(5,7));
+                        if(month == 6) {
+                            Log.d("기간", Integer.toString(month));
+                            filterCountList.add(sg);
+                        }
+                    } else {
+                        month = Integer.parseInt(endDate.substring(5,7)) - Integer.parseInt(startDate.substring(5,7));
+                        if(month == 6) {
+                            filterCountList.add(sg);
+                        }
+                    }
+                }
+                setListView(filterCountList);
+                break;
+            case R.id.moreSixMonth:
+                for(Map<String, Object> sg: filteredStudyList) {
+                    startDate = String.valueOf(sg.get("startDate"));
+                    endDate = String.valueOf(sg.get("endDate"));
+
+                    if(Integer.parseInt(endDate.substring(2,4)) > Integer.parseInt(startDate.substring(2,4))) {
+                        month = 12 - Integer.parseInt(startDate.substring(5,7)) + Integer.parseInt(endDate.substring(5,7));
+                        if(month > 6) {
+                            Log.d("기간", Integer.toString(month));
+                            filterCountList.add(sg);
+                        }
+                    } else {
+                        month = Integer.parseInt(endDate.substring(5,7)) - Integer.parseInt(startDate.substring(5,7));
+                        if(month > 6) {
+                            filterCountList.add(sg);
+                        }
+                    }
+                }
+                setListView(filterCountList);
+                break;
+        }
     }
 
 }

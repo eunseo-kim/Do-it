@@ -256,7 +256,7 @@
                 android:onClick="filerDate"/>
 
             <RadioButton
-                android:id="@+id/moreSizMonth"
+                android:id="@+id/moreSixMonth"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:background="@drawable/white_box_radius"
