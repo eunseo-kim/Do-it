@@ -17,7 +17,7 @@ import com.example.study_with_me.model.Studydata;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SearchAdapter extends BaseAdapter implements Filterable {
+public class SearchAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrList(원본 데이터 리스트)
@@ -33,6 +33,9 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.studyList = studyList;
         this.layoutInflater = LayoutInflater.from(this.context);
+    }
+
+    public SearchAdapter() {
     }
 
     @Override
@@ -73,47 +76,47 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
 
         return view;
     }
+//
+//    @Override
+//    public Filter getFilter() {
+//        if(listFilter == null) {
+//            listFilter = new ListFilter();
+//        }
+//        return listFilter;
+//    }
 
-    @Override
-    public Filter getFilter() {
-        if(listFilter == null) {
-            listFilter = new ListFilter();
-        }
-        return listFilter;
-    }
-
-    private class ListFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if(constraint == null || constraint.length() == 0) {
-                results.values = StudydataList;
-                results.count = StudydataList.size();
-            } else {
-                ArrayList<Studydata> itemList = new ArrayList<Studydata>();
-
-                for(Studydata item : StudydataList) {
-                    if(item.getStudyTitle().toUpperCase().contains(constraint.toString().toUpperCase())) {
-                        itemList.add(item);
-                    }
-                }
-                results.values = itemList;
-                results.count = itemList.size();
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filterStudyList = (ArrayList<Studydata>) results.values;
-
-            if(results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
-    }
+//    private class ListFilter extends Filter {
+//
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            FilterResults results = new FilterResults();
+//
+//            if(constraint == null || constraint.length() == 0) {
+//                results.values = StudydataList;
+//                results.count = StudydataList.size();
+//            } else {
+//                ArrayList<Studydata> itemList = new ArrayList<Studydata>();
+//
+//                for(Studydata item : StudydataList) {
+//                    if(item.getStudyTitle().toUpperCase().contains(constraint.toString().toUpperCase())) {
+//                        itemList.add(item);
+//                    }
+//                }
+//                results.values = itemList;
+//                results.count = itemList.size();
+//            }
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            filterStudyList = (ArrayList<Studydata>) results.values;
+//
+//            if(results.count > 0) {
+//                notifyDataSetChanged();
+//            } else {
+//                notifyDataSetInvalidated();
+//            }
+//        }
+//    }
 }
