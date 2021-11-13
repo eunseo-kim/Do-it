@@ -160,7 +160,8 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="2명"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:textColor="@drawable/selector_top_menu_text"
+                android:onClick="filterCount"/>
 
             <RadioButton
                 android:id="@+id/three"
@@ -172,7 +173,8 @@
                 android:gravity="center"
                 android:text="3명"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filterCount"/>
 
             <RadioButton
                 android:id="@+id/four"
@@ -184,7 +186,8 @@
                 android:gravity="center"
                 android:text="4명"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filterCount"/>
 
             <RadioButton
                 android:id="@+id/moreFour"
@@ -195,7 +198,8 @@
                 android:gravity="center"
                 android:text="기타"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filterCount"/>
         </RadioGroup>
 
         <!--기간 고르기-->
@@ -222,7 +226,8 @@
                 android:gravity="center"
                 android:text="1개월"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filerDate"/>
 
             <RadioButton
                 android:id="@+id/twoMonth"
@@ -234,7 +239,8 @@
                 android:gravity="center"
                 android:text="2개월"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filerDate"/>
 
             <RadioButton
                 android:id="@+id/sixMonth"
@@ -246,7 +252,8 @@
                 android:gravity="center"
                 android:text="6개월"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filerDate"/>
 
             <RadioButton
                 android:id="@+id/moreSizMonth"
@@ -257,7 +264,8 @@
                 android:gravity="center"
                 android:text="기타"
                 android:textColor="@drawable/selector_top_menu_text"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:onClick="filerDate"/>
         </RadioGroup>
 
 

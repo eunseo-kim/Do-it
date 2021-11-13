@@ -42,7 +42,9 @@ public class StudySearchActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private ListView studySearchListView;
 
-    private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>();
+    private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>(); // 전체 스터디 리스트
+    private ArrayList<Map<String, StudyGroup>> filteredStudyList = new ArrayList<>(); // 필터링된 스터디 리스트
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,14 +106,14 @@ public class StudySearchActivity extends AppCompatActivity {
     }
 
     /** 스터디 검색화면 리스트 뷰 처리 **/
-    private void setListView() {
-        SearchAdapter adapter = new SearchAdapter(this, studyList);
+    private void setListView(ArrayList<Map<String, StudyGroup>> list) {
+        SearchAdapter adapter = new SearchAdapter(this, list);
         studySearchListView.setAdapter(adapter);
         studySearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Map<String, StudyGroup> item = (Map<String, StudyGroup>) adapter.getItem(position);
-                Intent intent = new Intent(getApplicationContext(), StudyPostActivityMessage.class);
+                Intent intent = new Intent(StudySearchActivity.this, StudyPostActivityMessage.class);
                 intent.putExtra("studyGroup", (Serializable) item);
                 startActivity(intent);
             }
@@ -134,7 +136,8 @@ public class StudySearchActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getValue() != null) {
                             collectAllStudyGroups((Map<String, Object>) snapshot.getValue());
-                            setListView();
+                            setListView(studyList);
+                            filteredStudyList = (ArrayList<Map<String, StudyGroup>>) studyList.clone();
 
                             // 스터디 목록 없으면 addMessage("스터디를 등록해주세요")출력하도록
                             if(studyList.size() != 0) {
@@ -218,42 +221,81 @@ public class StudySearchActivity extends AppCompatActivity {
         }
     }
 
-    // 분류하는거 구현해야됨,,
+    /** 분류 필터링 **/
     public void onClick(View v) {
-        int viewId = v.getId();
+        filteredStudyList.clear();
 
-        if(viewId == R.id.all) {
-            Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
-
+        switch (v.getId()) {
+            case R.id.all:
+                Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
+                filteredStudyList = (ArrayList<Map<String, StudyGroup>>) studyList.clone();
+                break;
+            case R.id.programming:
+                Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
+                for (Map<String, StudyGroup> sg : studyList) {
+                    if(String.valueOf(sg.get("type")).equals("프로그래밍")) {
+                        filteredStudyList.add(sg);
+                    }
+                }
+                break;
+            case R.id.employ:
+                Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
+                for (Map<String, StudyGroup> sg : studyList) {
+                    if(String.valueOf(sg.get("type")).equals("취업")) {
+                        filteredStudyList.add(sg);
+                    }
+                }
+                break;
+            case R.id.language:
+                Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
+                for (Map<String, StudyGroup> sg : studyList) {
+                    if(String.valueOf(sg.get("type")).equals("어학")) {
+                        filteredStudyList.add(sg);
+                    }
+                }
+                break;
+            case R.id.ect:
+                Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
+                for (Map<String, StudyGroup> sg : studyList) {
+                    if(String.valueOf(sg.get("type")).equals("기타")) {
+                        filteredStudyList.add(sg);
+                    }
+                }
+                break;
         }
-        else if(viewId == R.id.programming) {
-            Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
-            if(viewId == R.id.two) {
+        setListView(filteredStudyList);
+    }
 
-            } else if(viewId == R.id.three) {
+    public void studyAreaClicked(View view) {
+        // 각각 글에 맞는 글이 매치되어야 됨!
+        Intent intent = new Intent(this, StudyPostActivityMessage.class);
+        startActivity(intent);
+    }
 
-            } else if(viewId == R.id.three) {
-
-            } else if(viewId == R.id.moreFour) {
-
-            }
-        }
-        else if(viewId == R.id.employ) {
-            Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
-
-        }
-        else if(viewId == R.id.language) {
-            Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
-
-        }
-        else if(viewId == R.id.ect) {
-            Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
-
-        }
-        else if (viewId ==  R.id.studyArea) {
-            // 각각 글에 맞는 글이 매치되어야 됨!
-            Intent intent = new Intent(this, StudyPostActivityMessage.class);
-            startActivity(intent);
+    /**인원수 필터링**/
+    public void filterCount(View view) {
+        ArrayList<Map<String, StudyGroup>> filterCountList = new ArrayList<Map<String, StudyGroup>>();
+        switch (view.getId()) {
+            case R.id.two:
+                for (Map<String, StudyGroup> sg : filteredStudyList) {
+                    if(Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
+                        filterCountList.add(sg);
+                    }
+                }
+                setListView(filterCountList);
+                break;
+            case R.id.three:
+                break;
+            case R.id.four:
+                break;
+            case R.id.moreFour:
+                break;
         }
     }
+
+    /**스터디 기간 필터링**/
+    public void filerDate(View view) {
+
+    }
+
 }
