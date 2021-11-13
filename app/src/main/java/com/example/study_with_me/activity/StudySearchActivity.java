@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
-import com.example.study_with_me.adapter.FilteringAdapter;
 import com.example.study_with_me.adapter.SearchAdapter;
 import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,11 +51,6 @@ public class StudySearchActivity extends AppCompatActivity {
 
         studySearchListView = (ListView) findViewById(R.id.studySearchListView);
 
-        // ListView에 filter 기능이 되는 adapter 연결
-        FilteringAdapter filterAdpater;
-        filterAdpater = new FilteringAdapter();
-        studySearchListView.setAdapter(filterAdpater);
-
         if(firebaseAuth.getCurrentUser() != null){
             userID = firebaseAuth.getCurrentUser().getUid();
         }
@@ -73,7 +67,6 @@ public class StudySearchActivity extends AppCompatActivity {
         /** DB의 studygroups의 변화가 생겼을 때 감지하는 listener **/
         setStudyGroupsChangedListener();
 
-
         EditText editText = (EditText)findViewById(R.id.editText) ;
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,8 +74,6 @@ public class StudySearchActivity extends AppCompatActivity {
                 String filterText = edit.toString();
                 if(filterText.length() > 0) {
                     studySearchListView.setFilterText(filterText);
-                    Log.d("studySearch >>", String.valueOf(studySearchListView.getCount()));
-
                 } else {
                     studySearchListView.clearTextFilter();
                 }
@@ -151,30 +142,6 @@ public class StudySearchActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    /** 필터링 처리 함수 **/
-    private void filteringSearchBar() {
-        EditText editTextFilter = (EditText)findViewById(R.id.editText);
-        editTextFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString();
-                if(filterText.length() > 0) {
-                    studySearchListView.setFilterText(filterText);
-                } else {
-                    studySearchListView.clearTextFilter();
-                }
-            }
-        });
     }
 
     /** floatingButton 처리 함수 **/
