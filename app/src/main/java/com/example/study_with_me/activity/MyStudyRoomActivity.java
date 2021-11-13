@@ -41,7 +41,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String userID;
     private ArrayList<String> studyGroupIDList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 ID 리스트
-    private ArrayList<Map<String, StudyGroup>> studyGroupList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 StudyGroup 객체 리스트
+    private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 StudyGroup 객체 리스트
     private ListView myStudyRoomListView;
 
     @Override

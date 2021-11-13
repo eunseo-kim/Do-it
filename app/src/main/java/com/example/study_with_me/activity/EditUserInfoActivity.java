@@ -27,8 +27,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private EditText emailEditText;
-    private EditText passwordEditText1;
-    private EditText passwordEditText2;
     private String userID;
     private String email;
 

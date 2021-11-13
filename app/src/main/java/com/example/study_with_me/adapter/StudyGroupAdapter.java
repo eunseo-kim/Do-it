@@ -20,9 +20,9 @@ import java.util.Map;
 public class StudyGroupAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    private ArrayList<Map<String, StudyGroup>> studyList = new ArrayList<>();
+    private ArrayList<Map<String, Object>> studyList = new ArrayList<>();
 
-    public StudyGroupAdapter(Context context, ArrayList<Map<String, StudyGroup>> studyList) {
+    public StudyGroupAdapter(Context context, ArrayList<Map<String, Object>> studyList) {
         this.context = context;
         this.studyList = studyList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -54,7 +54,7 @@ public class StudyGroupAdapter extends BaseAdapter {
         TextView maxMemberCount = (TextView)view.findViewById(R.id.maxMemberCount);
         TextView studyRegisterDay = (TextView) view.findViewById(R.id.studyRegisterDay);
 
-        Map<String, StudyGroup> studyGroup = studyList.get(position);
+        Map<String, Object> studyGroup = studyList.get(position);
         Log.d("checkCheck", String.valueOf(studyGroup.get("memberList")));
 //        ArrayList<String> memberList = studyGroup.get("memberList").getMemberList();
         studyField.setText(String.valueOf(studyGroup.get("type")));
