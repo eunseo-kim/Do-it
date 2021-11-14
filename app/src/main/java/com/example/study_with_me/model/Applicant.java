@@ -7,21 +7,29 @@ public class Applicant {
     String userID;
     String registerTime;
     String studyGroupTitle;
+    String username;
+    String studyGroupID;
 
-    public Applicant(String userID, String registerTime, String studyGroupTitle) {
+    public Applicant(String userID, String username, String registerTime, String studyGroupID, String studyGroupTitle) {
         this.userID = userID;
-        this.studyGroupTitle = studyGroupTitle;
+        this.username = username;
 
+        this.studyGroupTitle = studyGroupTitle;
+        this.studyGroupID = studyGroupID;
+
+        this.registerTime = registerTime;
         /* long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM-dd hh:mm");
         String time = dateFormat.format(date); */
-        this.registerTime = registerTime;
-
     }
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getUserName() {
+        return username;
     }
 
     public String getRegisterTime() {
@@ -29,4 +37,8 @@ public class Applicant {
     }
 
     public String getStudyGroupTitle() { return studyGroupTitle; }
+
+    public String getStudyGroupID() {
+        return studyGroupID;
+    }
 }

@@ -40,7 +40,6 @@ public class AlarmActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String userID;
     private ArrayList<Applicant> applicants = new ArrayList<>();
-    private ArrayList<String> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class AlarmActivity extends AppCompatActivity {
             userID = firebaseAuth.getCurrentUser().getUid();
         }
 
-        setUserDataChangedListener();
         setApplicants();
     }
 
@@ -77,35 +75,22 @@ public class AlarmActivity extends AppCompatActivity {
                             String studyGroupTitle = applicantSnapshot.child("studyGroupTitle").getValue(String.class);
                             String registerTime = applicantSnapshot.child("registerTime").getValue(String.class);
                             String userID = applicantSnapshot.child("userID").getValue(String.class);
-                            applicants.add(new Applicant(userID, registerTime, studyGroupTitle));
+                            String username = applicantSnapshot.child("username").getValue(String.class);
+                            String studyGroupID = applicantSnapshot.child("studyGroupID").getValue(String.class);
+                            applicants.add(new Applicant(userID, username, registerTime, studyGroupID, studyGroupTitle));
                         }
                     }
                 }
                 setListView();
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
-    }
-
-    private void setUserDataChangedListener() {
-        userRef.child(userID)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        userList.add(snapshot.child("username").getValue(String.class));
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) { }
-                });
     }
 
     public void setListView() {
         SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.alarmListView);
-        ApplicantAdapter adapter = new ApplicantAdapter(this, applicants, userList);
+        ApplicantAdapter adapter = new ApplicantAdapter(this, applicants);
         swipeMenuListView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -152,10 +137,26 @@ public class AlarmActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Log.d(TAG, "onMenuItemClick: click item");
+                        // 수락
+                        // studygroups => 현재 studygroupID
+                        // => applicantList에서 해당 사용자 삭제 + memberList에 해당 사용자 추가
+
+                        // 필요한 거
+                        // - 현재 studygroupID
+                        // - 신청자의 userID
+                        Log.d(TAG, "onMenuItemClick: 신청");
                         break;
                     case 1:
-                        Log.d(TAG, "onMenuItemClick: click item");
+                        // applicants 삭제하고 덮어씌우기
+                        // memberList에 userID 추가하기
+                        // 다시 보여주려면?
+                        Log.d("len(applicants)", String.valueOf(applicants.size()));
+                        Log.d("position", String.valueOf(position));
+
+                        /** listView 변경사항 => notifyDataSetChanged() **/
+
+                        Log.d("applicants get :", applicants.get(position).getStudyGroupTitle());
+                        Log.d(TAG, "onMenuItemClick: 거절");
                         break;
                 }
                 // false : close the menu; true : not close the menu
