@@ -25,13 +25,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-
-// https://github.com/baoyongzhang/SwipeMenuListView 여기 링크 참고해서 만들었습니다!
 
 public class AlarmActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -40,6 +38,7 @@ public class AlarmActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
+    private ApplicantAdapter adapter;
     private String userID;
     private ArrayList<Applicant> applicants = new ArrayList<>();
 
@@ -47,7 +46,7 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm);
-        // 상단 메뉴바
+
         getSupportActionBar().setTitle("알림");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -59,17 +58,12 @@ public class AlarmActivity extends AppCompatActivity {
         setApplicants();
     }
 
-    /* StudyApplicant applicants 알림 화면에 띄워주기 */
-
-
-
-    /* DB에서 전체 스터디 그룹 돌면서 => 내가 방장인 스터디그룹의 모든 Applicant 리스트 */
     public void setApplicants() {
-        // DB에서 현재 사용자가 방장인 스터디 그룹 가져오기
+        /** DB에서 현재 사용자가 방장인 스터디 그룹 가져오기 **/
         studyGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                applicants.clear(); /* 이거 추가하니까 중복 제거됐어요 */
                 for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
                     // studyGroupSnapshot.child("leader")과 userID 비교
                     // 만약 같으면? [applicant list + 스터디 이름] 가져오기
@@ -77,17 +71,20 @@ public class AlarmActivity extends AppCompatActivity {
                         Map<String, Object> map = (Map<String, Object>) studyGroupSnapshot.getValue();
                         ArrayList<Applicant> list = (ArrayList<Applicant>) map.get("applicantList");
 
-                        for(int i = 0; i < list.size(); i++) {
-                            Map<String, Object> applicant = (Map<String, Object>) list.get(i);
-                            String studyGroupTitle = String.valueOf(applicant.get("studyGroupTitle"));
-                            String registerTime = (String) applicant.get("registerTime");
-                            String id = (String) applicant.get("userID");
-                            String username = applicant.get("userName").toString();
-                            String studyGroupID = (String) applicant.get("studyGroupID");
-                            applicants.add(new Applicant(id, username, registerTime, studyGroupID, studyGroupTitle));
+                        if (list != null) {
+                            for (int i = 0; i < list.size(); i++) {
+                                Map<String, Object> applicant = (Map<String, Object>) list.get(i);
+                                String studyGroupTitle = String.valueOf(applicant.get("studyGroupTitle"));
+                                String registerTime = (String) applicant.get("registerTime");
+                                String id = (String) applicant.get("userID");
+                                String username = applicant.get("userName").toString();
+                                String studyGroupID = (String) applicant.get("studyGroupID");
+                                applicants.add(new Applicant(id, username, registerTime, studyGroupID, studyGroupTitle));
+                            }
                         }
                     }
                 }
+                Log.d("check applicants size :",String.valueOf(applicants.size()));
                 setListView();
             }
             @Override
@@ -96,9 +93,8 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     public void setListView() {
-        Log.d("aList >>> ", applicants.toString());
         SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.alarmListView);
-        ApplicantAdapter adapter = new ApplicantAdapter(this, applicants);
+        adapter = new ApplicantAdapter(this, applicants);
         swipeMenuListView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -143,36 +139,43 @@ public class AlarmActivity extends AppCompatActivity {
         swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                Log.d("onMenuItemClick", "onMenuItemClick");
+                Applicant applicant = applicants.get(position);
+                String appStudyGroupID = applicant.getStudyGroupID();
+                String appUserID = applicant.getUserID();
+
                 switch (index) {
                     case 0:
-                        // 수락
-                        // studygroups => 현재 studygroupID
-                        // => applicantList에서 해당 사용자 삭제 + memberList에 해당 사용자 추가
+                        databaseReference.child("studygroups")
+                                .child(appStudyGroupID).child("memberList")
+                                .push().setValue(appUserID);
 
-                        // 필요한 거
-                        // - 현재 studygroupID
-                        // - 신청자의 userID
-                        Log.d(TAG, "onMenuItemClick: 신청");
-                        break;
-                    case 1:
-                        // applicants 삭제하고 덮어씌우기
-                        // memberList에 userID 추가하기
-                        // 다시 보여주려면?
-                        Log.d("len(applicants)", String.valueOf(applicants.size()));
-                        Log.d("position", String.valueOf(position));
+                        databaseReference.child("users")
+                                .child(appUserID).child("studyGroupIDList")
+                                .push().setValue(appStudyGroupID);
+                    default:
+                        Query query = databaseReference.child("studygroups")
+                                .child(appStudyGroupID).child("applicantList")
+                                .orderByChild("userID").equalTo(appUserID);
 
-                        /** listView 변경사항 => notifyDataSetChanged() **/
-
-                        Log.d("applicants get :", applicants.get(position).getStudyGroupTitle());
-                        Log.d(TAG, "onMenuItemClick: 거절");
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot groupSnapShot: snapshot.getChildren()) {
+                                    groupSnapShot.getRef().removeValue();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
+                        });
                         break;
                 }
-                // false : close the menu; true : not close the menu
+                applicants.remove(position);
+                adapter.notifyDataSetChanged();
                 return false;
             }
         });
     }
-
 
     // 액션바 오버라이딩
     @Override
