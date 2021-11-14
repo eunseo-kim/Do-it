@@ -14,6 +14,7 @@ import com.example.study_with_me.model.StudyGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class StudyGroupAdapter extends BaseAdapter {
         studyTitle.setText(String.valueOf(studyGroup.get("name")));
         studyRegisterDay.setText(String.valueOf(studyGroup.get("endDate")));
 
-        ArrayList memberList = new ArrayList((Collection) studyGroup.get("memberList"));
+        HashMap<String, String> memberList = (HashMap<String, String>)studyGroup.get("memberList");
         currentMemberCount.setText(String.valueOf(memberList.size()));
         maxMemberCount.setText(String.valueOf(studyGroup.get("member")));
 
