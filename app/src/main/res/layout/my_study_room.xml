@@ -19,45 +19,53 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
+                android:id="@+id/ing"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:checked="true"
-                android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
+                android:onClick="onClick"
                 android:text="진행중"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
+                android:onClick="onClick"
+                android:id="@+id/done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:button="@null"
                 android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
+                android:button="@null"
                 android:text="종료"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
+                android:onClick="onClick"
+                android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:button="@null"
                 android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
+                android:button="@null"
                 android:text="전체"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
 
             <RadioButton
+                android:onClick="onClick"
+                android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
-                android:button="@null"
                 android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
+                android:button="@null"
                 android:text="마감설정"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
         </RadioGroup>
     </LinearLayout>
 
