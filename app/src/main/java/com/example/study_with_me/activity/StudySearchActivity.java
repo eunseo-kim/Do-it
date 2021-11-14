@@ -194,7 +194,6 @@ public class StudySearchActivity extends AppCompatActivity {
         Log.d("studyList >>> ", studyList.get(0).toString());
         Boolean b = (Boolean) studyList.get(0).get("closed");
 
-
         switch (v.getId()) {
             case R.id.all:
                 Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
@@ -236,8 +235,8 @@ public class StudySearchActivity extends AppCompatActivity {
         setListView(filteredStudyList);
     }
 
+    // 각각 글에 맞는 글이 매치되어야 됨!
     public void studyAreaClicked(View view) {
-        // 각각 글에 맞는 글이 매치되어야 됨!
         Intent intent = new Intent(this, StudyPostActivityMessage.class);
         startActivity(intent);
     }
