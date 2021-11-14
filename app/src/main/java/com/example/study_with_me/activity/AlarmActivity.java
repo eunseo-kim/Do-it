@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 // https://github.com/baoyongzhang/SwipeMenuListView 여기 링크 참고해서 만들었습니다!
 
@@ -67,17 +69,22 @@ public class AlarmActivity extends AppCompatActivity {
         studyGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
                     // studyGroupSnapshot.child("leader")과 userID 비교
                     // 만약 같으면? [applicant list + 스터디 이름] 가져오기
                     if (userID.equals(studyGroupSnapshot.child("leader").getValue(String.class))) {
-                        for (DataSnapshot applicantSnapshot : studyGroupSnapshot.child("applicantList").getChildren()) {
-                            String studyGroupTitle = applicantSnapshot.child("studyGroupTitle").getValue(String.class);
-                            String registerTime = applicantSnapshot.child("registerTime").getValue(String.class);
-                            String userID = applicantSnapshot.child("userID").getValue(String.class);
-                            String username = applicantSnapshot.child("username").getValue(String.class);
-                            String studyGroupID = applicantSnapshot.child("studyGroupID").getValue(String.class);
-                            applicants.add(new Applicant(userID, username, registerTime, studyGroupID, studyGroupTitle));
+                        Map<String, Object> map = (Map<String, Object>) studyGroupSnapshot.getValue();
+                        ArrayList<Applicant> list = (ArrayList<Applicant>) map.get("applicantList");
+
+                        for(int i = 0; i < list.size(); i++) {
+                            Map<String, Object> applicant = (Map<String, Object>) list.get(i);
+                            String studyGroupTitle = String.valueOf(applicant.get("studyGroupTitle"));
+                            String registerTime = (String) applicant.get("registerTime");
+                            String id = (String) applicant.get("userID");
+                            String username = applicant.get("userName").toString();
+                            String studyGroupID = (String) applicant.get("studyGroupID");
+                            applicants.add(new Applicant(id, username, registerTime, studyGroupID, studyGroupTitle));
                         }
                     }
                 }
@@ -89,6 +96,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     public void setListView() {
+        Log.d("aList >>> ", applicants.toString());
         SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.alarmListView);
         ApplicantAdapter adapter = new ApplicantAdapter(this, applicants);
         swipeMenuListView.setAdapter(adapter);
