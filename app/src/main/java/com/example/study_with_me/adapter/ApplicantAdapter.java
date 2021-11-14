@@ -26,17 +26,15 @@ public class ApplicantAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     ArrayList<Applicant> applicants;
-    ArrayList<String> usernameList;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference UserRef = databaseReference.child("users");
     private String username;
 
-    public ApplicantAdapter(Context context, ArrayList<Applicant> studyGroups, ArrayList<String> usernameList) {
+    public ApplicantAdapter(Context context, ArrayList<Applicant> applicants) {
         this.context = context;
-        this.applicants = studyGroups;
+        this.applicants = applicants;
         this.layoutInflater = LayoutInflater.from(this.context);
-        this.usernameList = usernameList;
     }
 
     @Override
@@ -56,10 +54,12 @@ public class ApplicantAdapter extends BaseAdapter {
         TextView alarmMemberName = (TextView) view.findViewById(R.id.alarmMemberName);
         TextView alarmRegisterTime = (TextView) view.findViewById(R.id.alarmRegisterTime);
 
-        username = usernameList.get(0);
+        Log.d("getUserName()", "??" + applicants.get(position).getUserName());
+        Log.d("getStudyGroupTitle()", ">" + applicants.get(position).getStudyGroupTitle());
 
         studyTitle.setText(applicants.get(position).getStudyGroupTitle());
-        alarmMemberName.setText(username);
+        /** 이름이 안떠요....... **/
+        alarmMemberName.setText(applicants.get(position).getUserName());
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
 
         return view;
