@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class StudyGroup {
-
+    private String studyGroupID;
     private String name;        // 스터디 이름
     private String description; // 스터디 설명
     private String type;        // 스터디 종류
@@ -22,7 +22,9 @@ public class StudyGroup {
     private ArrayList<String> memberList = new ArrayList<>();        // 스터디 멤버 리스트
 
 
-    public StudyGroup(String leader, String name, String description, String type, int numOfMember, Date startDate, Date endDate) {
+    public StudyGroup(String studyGroupID, String leader, String name, String description,
+                      String type, int numOfMember, Date startDate, Date endDate) {
+        this.studyGroupID = studyGroupID;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -38,15 +40,17 @@ public class StudyGroup {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
         String registerTime = dateFormat.format(date);
 
-        applicantList.add(new Applicant(leader, registerTime, name));
+        String username = "leader";
+        applicantList.add(new Applicant(leader, username, registerTime, studyGroupID, name));
     }
 
 
-    public StudyGroup(String leader, String name, String description,
+    public StudyGroup(String studyGroupID, String leader, String name, String description,
                       String type, int numOfMember, Date startDate,
                       Date endDate, boolean closed,
                       ArrayList<Applicant> applicantList,
                       ArrayList<String> memberList) {
+        this.studyGroupID = studyGroupID;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -59,6 +63,9 @@ public class StudyGroup {
         this.memberList = memberList;
     }
 
+    public String getStudyGroupID() {
+        return this.studyGroupID;
+    }
     public String getName() { return name; }
     public String getDescription() { return description; }
     public String getType() { return type; }

@@ -93,8 +93,8 @@ public class StudyRegisterActivity extends AppCompatActivity {
     /** DB에 스터디 정보를 등록하는 함수 **/
     private void writeStudyGroup() {
         long time= System.currentTimeMillis();
-        StudyGroup studyGroup = new StudyGroup(userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
         studyGroupID = userID+String.valueOf(time);
+        StudyGroup studyGroup = new StudyGroup(studyGroupID, userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
         studyGroupRef.child(studyGroupID).push();
         studyGroupRef.child(studyGroupID).setValue(studyGroup)
             .addOnCompleteListener(new OnCompleteListener<Void>() {
