@@ -15,9 +15,8 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/studyRecuit"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
@@ -26,7 +25,8 @@
             android:padding="5dp"
             android:text="모집중"
             android:textColor="@color/white"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            android:textStyle="bold" />
 
         <TextView
             android:textStyle="bold"

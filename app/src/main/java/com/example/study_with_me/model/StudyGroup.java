@@ -30,7 +30,7 @@ public class StudyGroup {
         this.startDate = startDate;
         this.endDate = endDate;
         this.leader = leader;
-        this.closed = true;
+        this.closed = false;
         memberList.add(leader);
 
         long now = System.currentTimeMillis();

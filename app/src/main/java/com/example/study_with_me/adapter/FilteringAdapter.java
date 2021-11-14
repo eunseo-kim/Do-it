@@ -25,9 +25,6 @@ public class FilteringAdapter extends BaseAdapter implements Filterable {
 
     Filter listFilter;
 
-    public FilteringAdapter() {
-
-    }
     @Override
     public int getCount() {
         return filterStudyList.size();

@@ -67,26 +67,7 @@ public class StudySearchActivity extends AppCompatActivity {
         /** DB의 studygroups의 변화가 생겼을 때 감지하는 listener **/
         setStudyGroupsChangedListener();
 
-        EditText editText = (EditText)findViewById(R.id.editText) ;
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString();
-                if(filterText.length() > 0) {
-                    studySearchListView.setFilterText(filterText);
-                } else {
-                    studySearchListView.clearTextFilter();
-                }
-            }
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-        });
+        editTextChangedListener();
     }
     /** 액션바 오버라이딩 **/
     @Override
@@ -152,6 +133,30 @@ public class StudySearchActivity extends AppCompatActivity {
                     public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+//  EditText에 키보드 입력이 있으면 필터링되는 함수
+    private void editTextChangedListener() {
+        EditText editText = (EditText)findViewById(R.id.editText) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString();
+                if(filterText.length() > 0) {
+                    studySearchListView.setFilterText(filterText);
+                } else {
+                    studySearchListView.clearTextFilter();
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
         });
     }
