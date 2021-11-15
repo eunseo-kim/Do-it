@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.SearchAdapter;
-import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -60,14 +59,33 @@ public class StudySearchActivity extends AppCompatActivity {
 
         /** floatingActionButton 누르면 스터디 생성 화면 **/
         floatingButtonClickedListener();
-        
+
         /** 펼치기 버튼(expandButton) 클릭 시 필터링 검색 창 펼침 **/
         expandButtonClickedListener();
 
         /** DB의 studygroups의 변화가 생겼을 때 감지하는 listener **/
         setStudyGroupsChangedListener();
 
-        editTextChangedListener();
+        EditText editText = (EditText)findViewById(R.id.editText) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString();
+                if(filterText.length() > 0) {
+                    studySearchListView.setFilterText(filterText);
+                } else {
+                    studySearchListView.clearTextFilter();
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
     }
     /** 액션바 오버라이딩 **/
     @Override
@@ -127,36 +145,12 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /** floatingButton 처리 함수 **/
     private void floatingButtonClickedListener() {
-                FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
                 startActivity(intent);
-            }
-        });
-    }
-
-//  EditText에 키보드 입력이 있으면 필터링되는 함수
-    private void editTextChangedListener() {
-        EditText editText = (EditText)findViewById(R.id.editText) ;
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString();
-                if(filterText.length() > 0) {
-                    studySearchListView.setFilterText(filterText);
-                } else {
-                    studySearchListView.clearTextFilter();
-                }
-            }
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
         });
     }
@@ -176,7 +170,7 @@ public class StudySearchActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     /** 상단 바 마이페이지, 알림 버튼 **/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -195,8 +189,9 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /** 분류 필터링 **/
     public void onClick(View v) {
+
         filteredStudyList.clear();
-        Log.d("studyList >>> ", studyList.get(0).toString());
+
         Boolean b = (Boolean) studyList.get(0).get("closed");
 
         switch (v.getId()) {
@@ -246,18 +241,45 @@ public class StudySearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**인원수 필터링**/
-    public void filterCount(View view) {
+    /**인원수 필터링
+     * @return**/
+    public ArrayList<Map<String, Object>> filterCount(View view) {
+        String startDate;
+        String endDate;
+        int month;
+
+        Log.d("필터된 스터디 리스트 >>", filteredStudyList.toString());
+
         ArrayList<Map<String, Object>> filterCountList = new ArrayList<Map<String, Object>>();
+        ArrayList<Map<String, Object>> finalfilterList = new ArrayList<Map<String, Object>>();
+
         switch (view.getId()) {
             case R.id.two:
                 for (Map<String, Object> sg : filteredStudyList) {
                     if (Integer.valueOf(String.valueOf(sg.get("member"))) == 2) {
                         filterCountList.add(sg);
+                        Log.d("필터", filterCountList.toString());
+
+                        if(view.getId() == R.id.oneMonth)  {
+                            for(Map<String, Object> sg2: filterCountList) {
+                                startDate = String.valueOf(sg2.get("startDate"));
+                                endDate = String.valueOf(sg2.get("endDate"));
+
+                                if(Integer.parseInt(endDate.substring(2,4)) > Integer.parseInt(startDate.substring(2,4))) {
+                                    month = 12 - Integer.parseInt(startDate.substring(5,7)) + Integer.parseInt(endDate.substring(4,6));
+                                    if(month == 1) {
+                                        Log.d("기간", Integer.toString(month));
+                                        finalfilterList.add(sg2);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 setListView(filterCountList);
                 break;
+            case R.id.oneMonth:
+                Log.d("누름", "제발 좀 되라!!");
             case R.id.three:
                 for (Map<String, Object> sg : filteredStudyList) {
                     if (Integer.valueOf(String.valueOf(sg.get("member"))) == 3) {
@@ -283,10 +305,14 @@ public class StudySearchActivity extends AppCompatActivity {
                 setListView(filterCountList);
                 break;
         }
+
+        Log.d("필터된 스터디 리스트 >>", filteredStudyList.toString());
+        return filteredStudyList;
     }
 
-    /**스터디 기간 필터링**/
-    public void filerDate(View view) {
+    /**스터디 기간 필터링
+     * @return**/
+    public ArrayList<Map<String, Object>> filterDate(View view) {
         String startDate;
         String endDate;
         int month;
@@ -373,6 +399,8 @@ public class StudySearchActivity extends AppCompatActivity {
                 setListView(filterCountList);
                 break;
         }
-    }
+        return filteredStudyList;
+     }
+
 
 }

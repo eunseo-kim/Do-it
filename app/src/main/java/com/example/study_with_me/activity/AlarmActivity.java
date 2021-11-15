@@ -160,7 +160,7 @@ public class AlarmActivity extends AppCompatActivity {
                         break;
                 }
                 // false : close the menu; true : not close the menu
-                return false;
+                return true;
             }
         });
     }
