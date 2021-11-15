@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 StudyGroup 객체 리스트
     private ArrayList<Map<String, Object>> filteredList = new ArrayList<>(); // 필터링 된 리스트
     private ListView myStudyRoomListView;
+    private StudyGroupAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,56 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         getStudyGroupIDList();
     }
 
+    /**진행중 스터디 그룹 필터링**/
+    public void filterStarted() throws ParseException {
+        for (Map<String, Object> sg : studyGroupList) {
+            // closed && not finished
+            SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+            Date endDate = format.parse(String.valueOf(sg.get("endDate")));
+            Date currDate = new Date();
+            if (currDate.before(endDate) && (Boolean)sg.get("closed")) {
+                filteredList.add(sg);
+            }
+        }
+    }
+
+    /**대기중 스터디 그룹 필터링**/
+    public void filterWaiting() {
+        /*스터디그룹의 applicants에 나의 userID 있으면 추가하기*/
+        for (Map<String, Object> sg : studyGroupList) {
+            ArrayList<Applicant>  applicantList = (ArrayList<Applicant>) sg.get("applicantList");
+            if (applicantList!=null && applicantList.contains(userID)) {
+                filteredList.add(sg);
+            }
+        }
+    }
+
+    /**마감설정 스터디 그룹 필터링**/
+    public void filterClosing() throws ParseException {
+        // endDate 이전이면서 closed="false"인 스터디 그룹
+        for (Map<String, Object> sg : studyGroupList) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+            Date endDate = format.parse(String.valueOf(sg.get("endDate")));
+            Date currDate = new Date();
+            if (currDate.before(endDate)&&!(Boolean)sg.get("closed")) {
+                filteredList.add(sg);
+            }
+        }
+    }
+
+    /**종료됨 스터디 그룹 필터링**/
+    public void filterFinished() throws ParseException {
+        // 현재 날짜가 endDate를 지났다면 추가하기
+        for (Map<String, Object> sg : studyGroupList) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+            Date endDate = format.parse(String.valueOf(sg.get("endDate")));
+            Date currDate = new Date();
+            if (endDate.before(currDate)) {
+                filteredList.add(sg);
+            }
+        }
+    }
+
     public void myStudyRoomTabClicked(View view) throws ParseException {
         filteredList.clear();
 
@@ -76,45 +128,18 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 filteredList = (ArrayList<Map<String, Object>>) studyGroupList.clone();
                 break;
             case R.id.started:
-                for (Map<String, Object> sg : studyGroupList) {
-                    // closed && not finished
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
-                    Date endDate = format.parse(String.valueOf(sg.get("endDate")));
-                    Date currDate = new Date();
-                    if (currDate.before(endDate) && (Boolean)sg.get("closed")) {
-                        filteredList.add(sg);
-                    }
-                }
+                filterStarted();
                 break;
             case R.id.waiting:
-                /*스터디그룹의 applicants에 나의 userID 있으면 추가하기*/
-                for (Map<String, Object> sg : studyGroupList) {
-                    ArrayList<Applicant>  applicantList = (ArrayList<Applicant>) sg.get("applicantList");
-                    if (applicantList.contains(userID)) {
-                        filteredList.add(sg);
-                    }
-                }
+                filterWaiting();
                 break;
             case R.id.closing:
-                for (Map<String, Object> sg : studyGroupList) {
-                    if(!(Boolean)sg.get("closed")) {
-                        filteredList.add(sg);
-                    }
-                }
+                filterClosing();
                 break;
             case R.id.finished:
-                // 현재 날짜가 endDate를 지났다면 추가하기
-                for (Map<String, Object> sg : studyGroupList) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
-                    Date endDate = format.parse(String.valueOf(sg.get("endDate")));
-                    Date currDate = new Date();
-                    if (endDate.before(currDate)) {
-                        filteredList.add(sg);
-                    }
-                }
+                filterFinished();
                 break;
         }
-
         setListView(filteredList);
     }
 
@@ -140,13 +165,22 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        studyGroupList.clear();
+                        filteredList.clear();
                         if(snapshot.getValue() != null) {
                             for (String id : studyGroupIDList) {
                                 collectStudyGroupList(id, (Map<String, Object>) snapshot.getValue());
                             }
-                            Log.d("studyList >>> ", studyGroupList.toString());
-                            // 처음 실행하면 자동으로 [전체] 탭 선택됨 => 모든 studyGroupList 보여주기
-                            setListView(studyGroupList);
+
+                            /*초기 실행 시 자동으로 '진행중' 탭 보임*/
+                            try {
+                                filterStarted();
+                                RadioButton startedTabBtn = (RadioButton)findViewById(R.id.started);
+                                startedTabBtn.setChecked(true);
+                                setListView(filteredList);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                     @Override
@@ -166,7 +200,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     }
 
     public void setListView(ArrayList<Map<String, Object>> list) {
-        StudyGroupAdapter adapter = new StudyGroupAdapter(this, list);
+        adapter = new StudyGroupAdapter(this, list);
         myStudyRoomListView.setAdapter(adapter);
         myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -188,14 +222,13 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 /*현재 탭이 [마감 설정]이면 longClick 했을 때 마감여부 Dialog 보여줌*/
                 RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
                 switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
-                    case R.id.waiting: // 대기 중
-                        /**신청 취소 AlertDialog**/
+                    case R.id.waiting: /*신청 취소 AlertDialog*/
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(MyStudyRoomActivity.this)
                                 .setTitle("신청을 취소하시겠습니까?")
                                 .setPositiveButton("예", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        // 신청 취소 하면 해당 스터디그룹 applicantList에서 현재 사용자 빼기
+                                        // [미완성] 신청 취소 하면 해당 스터디그룹 applicantList에서 현재 사용자 빼기
                                         Toast.makeText(getApplicationContext(), "신청이 취소 되었습니다.", Toast.LENGTH_SHORT).show();
                                     }
                                 })
@@ -209,20 +242,19 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                         dialog1.show();
 
                         break;
-                    case R.id.closing: // 마감 설정
-                        /**스터디 마감 AlertDialog**/
+                    case R.id.closing: /*스터디 마감 AlertDialog*/
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(MyStudyRoomActivity.this)
                                 .setTitle("스터디 모집을 마감하시겠습니까?")
                                 .setPositiveButton("예", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        // 신청 취소 하면 해당 스터디그룹 applicantList에서 현재 사용자 빼기
+                                        studyGroupRef.child((String)studyGroup.get("studyGroupID")).child("closed").setValue(true);
+                                        getStudyGroupList(); // 변경된 스터디그룹 리스트 가져오기(조금 비효율적인 것 같기도...)
                                     }
                                 })
                                 .setNegativeButton("아니오", null);
                         AlertDialog dialog2 = builder2.create();
                         dialog2.show();
-
                         break;
                 }
                 return true;
@@ -250,19 +282,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.ing:
-                break;
-            case R.id.done:
-                break;
-            case R.id.all:
-                break;
-            case R.id.close:
-                break;
         }
     }
 }

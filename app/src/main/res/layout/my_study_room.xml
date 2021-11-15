@@ -29,7 +29,8 @@
                 android:background="@drawable/selector_top_menu_button"
                 android:textColor="@drawable/selector_top_menu_text"
                 android:text="진행중"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
                 android:id="@+id/waiting"
@@ -40,7 +41,8 @@
                 android:background="@drawable/selector_top_menu_button"
                 android:textColor="@drawable/selector_top_menu_text"
                 android:text="대기중"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
                 android:id="@+id/closing"
@@ -51,7 +53,8 @@
                 android:background="@drawable/selector_top_menu_button"
                 android:textColor="@drawable/selector_top_menu_text"
                 android:text="마감설정"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
                 android:id="@+id/finished"
@@ -62,7 +65,8 @@
                 android:background="@drawable/selector_top_menu_button"
                 android:textColor="@drawable/selector_top_menu_text"
                 android:text="종료됨"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
         </RadioGroup>
     </LinearLayout>
 
