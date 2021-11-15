@@ -18,6 +18,8 @@ import com.example.study_with_me.R;
 import com.example.study_with_me.model.Applicant;
 import com.example.study_with_me.model.StudyGroup;
 import com.example.study_with_me.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -132,19 +134,22 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                 }
 
                 if(!duplicate) {
-                    Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
-//                    username = userRef.child(userID).child("username").get;
+                    userRef.child(userID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            username = String.valueOf(task.getResult().getValue());
+                            long now = System.currentTimeMillis();
+                            Date date = new Date(now);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
+                            String registerTime = dateFormat.format(date);
 
-                    long now = System.currentTimeMillis();
-                    Date date = new Date(now);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
-                    String registerTime = dateFormat.format(date);
+                            Applicant newApplicant = new Applicant(userID, username, registerTime,
+                                    studyGroupID, String.valueOf(studyGroup.get("name")));
+                            studyGroupRef.child(studyGroupID).child("applicantList").push().setValue(newApplicant);
+                            Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                    Log.d("userInfo", userID + username + registerTime + studyGroupID + String.valueOf(studyGroup.get("studyGroupTitle")));
-                    Log.d("applicantList > ", applicantMap.toString());
-                    Applicant newApplicant = new Applicant(userID, "username", registerTime,
-                            studyGroupID, String.valueOf(studyGroup.get("name")));
-                    studyGroupRef.child(studyGroupID).child("applicantList").push().setValue(newApplicant);
                 }
             }
         });

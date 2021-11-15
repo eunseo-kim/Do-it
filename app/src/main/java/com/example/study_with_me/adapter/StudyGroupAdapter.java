@@ -61,7 +61,7 @@ public class StudyGroupAdapter extends BaseAdapter {
         studyTitle.setText(String.valueOf(studyGroup.get("name")));
         studyRegisterDay.setText(String.valueOf(studyGroup.get("endDate")));
 
-        ArrayList<Map<String, String>> memberList = (ArrayList<Map<String, String>>)studyGroup.get("memberList");
+        Map<String, String> memberList = (Map<String, String>)studyGroup.get("memberList");
         currentMemberCount.setText(String.valueOf(memberList.size()));
         maxMemberCount.setText(String.valueOf(studyGroup.get("member")));
 
