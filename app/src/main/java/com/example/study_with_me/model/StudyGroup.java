@@ -39,9 +39,6 @@ public class StudyGroup {
         Date date = new Date(now);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
         String registerTime = dateFormat.format(date);
-
-        String username = "leader";
-        applicantList.add(new Applicant(leader, username, registerTime, studyGroupID, name));
     }
 
 

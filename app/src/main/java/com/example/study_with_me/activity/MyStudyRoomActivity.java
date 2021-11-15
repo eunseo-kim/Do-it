@@ -252,4 +252,17 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.ing:
+                break;
+            case R.id.done:
+                break;
+            case R.id.all:
+                break;
+            case R.id.close:
+                break;
+        }
+    }
 }
