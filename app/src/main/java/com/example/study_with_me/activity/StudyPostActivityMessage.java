@@ -15,13 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.study_with_me.R;
+import com.example.study_with_me.model.Applicant;
 import com.example.study_with_me.model.StudyGroup;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +32,10 @@ public class StudyPostActivityMessage extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     DatabaseReference userRef = databaseReference.child("users");
+    DatabaseReference studyGroupRef = databaseReference.child("studygroups");
+    Map<String, Object> studyGroupInfo = new HashMap<>();
+    private FirebaseAuth firebaseAuth;
+    private String userID;
 
     Dialog dialog01;    // custom dialog
 
@@ -37,10 +44,13 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_post);
 
-        /** intent 값 받기 (study group에 대한 map 형태의 정보) **/
-        Map<String, Object> studyGroupInfo = new HashMap<>();
-        studyGroupInfo = (Map) getIntent().getSerializableExtra("studyGroup");
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null){
+            userID = firebaseAuth.getCurrentUser().getUid();
+        }
 
+        /** intent 값 받기 (study group에 대한 map 형태의 정보) **/
+        studyGroupInfo = (Map) getIntent().getSerializableExtra("studyGroup");
         setUserRefListener(studyGroupInfo);
 
         dialog01 = new Dialog(StudyPostActivityMessage.this);
@@ -97,7 +107,38 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         dialog01.findViewById(R.id.yesButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
+                // studyGroup => StudyGroup 객체
+                // 현재 가입하려는 studyGroup의 id -> studyGroup.getStudyGroupID()
+                // 로그인된 사용자 id -> userID
+                Map<String, Object> studyGroup = (Map<String, Object>) studyGroupInfo;
+                Log.d("aa", studyGroup.toString());
+                String studyGroupID = (String) studyGroup.get("studyGroupID");
+
+                ArrayList<Applicant> applicantList = (ArrayList<Applicant>)studyGroup.get("applicantList");
+                if (applicantList != null) {
+                    for (int i = 0; i < applicantList.size(); i++) {
+                        // - applicantList의 i번째 인덱스의 현재 userID 가져오는 법?
+                        Map<String, Object> map = (Map<String, Object>) applicantList.get(i);
+                        if (map.get("userID").equals(userID)){
+                            Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+
+                        /*
+                         * 만약 존재하면 토스트 메시지 보여주고 break;
+                         * Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
+                         * */
+                        else if (!map.get("userID").equals(userID)){
+                            Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    /*만약 다 돌았는데 신청자 리스트에 없는 새로운 사용자이면
+                     * 가입되었습니다. => Toast 메시지 보여주고
+                     * applicantList에 new Applicant(~~~) 추가한 다음에
+                     * db에 studyGroup 갱신 시켜주기*/
+                }
             }
         });
     }

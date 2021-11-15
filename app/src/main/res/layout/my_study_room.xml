@@ -13,59 +13,60 @@
         android:orientation="horizontal">
 
         <RadioGroup
+            android:id="@+id/myStudyRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_line"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/ing"
-                android:layout_width="59dp"
+                android:id="@+id/started"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
                 android:checked="true"
-                android:onClick="onClick"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
                 android:text="진행중"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
-                android:onClick="onClick"
-                android:id="@+id/done"
+                android:id="@+id/waiting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
-                android:text="종료"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="대기중"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
-                android:onClick="onClick"
-                android:id="@+id/all"
+                android:id="@+id/closing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
-                android:text="전체"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="마감설정"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:onClick="myStudyRoomTabClicked"/>
 
             <RadioButton
-                android:onClick="onClick"
-                android:id="@+id/close"
+                android:id="@+id/finished"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_top_menu_button"
                 android:button="@null"
-                android:text="마감설정"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="종료됨"
                 android:textAlignment="center"
-                android:textColor="@drawable/selector_top_menu_text" />
+                android:onClick="myStudyRoomTabClicked"/>
         </RadioGroup>
     </LinearLayout>
 
