@@ -68,12 +68,12 @@ public class AlarmActivity extends AppCompatActivity {
                     // studyGroupSnapshot.child("leader")과 userID 비교
                     // 만약 같으면? [applicant list + 스터디 이름] 가져오기
                     if (userID.equals(studyGroupSnapshot.child("leader").getValue(String.class))) {
-                        Map<String, Object> map = (Map<String, Object>) studyGroupSnapshot.getValue();
-                        ArrayList<Applicant> list = (ArrayList<Applicant>) map.get("applicantList");
+                        Map<String, Object> studyGroup = (Map<String, Object>) studyGroupSnapshot.getValue();
 
-                        if (list != null) {
-                            for (int i = 0; i < list.size(); i++) {
-                                Map<String, Object> applicant = (Map<String, Object>) list.get(i);
+                        if (studyGroup.get("applicantList") != null) {
+                            Map<String, Object> applicantMap = (Map<String, Object>)studyGroup.get("applicantList");
+                            for (Map.Entry entry : applicantMap.entrySet()) {
+                                Map<String, Object> applicant = (Map<String, Object>) entry.getValue();
                                 String studyGroupTitle = String.valueOf(applicant.get("studyGroupTitle"));
                                 String registerTime = (String) applicant.get("registerTime");
                                 String id = (String) applicant.get("userID");
