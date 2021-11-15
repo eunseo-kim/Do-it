@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         getSupportActionBar().hide();
         signUp();
+        findPassword();
 
         emailLogin = (EditText)findViewById(R.id.emailLogin);
         passwordLogin = (EditText)findViewById(R.id.passwordLogin);
@@ -52,6 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void findPassword() {
+        TextView findPwdButton = findViewById(R.id.findPwdButton);
+
+        findPwdButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindPasswordActivity.class);
                 startActivity(intent);
             }
         });
