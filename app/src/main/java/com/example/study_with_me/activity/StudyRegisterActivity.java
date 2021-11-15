@@ -97,16 +97,16 @@ public class StudyRegisterActivity extends AppCompatActivity {
         StudyGroup studyGroup = new StudyGroup(studyGroupID, userID, studyName, studyDescription, type, numOfMember, startDate, endDate);
         studyGroupRef.child(studyGroupID).push();
         studyGroupRef.child(studyGroupID).setValue(studyGroup)
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(getApplicationContext(), "스터디 등록을 완료했습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "스터디 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                }
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getApplicationContext(), "스터디 등록을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "스터디 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         addStudyGroupList();
@@ -220,13 +220,13 @@ public class StudyRegisterActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 switch(checkedId) {
                     case R.id.studyMemberNumTwo:
-                        numOfMember = 1;
-                        break;
-                    case R.id.studyMemberNumThree:
                         numOfMember = 2;
                         break;
-                    case R.id.studyMemberNumFour:
+                    case R.id.studyMemberNumThree:
                         numOfMember = 3;
+                        break;
+                    case R.id.studyMemberNumFour:
+                        numOfMember = 4;
                         break;
                 }
             }
