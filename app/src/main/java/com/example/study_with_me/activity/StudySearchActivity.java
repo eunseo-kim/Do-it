@@ -31,7 +31,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StudySearchActivity extends AppCompatActivity {
     private String userID;
@@ -44,7 +47,9 @@ public class StudySearchActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> studyList = new ArrayList<>(); // 전체 스터디 리스트
     private ArrayList<Map<String, Object>> filteredStudyList = new ArrayList<>(); // 필터링된 스터디 리스트
 
-    private String typeFiltering, memberFiltering, dateFiltering;
+    private ArrayList<Map<String, Object>> filterTypeList = new ArrayList<>();
+    private ArrayList<Map<String, Object>> filterCountList = new ArrayList<>();
+    private ArrayList<Map<String, Object>> filterDateList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,17 @@ public class StudySearchActivity extends AppCompatActivity {
     }
 
     private void filteringListView() {
+        Set<Map<String, Object>> typeSet = new HashSet<>(filterTypeList);
+        Set<Map<String, Object>> countSet = new HashSet<>(filterCountList);
+        Set<Map<String, Object>> dateSet = new HashSet<>(filterDateList);
 
+        if(countSet.size() > 0)
+            typeSet.retainAll(countSet);
+        if(dateSet.size() > 0)
+            typeSet.retainAll(dateSet);
+
+        ArrayList<Map<String, Object>> list = new ArrayList<>(typeSet);
+        setListView(list);
     }
 
     /** 스터디 검색화면 리스트 뷰 처리 **/
@@ -197,53 +212,48 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /** 분류 필터링 **/
     public void onClick(View v) {
-        filteredStudyList.clear();
-        Log.d("studyList >>> ", studyList.get(0).toString());
+        filterTypeList.clear();
         Boolean b = (Boolean) studyList.get(0).get("closed");
 
         switch (v.getId()) {
             case R.id.all:
                 Toast.makeText(getApplicationContext(),"전체 스터디", Toast.LENGTH_SHORT).show();
-                filteredStudyList = (ArrayList<Map<String, Object>>) studyList.clone();
+                filterTypeList = (ArrayList<Map<String, Object>>) filteredStudyList.clone();
                 break;
             case R.id.programming:
                 Toast.makeText(getApplicationContext(), "프로그래밍만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, Object> sg : studyList) {
+                for (Map<String, Object> sg : filteredStudyList) {
                     if(String.valueOf(sg.get("type")).equals("프로그래밍")) {
-                        filteredStudyList.add(sg);
+                        filterTypeList.add(sg);
                     }
                 }
-                typeFiltering = "프로그래밍";
                 break;
             case R.id.employ:
                 Toast.makeText(getApplicationContext(), "취업만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, Object> sg : studyList) {
+                for (Map<String, Object> sg : filteredStudyList) {
                     if(String.valueOf(sg.get("type")).equals("취업")) {
-                        filteredStudyList.add(sg);
+                        filterTypeList.add(sg);
                     }
                 }
-                typeFiltering = "취업";
                 break;
             case R.id.language:
                 Toast.makeText(getApplicationContext(), "어학 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, Object> sg : studyList) {
+                for (Map<String, Object> sg : filteredStudyList) {
                     if(String.valueOf(sg.get("type")).equals("어학")) {
-                        filteredStudyList.add(sg);
+                        filterTypeList.add(sg);
                     }
                 }
-                typeFiltering = "어학";
                 break;
             case R.id.ect:
                 Toast.makeText(getApplicationContext(), "기타만 분류", Toast.LENGTH_SHORT).show();
-                for (Map<String, Object> sg : studyList) {
+                for (Map<String, Object> sg : filteredStudyList) {
                     if (!String.valueOf(sg.get("type")).equals("프로그래밍")  && !String.valueOf(sg.get("type")).equals("취업") && !String.valueOf(sg.get("type")).equals("어학")) {
-                        filteredStudyList.add(sg);
+                        filterTypeList.add(sg);
                     }
                 }
-                typeFiltering = "기타";
                 break;
         }
-        setListView(filteredStudyList);
+        filteringListView();
     }
 
     // 각각 글에 맞는 글이 매치되어야 됨!
@@ -254,7 +264,7 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /**인원수 필터링**/
     public void filterCount(View view) {
-        ArrayList<Map<String, Object>> filterCountList = new ArrayList<Map<String, Object>>();
+        filterCountList.clear();
         switch (view.getId()) {
             case R.id.two:
                 for (Map<String, Object> sg : filteredStudyList) {
@@ -262,7 +272,6 @@ public class StudySearchActivity extends AppCompatActivity {
                         filterCountList.add(sg);
                     }
                 }
-                memberFiltering = "2명";
                 break;
             case R.id.three:
                 for (Map<String, Object> sg : filteredStudyList) {
@@ -270,7 +279,6 @@ public class StudySearchActivity extends AppCompatActivity {
                         filterCountList.add(sg);
                     }
                 }
-                memberFiltering = "3명";
                 break;
             case R.id.four:
                 for (Map<String, Object> sg : filteredStudyList) {
@@ -278,7 +286,6 @@ public class StudySearchActivity extends AppCompatActivity {
                         filterCountList.add(sg);
                     }
                 }
-                memberFiltering = "4명";
                 break;
             case R.id.moreFour:
                 for (Map<String, Object> sg : filteredStudyList) {
@@ -286,10 +293,9 @@ public class StudySearchActivity extends AppCompatActivity {
                         filterCountList.add(sg);
                     }
                 }
-                memberFiltering = "5명이상";
                 break;
         }
-        setListView(filterCountList);
+        filteringListView();
     }
 
     /** 두 날짜 사이의 기간 구하기 **/
@@ -299,7 +305,7 @@ public class StudySearchActivity extends AppCompatActivity {
         int m1 = Integer.parseInt(sDate.substring(5, 7));
         int m2 = Integer.parseInt(eDate.substring(5, 7));
 
-        int diffMonth = (y2-y1) * 12 + (m2-m1) + 1;
+        int diffMonth = (y2-y1) * 12 + (m2-m1);
         return diffMonth;
     }
 
@@ -308,7 +314,7 @@ public class StudySearchActivity extends AppCompatActivity {
         String startDate;
         String endDate;
         int month;
-        ArrayList<Map<String, Object>> filterCountList = new ArrayList<Map<String, Object>>();
+        filterDateList.clear();
 
         switch(view.getId()) {
             case R.id.oneMonth:
@@ -319,10 +325,9 @@ public class StudySearchActivity extends AppCompatActivity {
                     month = getDiffMonth(startDate, endDate);
                     if(month == 1) {
                         Log.d("기간: ", Integer.toString(month));
-                        filterCountList.add(sg);
+                        filterDateList.add(sg);
                     }
                 }
-                dateFiltering = "1개월";
                 break;
             case R.id.twoMonth:
                 for(Map<String, Object> sg: filteredStudyList) {
@@ -332,10 +337,9 @@ public class StudySearchActivity extends AppCompatActivity {
                     month = getDiffMonth(startDate, endDate);
                     if(month == 2) {
                         Log.d("기간: ", Integer.toString(month));
-                        filterCountList.add(sg);
+                        filterDateList.add(sg);
                     }
                 }
-                dateFiltering = "2개월";
                 break;
             case R.id.sixMonth:
                 for(Map<String, Object> sg: filteredStudyList) {
@@ -345,11 +349,9 @@ public class StudySearchActivity extends AppCompatActivity {
                     month = getDiffMonth(startDate, endDate);
                     if(month == 6) {
                         Log.d("기간: ", Integer.toString(month));
-                        filterCountList.add(sg);
+                        filterDateList.add(sg);
                     }
                 }
-
-                dateFiltering = "6개월";
                 break;
             case R.id.moreSixMonth:
                 for(Map<String, Object> sg: filteredStudyList) {
@@ -359,12 +361,11 @@ public class StudySearchActivity extends AppCompatActivity {
                     month = getDiffMonth(startDate, endDate);
                     if(month != 1 && month != 2 && month != 6) {
                         Log.d("기간: ", Integer.toString(month));
-                        filterCountList.add(sg);
+                        filterDateList.add(sg);
                     }
                 }
-                dateFiltering = "6개월초과";
                 break;
         }
-        setListView(filterCountList);
+        filteringListView();
     }
 }
