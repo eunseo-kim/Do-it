@@ -45,11 +45,13 @@ public class StudySearchActivity extends AppCompatActivity {
     private ListView studySearchListView;
 
     private ArrayList<Map<String, Object>> studyList = new ArrayList<>(); // 전체 스터디 리스트
-    private ArrayList<Map<String, Object>> filteredStudyList = new ArrayList<>(); // 필터링된 스터디 리스트
+    private ArrayList<Map<String, Object>> filteredStudyList = studyList; // 필터링된 스터디 리스트
 
     private ArrayList<Map<String, Object>> filterTypeList = new ArrayList<>();
     private ArrayList<Map<String, Object>> filterCountList = new ArrayList<>();
     private ArrayList<Map<String, Object>> filterDateList = new ArrayList<>();
+
+    private boolean noCountClick = true, noDateClick = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +111,9 @@ public class StudySearchActivity extends AppCompatActivity {
         Set<Map<String, Object>> countSet = new HashSet<>(filterCountList);
         Set<Map<String, Object>> dateSet = new HashSet<>(filterDateList);
 
-        if(countSet.size() > 0)
+        if(!noCountClick)
             typeSet.retainAll(countSet);
-        if(dateSet.size() > 0)
+        if(!noDateClick)
             typeSet.retainAll(dateSet);
 
         ArrayList<Map<String, Object>> list = new ArrayList<>(typeSet);
@@ -264,6 +266,7 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /**인원수 필터링**/
     public void filterCount(View view) {
+        noCountClick = false;
         filterCountList.clear();
         switch (view.getId()) {
             case R.id.two:
@@ -315,7 +318,7 @@ public class StudySearchActivity extends AppCompatActivity {
         String endDate;
         int month;
         filterDateList.clear();
-
+        noDateClick = false;
         switch(view.getId()) {
             case R.id.oneMonth:
                 for(Map<String, Object> sg: filteredStudyList) {
@@ -324,7 +327,6 @@ public class StudySearchActivity extends AppCompatActivity {
 
                     month = getDiffMonth(startDate, endDate);
                     if(month == 1) {
-                        Log.d("기간: ", Integer.toString(month));
                         filterDateList.add(sg);
                     }
                 }
@@ -336,7 +338,6 @@ public class StudySearchActivity extends AppCompatActivity {
 
                     month = getDiffMonth(startDate, endDate);
                     if(month == 2) {
-                        Log.d("기간: ", Integer.toString(month));
                         filterDateList.add(sg);
                     }
                 }
@@ -348,7 +349,6 @@ public class StudySearchActivity extends AppCompatActivity {
 
                     month = getDiffMonth(startDate, endDate);
                     if(month == 6) {
-                        Log.d("기간: ", Integer.toString(month));
                         filterDateList.add(sg);
                     }
                 }
@@ -360,7 +360,6 @@ public class StudySearchActivity extends AppCompatActivity {
 
                     month = getDiffMonth(startDate, endDate);
                     if(month != 1 && month != 2 && month != 6) {
-                        Log.d("기간: ", Integer.toString(month));
                         filterDateList.add(sg);
                     }
                 }
