@@ -1,6 +1,8 @@
 package com.example.study_with_me.model;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserModel {
     public String email;
@@ -11,6 +13,7 @@ public class UserModel {
     public int dropCount;
     public int joinCount;
     public String userID;
+    public Map<String, String> appliedStudyGroupIDList;
 
     public UserModel(String email, String password, String username) {
         this.email = email;
@@ -20,6 +23,7 @@ public class UserModel {
         this.dropCount = 0;
         this.joinCount = 0;
         studyGroupIDList = new ArrayList<>();
+        appliedStudyGroupIDList = new HashMap<>();
     }
 
     public void addDropCount() { this.dropCount += 1; }
@@ -49,5 +53,8 @@ public class UserModel {
     }
     public String getUserID() {
         return userID;
+    }
+    public Map<String, String> getAppliedStudyGroupIDList() {
+        return appliedStudyGroupIDList;
     }
 }

@@ -147,6 +147,9 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                                     studyGroupID, String.valueOf(studyGroup.get("name")));
                             studyGroupRef.child(studyGroupID).child("applicantList").push().setValue(newApplicant);
                             Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
+
+                            /*user의 appliedStudyGroupIDList에 추가하기*/
+                            userRef.child(userID).child("appliedStudyGroupIDList").push().setValue(studyGroupID);
                         }
                     });
 
