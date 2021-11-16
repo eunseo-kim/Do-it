@@ -6,7 +6,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudyGroup {
     private String studyGroupID;
@@ -19,7 +21,7 @@ public class StudyGroup {
     private String leader;      // 스터디 방장 정보
     private boolean closed;     // 스터디 마감 여부
     private ArrayList<Applicant> applicantList = new ArrayList<>();   // 스터디 신청자 리스트
-    private ArrayList<String> memberList = new ArrayList<>();        // 스터디 멤버 리스트
+    private Map<String, String> memberList = new HashMap<>();        // 스터디 멤버 리스트
 
 
     public StudyGroup(String studyGroupID, String leader, String name, String description,
@@ -33,7 +35,7 @@ public class StudyGroup {
         this.endDate = endDate;
         this.leader = leader;
         this.closed = false;
-        memberList.add(leader);
+        memberList.put("leader", leader);
 
         long now = System.currentTimeMillis();
         Date date = new Date(now);
@@ -46,7 +48,7 @@ public class StudyGroup {
                       String type, int numOfMember, Date startDate,
                       Date endDate, boolean closed,
                       ArrayList<Applicant> applicantList,
-                      ArrayList<String> memberList) {
+                      Map<String, String> memberList) {
         this.studyGroupID = studyGroupID;
         this.name = name;
         this.description = description;
@@ -77,7 +79,7 @@ public class StudyGroup {
     public int getMember() { return numOfMember; }
     public String getLeader() { return leader; }
     public List<Applicant> getApplicantList() { return applicantList; }
-    public ArrayList<String> getMemberList() { return memberList; }
+    public Map<String, String> getMemberList() { return memberList; }
 
     public boolean getClosed() {
         return this.closed;

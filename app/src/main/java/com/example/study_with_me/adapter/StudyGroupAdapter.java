@@ -8,35 +8,50 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.MemberSampledata;
 import com.example.study_with_me.model.StudyGroup;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StudyGroupAdapter extends BaseAdapter {
+    private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
-    private ArrayList<Map<String, Object>> studyList = new ArrayList<>();
 
-    public StudyGroupAdapter(Context context, ArrayList<Map<String, Object>> studyList) {
+
+    public StudyGroupAdapter(Context context, ArrayList<Map<String, Object>> studyGroupList) {
         this.context = context;
-        this.studyList = studyList;
+        this.studyGroupList = studyGroupList;
         this.layoutInflater = LayoutInflater.from(this.context);
+        Log.d("ADAPTER : ", String.valueOf(studyGroupList.size()));
     }
 
     @Override
     public int getCount() {
-        return studyList.size();
+        return studyGroupList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return studyList.get(position);
+        return studyGroupList.get(position);
     }
 
     @Override
@@ -51,29 +66,26 @@ public class StudyGroupAdapter extends BaseAdapter {
         TextView studyRecuit = (TextView) view.findViewById(R.id.studyRecuit);
         TextView studyField = (TextView) view.findViewById(R.id.studyField);
         TextView studyTitle = (TextView) view.findViewById(R.id.studyTitle);
-        TextView currentMemberCount = (TextView)view.findViewById(R.id.currentMemberCount);
-        TextView maxMemberCount = (TextView)view.findViewById(R.id.maxMemberCount);
+        TextView currentMemberCount = (TextView) view.findViewById(R.id.currentMemberCount);
+        TextView maxMemberCount = (TextView) view.findViewById(R.id.maxMemberCount);
         TextView studyRegisterDay = (TextView) view.findViewById(R.id.studyRegisterDay);
 
-        Map<String, Object> studyGroup = studyList.get(position);
-        Log.d("checkCheck", String.valueOf(studyGroup.get("memberList")));
-        studyField.setText(String.valueOf(studyGroup.get("type")));
-        studyTitle.setText(String.valueOf(studyGroup.get("name")));
-        studyRegisterDay.setText(String.valueOf(studyGroup.get("endDate")));
+        if (studyGroupList.size() > 0) {
+            Map<String, Object> studyGroup = studyGroupList.get(position);
+            studyField.setText(String.valueOf(studyGroup.get("type")));
+            studyTitle.setText(String.valueOf(studyGroup.get("name")));
+            studyRegisterDay.setText(String.valueOf(studyGroup.get("endDate")));
 
-        Map<String, String> memberList = (Map<String, String>)studyGroup.get("memberList");
-        currentMemberCount.setText(String.valueOf(memberList.size()));
-        maxMemberCount.setText(String.valueOf(studyGroup.get("member")));
+            Map<String, String> memberList = (Map<String, String>) studyGroup.get("memberList");
+            if(memberList != null) currentMemberCount.setText(String.valueOf(memberList.size()));
+            maxMemberCount.setText(String.valueOf(studyGroup.get("member")));
 
-        boolean closed = new Boolean(String.valueOf(studyGroup.get("closed")));
-        String currentRecruit;
-        if (closed) {
-            currentRecruit = "모집마감";
-        } else {
-            currentRecruit = "모집중";
+            boolean closed = new Boolean(String.valueOf(studyGroup.get("closed")));
+            String currentRecruit;
+            if (closed) currentRecruit = "모집마감";
+            else currentRecruit = "모집중";
+            studyRecuit.setText(currentRecruit);
         }
-        studyRecuit.setText(currentRecruit);
-
 
         return view;
     }

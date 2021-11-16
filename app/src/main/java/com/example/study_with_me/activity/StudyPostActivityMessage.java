@@ -3,6 +3,7 @@ package com.example.study_with_me.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -43,6 +44,9 @@ public class StudyPostActivityMessage extends AppCompatActivity {
     private String userID;
     private String username;
     private Map<String, Object> applicantMap;
+    private Map<String, Object> studyGroup;
+    private boolean duplicate = false; // 중복된 신청자인지
+    private boolean isLeader = false;  // 리더인지
 
     Dialog dialog01;    // custom dialog
 
@@ -114,43 +118,59 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         dialog01.findViewById(R.id.yesButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean duplicate = false; // 중복된 신청자인지
-                Map<String, Object> studyGroup = (Map<String, Object>) studyGroupInfo;
-                Log.d("aa", studyGroup.toString());
+                studyGroup = (Map<String, Object>) studyGroupInfo;
                 String studyGroupID = (String) studyGroup.get("studyGroupID");
+                studyGroupRef.child(studyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        studyGroup = (Map<String, Object>) task.getResult().getValue();
+                        /*중복된 신청자 예외처리*/
+                        if (studyGroup.get("applicantList") != null) {
+                            applicantMap = (Map<String, Object>)studyGroup.get("applicantList");
+                            for (Map.Entry entry : applicantMap.entrySet()) {
+                                Map<String, Object> map = (Map<String, Object>) entry.getValue();
+                                Log.d("leader?", ""+studyGroup.get("leader").toString().equals(userID));
+                                if (map.get("userID").equals(userID)) {
+                                    Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
+                                    duplicate = true;
+                                    break;
+                                }
+                            }
+                        } else {
+                            applicantMap = new HashMap<>();
+                        }
 
-                if (studyGroup.get("applicantList") != null) {
-                    applicantMap = (Map<String, Object>)studyGroup.get("applicantList");
-                    for (Map.Entry entry : applicantMap.entrySet()) {
-                        Map<String, Object> map = (Map<String, Object>) entry.getValue();
-                        if (map.get("userID").equals(userID)) {
-                            Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
-                            duplicate = true;
-                            break;
+                        /*방장이 가입하는 경우 예외처리*/
+                        if (studyGroup.get("leader").toString().equals(userID)) {
+                            Toast.makeText(getApplicationContext(), "본인이 방장인 스터디는 가입할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            isLeader = true;
+                        }
+
+                        if(!(duplicate || isLeader)) {
+                            userRef.child(userID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    username = String.valueOf(task.getResult().getValue());
+                                    long now = System.currentTimeMillis();
+                                    Date date = new Date(now);
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
+                                    String registerTime = dateFormat.format(date);
+
+                                    Applicant newApplicant = new Applicant(userID, username, registerTime,
+                                            studyGroupID, String.valueOf(studyGroup.get("name")));
+                                    studyGroupRef.child(studyGroupID).child("applicantList").push().setValue(newApplicant);
+                                    Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                    /*user의 appliedStudyGroupIDList에 추가하기*/
+                                    userRef.child(userID).child("appliedStudyGroupIDList").push().setValue(studyGroupID);
+                                }
+                            });
+
                         }
                     }
-                } else {
-                    applicantMap = new HashMap<>();
-                }
+                });
 
-                if(!duplicate) {
-                    userRef.child(userID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            username = String.valueOf(task.getResult().getValue());
-                            long now = System.currentTimeMillis();
-                            Date date = new Date(now);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd hh:mm");
-                            String registerTime = dateFormat.format(date);
 
-                            Applicant newApplicant = new Applicant(userID, username, registerTime,
-                                    studyGroupID, String.valueOf(studyGroup.get("name")));
-                            studyGroupRef.child(studyGroupID).child("applicantList").push().setValue(newApplicant);
-                            Toast.makeText(getApplicationContext(), "신청되었습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
             }
         });
     }
