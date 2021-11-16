@@ -70,25 +70,20 @@ public class StudyGroupAdapter extends BaseAdapter {
         TextView maxMemberCount = (TextView) view.findViewById(R.id.maxMemberCount);
         TextView studyRegisterDay = (TextView) view.findViewById(R.id.studyRegisterDay);
 
-        Log.d("position, filteredList", position + " => " + studyGroupList);
         if (studyGroupList.size() > 0) {
             Map<String, Object> studyGroup = studyGroupList.get(position);
-            Log.d("checkCheck", String.valueOf(studyGroup.get("memberList")));
             studyField.setText(String.valueOf(studyGroup.get("type")));
             studyTitle.setText(String.valueOf(studyGroup.get("name")));
             studyRegisterDay.setText(String.valueOf(studyGroup.get("endDate")));
 
             Map<String, String> memberList = (Map<String, String>) studyGroup.get("memberList");
-            currentMemberCount.setText(String.valueOf(memberList.size()));
+            if(memberList != null) currentMemberCount.setText(String.valueOf(memberList.size()));
             maxMemberCount.setText(String.valueOf(studyGroup.get("member")));
 
             boolean closed = new Boolean(String.valueOf(studyGroup.get("closed")));
             String currentRecruit;
-            if (closed) {
-                currentRecruit = "모집마감";
-            } else {
-                currentRecruit = "모집중";
-            }
+            if (closed) currentRecruit = "모집마감";
+            else currentRecruit = "모집중";
             studyRecuit.setText(currentRecruit);
         }
 
