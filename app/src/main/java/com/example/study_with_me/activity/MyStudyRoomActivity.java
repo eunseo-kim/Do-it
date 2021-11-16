@@ -1,6 +1,5 @@
 package com.example.study_with_me.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,35 +8,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
-import com.example.study_with_me.adapter.SearchAdapter;
 import com.example.study_with_me.adapter.StudyGroupAdapter;
-import com.example.study_with_me.model.Applicant;
-import com.example.study_with_me.model.StudyGroup;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MyStudyRoomActivity extends AppCompatActivity {
@@ -47,9 +37,12 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
     private String userID;
-    private ArrayList<String> studyGroupIDList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 ID 리스트
-    private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>(); // 사용자가 가입한 스터디그룹 StudyGroup 객체 리스트
-    private ArrayList<Map<String, Object>> filteredList = new ArrayList<>(); // 필터링 된 리스트
+    private Map<String, String> studyGroupIDMap = new HashMap<>();
+    private Map<String, String> appliedStudyGroupIDMap = new HashMap<>();
+    private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>();
+    private ArrayList<Map<String, Object>> appliedStudyGroupList = new ArrayList<>();
+    private ArrayList<Map<String, Object>> filteredList = new ArrayList<>();
+    private Map<String, Object> singleStudyGroup;
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
 
@@ -61,17 +54,76 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() != null){
-            userID = firebaseAuth.getCurrentUser().getUid();
-        }
+        userID = firebaseAuth.getCurrentUser().getUid();
 
         myStudyRoomListView = (ListView)findViewById(R.id.myStudyRoomListView);
 
-        getStudyGroupIDList();
+        getAppliedStudyGroups();
+        getStudyGroups();
     }
 
+    /** 신청한 스터디 그룹 가져오기 **/
+    public void getAppliedStudyGroups() {
+        userRef.child(userID).child("appliedStudyGroupIDList")
+            .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                appliedStudyGroupIDMap = (Map<String, String>) task.getResult().getValue();
+                for(Map.Entry<String, String> entry : appliedStudyGroupIDMap.entrySet()) {
+                    String studyGroupID = entry.getValue();
+
+                    studyGroupRef.child(studyGroupID).get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            appliedStudyGroupList.add((Map<String, Object>)task.getResult().getValue());
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+
+    /** 가입한 스터디 그룹 가져오기 **/
+    public void getStudyGroups() {
+        userRef.child(userID).child("studyGroupIDList")
+            .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                studyGroupIDMap = (Map<String, String>) task.getResult().getValue();
+                for(Map.Entry<String, String> entry : studyGroupIDMap.entrySet()) {
+                    String studyGroupID = entry.getValue();
+
+                    studyGroupRef.child(studyGroupID).get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            studyGroupList.add((Map<String, Object>)task.getResult().getValue());
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void setListView(ArrayList<Map<String, Object>> studyGroupList) throws ParseException {
+        adapter = new StudyGroupAdapter(this, studyGroupList);
+        myStudyRoomListView.setAdapter(adapter);
+        myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
+                Intent intent = new Intent(MyStudyRoomActivity.this, MainActivity.class);
+                intent.putExtra("studyGroup", (Serializable) item);
+                startActivity(intent);
+            }
+        });
+    }
     /**진행중 스터디 그룹 필터링**/
     public void filterStarted() throws ParseException {
+        filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             // closed && not finished
             SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
@@ -81,22 +133,18 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 filteredList.add(sg);
             }
         }
+        setListView(filteredList);
     }
 
     /**대기중 스터디 그룹 필터링**/
-    public void filterWaiting() {
-        /*스터디그룹의 applicants에 나의 userID 있으면 추가하기*/
-        for (Map<String, Object> sg : studyGroupList) {
-            ArrayList<Applicant>  applicantList = (ArrayList<Applicant>) sg.get("applicantList");
-            if (applicantList!=null && applicantList.contains(userID)) {
-                filteredList.add(sg);
-            }
-        }
+    public void filterWaiting() throws ParseException {
+        setListView(appliedStudyGroupList);
     }
+
 
     /**마감설정 스터디 그룹 필터링**/
     public void filterClosing() throws ParseException {
-        // endDate 이전이면서 closed="false"인 스터디 그룹
+        filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
             Date endDate = format.parse(String.valueOf(sg.get("endDate")));
@@ -105,11 +153,13 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 filteredList.add(sg);
             }
         }
+        setListView(filteredList);
     }
+
 
     /**종료됨 스터디 그룹 필터링**/
     public void filterFinished() throws ParseException {
-        // 현재 날짜가 endDate를 지났다면 추가하기
+        filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
             Date endDate = format.parse(String.valueOf(sg.get("endDate")));
@@ -118,15 +168,11 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 filteredList.add(sg);
             }
         }
+        setListView(filteredList);
     }
 
     public void myStudyRoomTabClicked(View view) throws ParseException {
-        filteredList.clear();
-
         switch (view.getId()) {
-            case R.id.all:
-                filteredList = (ArrayList<Map<String, Object>>) studyGroupList.clone();
-                break;
             case R.id.started:
                 filterStarted();
                 break;
@@ -140,127 +186,10 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 filterFinished();
                 break;
         }
-        setListView(filteredList);
-    }
-
-    public void getStudyGroupIDList() {
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot studygroup : snapshot.child(userID).child("studyGroupIDList").getChildren()) {
-                    String studyGroupID = studygroup.getValue(String.class);
-                    studyGroupIDList.add(studyGroupID);
-                }
-                Log.d("getStudyGroupIDList : ", studyGroupIDList.toString());
-                getStudyGroupList();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-    }
-
-    public void getStudyGroupList() {
-        studyGroupRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        studyGroupList.clear();
-                        filteredList.clear();
-                        if(snapshot.getValue() != null) {
-                            for (String id : studyGroupIDList) {
-                                collectStudyGroupList(id, (Map<String, Object>) snapshot.getValue());
-                            }
-
-                            /*초기 실행 시 자동으로 '진행중' 탭 보임*/
-                            try {
-                                filterStarted();
-                                RadioButton startedTabBtn = (RadioButton)findViewById(R.id.started);
-                                startedTabBtn.setChecked(true);
-                                setListView(filteredList);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
     }
 
 
-    private void collectStudyGroupList(String id, Map<String, Object> studygroups) {
-        for(Map.Entry<String, Object> entry : studygroups.entrySet()) {
-            Map singleStudyGroup = (Map) entry.getValue();
-            if (entry.getKey().equals(id)) {
-                studyGroupList.add(singleStudyGroup);
-                break;
-            }
-        }
-    }
 
-    public void setListView(ArrayList<Map<String, Object>> list) {
-        adapter = new StudyGroupAdapter(this, list);
-        myStudyRoomListView.setAdapter(adapter);
-        myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
-                Intent intent = new Intent(MyStudyRoomActivity.this, MainActivity.class);
-                intent.putExtra("studyGroup", (Serializable) item);
-                startActivity(intent);
-            }
-        });
-
-
-        /** 길게 누르면 마감 버튼 or 신청 취소 or 삭제 버튼 **/
-        myStudyRoomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> studyGroup = (Map<String, Object>) adapter.getItem(position);
-
-                /*현재 탭이 [마감 설정]이면 longClick 했을 때 마감여부 Dialog 보여줌*/
-                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
-                switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
-                    case R.id.waiting: /*신청 취소 AlertDialog*/
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(MyStudyRoomActivity.this)
-                                .setTitle("신청을 취소하시겠습니까?")
-                                .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        // [미완성] 신청 취소 하면 해당 스터디그룹 applicantList에서 현재 사용자 빼기
-                                        Toast.makeText(getApplicationContext(), "신청이 취소 되었습니다.", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        AlertDialog dialog1 = builder1.create();
-                        dialog1.show();
-
-                        break;
-                    case R.id.closing: /*스터디 마감 AlertDialog*/
-                        AlertDialog.Builder builder2 = new AlertDialog.Builder(MyStudyRoomActivity.this)
-                                .setTitle("스터디 모집을 마감하시겠습니까?")
-                                .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        studyGroupRef.child((String)studyGroup.get("studyGroupID")).child("closed").setValue(true);
-                                        getStudyGroupList(); // 변경된 스터디그룹 리스트 가져오기(조금 비효율적인 것 같기도...)
-                                    }
-                                })
-                                .setNegativeButton("아니오", null);
-                        AlertDialog dialog2 = builder2.create();
-                        dialog2.show();
-                        break;
-                }
-                return true;
-            }
-        });
-    }
 
     /** 액션바 오버라이딩 **/
     @Override
