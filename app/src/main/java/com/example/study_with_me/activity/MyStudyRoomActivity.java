@@ -116,8 +116,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         });
     }
 
-
-
     /** 가입한 스터디 그룹 가져오기 **/
     public void getStudyGroups() {
         studyGroupList.clear();
@@ -195,6 +193,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             }
         });
     }
+
     /**진행중 스터디 그룹 필터링**/
     public void filterStarted() throws ParseException {
         filteredList.clear();
@@ -216,7 +215,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         setListView(appliedStudyGroupList);
     }
 
-
     /**마감설정 스터디 그룹 필터링**/
     public void filterClosing() throws ParseException {
         filteredList.clear();
@@ -232,7 +230,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         }
         setListView(filteredList);
     }
-
 
     /**종료됨 스터디 그룹 필터링**/
     public void filterFinished() throws ParseException {
@@ -396,7 +393,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             }
         });
     }
-
 
     /** 액션바 오버라이딩 **/
     @Override
