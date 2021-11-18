@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,16 @@ import android.widget.TextView;
 import com.example.study_with_me.R;
 import com.example.study_with_me.activity.EvaluateMemberActivity;
 import com.example.study_with_me.model.MemberSampledata;
+import com.example.study_with_me.model.UserModel;
 
 import java.util.ArrayList;
 
 public class TeamEvaluationAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    ArrayList<MemberSampledata> evalMemberList;
+    ArrayList<String> evalMemberList;
 
-    public TeamEvaluationAdapter(Context context, ArrayList<MemberSampledata> evalMemberList) {
+    public TeamEvaluationAdapter(Context context, ArrayList<String> evalMemberList) {
         this.context = context;
         this.evalMemberList = evalMemberList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -36,7 +38,7 @@ public class TeamEvaluationAdapter extends BaseAdapter {
     public long getItemId(int position) { return position; }
 
     @Override
-    public MemberSampledata getItem(int position) { return evalMemberList.get(position); }
+    public String getItem(int position) { return evalMemberList.get(position); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,8 +48,10 @@ public class TeamEvaluationAdapter extends BaseAdapter {
         TextView memberName = (TextView) view.findViewById(R.id.evalMemberName);
         Button evalBtn = (Button) view.findViewById(R.id.evalMemberBtn);
 
-        memberImage.setImageResource(evalMemberList.get(position).getMemberImage());
-        memberName.setText(evalMemberList.get(position).getName());
+        memberImage.setImageResource(R.drawable.tmp_person_icon);
+        //memberImage.setImageResource(evalMemberList.get(position).getMemberImage());
+        memberName.setText(evalMemberList.get(position));
+        Log.d("p >>>> ", evalMemberList.get(position));
         evalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

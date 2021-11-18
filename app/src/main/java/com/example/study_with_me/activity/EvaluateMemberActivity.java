@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
@@ -19,5 +20,9 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_member_rating);
+
+        /** 상단 액션바 설정 **/
+        getSupportActionBar().setTitle("팀원 평가");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
