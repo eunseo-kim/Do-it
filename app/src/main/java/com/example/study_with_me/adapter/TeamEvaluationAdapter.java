@@ -13,19 +13,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.study_with_me.R;
 import com.example.study_with_me.activity.EvaluateMemberActivity;
 import com.example.study_with_me.model.MemberSampledata;
 import com.example.study_with_me.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TeamEvaluationAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    ArrayList<String> evalMemberList;
+    ArrayList<Map<String, String>> evalMemberList;
 
-    public TeamEvaluationAdapter(Context context, ArrayList<String> evalMemberList) {
+    public TeamEvaluationAdapter(Context context, ArrayList<Map<String, String>> evalMemberList) {
         this.context = context;
         this.evalMemberList = evalMemberList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -38,25 +44,26 @@ public class TeamEvaluationAdapter extends BaseAdapter {
     public long getItemId(int position) { return position; }
 
     @Override
-    public String getItem(int position) { return evalMemberList.get(position); }
+    public Map<String, String> getItem(int position) { return evalMemberList.get(position); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.evaluate_member_item, null);
-
         ImageView memberImage = (ImageView) view.findViewById(R.id.evalMemberImage);
         TextView memberName = (TextView) view.findViewById(R.id.evalMemberName);
         Button evalBtn = (Button) view.findViewById(R.id.evalMemberBtn);
 
         memberImage.setImageResource(R.drawable.tmp_person_icon);
         //memberImage.setImageResource(evalMemberList.get(position).getMemberImage());
-        memberName.setText(evalMemberList.get(position));
-        Log.d("p >>>> ", evalMemberList.get(position));
+        String[] usernames = evalMemberList.get(position).values().toArray(new String[0]);
+        memberName.setText(usernames[0]);
+
         evalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context c = view.getContext();
                 Intent intent = new Intent(view.getContext(), EvaluateMemberActivity.class);
+                intent.putExtra("userID", evalMemberList.get(position).keySet().toArray(new String[0])[0]);
                 c.startActivity(intent);
             }
         });
