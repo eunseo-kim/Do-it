@@ -20,6 +20,8 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.ApplicantAdapter;
 import com.example.study_with_me.model.Applicant;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +41,9 @@ public class AlarmActivity extends AppCompatActivity {
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
     private ApplicantAdapter adapter;
+
     private String userID;
+    private int joinCount;
     private ArrayList<Applicant> applicants = new ArrayList<>();
 
     @Override
@@ -58,7 +62,16 @@ public class AlarmActivity extends AppCompatActivity {
         setApplicants();
     }
 
-    public void setApplicants() {
+    private void setJoinCount(String uid) {
+        userRef.child(uid).child("joinCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+            }
+        });
+    }
+
+    private void setApplicants() {
         /** DB에서 현재 사용자가 방장인 스터디 그룹 가져오기 **/
         studyGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +105,7 @@ public class AlarmActivity extends AppCompatActivity {
         });
     }
 
-    public void setListView() {
+    private void setListView() {
         SwipeMenuListView swipeMenuListView = (SwipeMenuListView) findViewById(R.id.alarmListView);
         adapter = new ApplicantAdapter(this, applicants);
         swipeMenuListView.setAdapter(adapter);
@@ -143,6 +156,7 @@ public class AlarmActivity extends AppCompatActivity {
                 Applicant applicant = applicants.get(position);
                 String appStudyGroupID = applicant.getStudyGroupID();
                 String appUserID = applicant.getUserID();
+                setJoinCount(appUserID);
 
                 switch (index) {
                     case 0:
@@ -153,6 +167,10 @@ public class AlarmActivity extends AppCompatActivity {
                         databaseReference.child("users")
                                 .child(appUserID).child("studyGroupIDList")
                                 .push().setValue(appStudyGroupID);
+
+                        databaseReference.child("users")
+                                .child(appUserID).child("joinCount")
+                                .push().setValue(joinCount+1);
                     default:
                         Query query = databaseReference.child("studygroups")
                                 .child(appStudyGroupID).child("applicantList")
