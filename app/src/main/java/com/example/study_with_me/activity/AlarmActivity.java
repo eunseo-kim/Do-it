@@ -62,14 +62,14 @@ public class AlarmActivity extends AppCompatActivity {
         setApplicants();
     }
 
-    private void setJoinCount(String uid) {
+    /* private void setJoinCount(String uid) {
         userRef.child(uid).child("joinCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 joinCount = Integer.parseInt(task.getResult().getValue().toString());
             }
         });
-    }
+    } */
 
     private void setApplicants() {
         /** DB에서 현재 사용자가 방장인 스터디 그룹 가져오기 **/
@@ -156,7 +156,7 @@ public class AlarmActivity extends AppCompatActivity {
                 Applicant applicant = applicants.get(position);
                 String appStudyGroupID = applicant.getStudyGroupID();
                 String appUserID = applicant.getUserID();
-                setJoinCount(appUserID);
+                // setJoinCount(appUserID);
 
                 switch (index) {
                     case 0:
@@ -167,10 +167,6 @@ public class AlarmActivity extends AppCompatActivity {
                         databaseReference.child("users")
                                 .child(appUserID).child("studyGroupIDList")
                                 .push().setValue(appStudyGroupID);
-
-                        databaseReference.child("users")
-                                .child(appUserID).child("joinCount")
-                                .push().setValue(joinCount+1);
                     default:
                         Query query = databaseReference.child("studygroups")
                                 .child(appStudyGroupID).child("applicantList")

@@ -51,6 +51,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> filteredList = new ArrayList<>();
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
+    private int joinCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
 
 
     }
+
 
     /** 신청한 스터디 그룹 가져오기 **/
     public void getAppliedStudyGroups() {
@@ -265,8 +267,33 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Toast.makeText(getApplicationContext(), "스터디 모집을 마감합니다.", Toast.LENGTH_SHORT).show();
-                            studyGroupRef.child((String)studyGroup.get("studyGroupID")).child("closed").setValue(true);
-                            getStudyGroups();
+                            String studyGroupID = (String)studyGroup.get("studyGroupID");
+
+                            /* studyGroup의 closed=true */
+                            studyGroupRef.child(studyGroupID).child("closed").setValue(true);
+
+                            /* memberList의 각 memberID의 joinCount + 1 */
+                            studyGroupRef.child(studyGroupID).child("memberList")
+                                    .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot members : snapshot.getChildren()) {
+                                        String memberID = members.getValue(String.class);
+                                        userRef.child(memberID).child("joinCount")
+                                        .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+                                                userRef.child(memberID).child("joinCount").setValue(joinCount+1);
+                                            }
+                                        });
+                                    }
+                                    getStudyGroups();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {}
+                            });
                         }
                     })
                     .setNegativeButton("아니오", null);
