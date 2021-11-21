@@ -84,8 +84,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
 
         try {
             endDate = format.parse(String.valueOf(studyInfo.get("endDate")));
-            return 1;
-            //return curDate.compareTo(endDate);
+
+            return curDate.compareTo(endDate);
         } catch(ParseException e) { throw new RuntimeException(e); }
     }
 

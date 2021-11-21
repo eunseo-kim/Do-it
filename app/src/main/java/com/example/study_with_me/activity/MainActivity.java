@@ -53,15 +53,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navBullet:
                         transaction.replace(R.id.frame_layout, bulletFragment).commitAllowingStateLoss();
+                        transaction.addToBackStack(null);
                         break;
                     case R.id.navEvaluateMember:
                         transaction.replace(R.id.frame_layout, evaluateMemberFragment).commitAllowingStateLoss();
+                        transaction.addToBackStack(null);
                         break;
                     case R.id.navAuthAttendance:
                         transaction.replace(R.id.frame_layout, authAttendanceFragment).commitAllowingStateLoss();
+                        transaction.addToBackStack(null);
                         break;
                     case R.id.navManageSchedule:
                         transaction.replace(R.id.frame_layout, scheduleManagementFragment).commitAllowingStateLoss();
+                        transaction.addToBackStack(null);
                         break;
                 }
                 return true;
