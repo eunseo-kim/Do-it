@@ -21,12 +21,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_weight="0.8"
-            android:text="text Text"
+            android:text="오늘 할 일"
             android:textColor="@color/black"
             android:textSize="14dp"/>
 
         <ImageView
-            android:id="@+id/AttendEditButton"
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/delete_icon"/>

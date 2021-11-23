@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--border bottom(구분선)-->
-    <!--border bottom(구분선)-->
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="310dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp">
-
-    </CalendarView>
+        android:layout_height="280dp"
+        app:mcv_selectionColor="#EFEFEF"/>
 
     <View
         android:layout_width="match_parent"
@@ -34,7 +32,7 @@
             android:layout_marginRight="5dp"
             android:background="#618AD8"/>
         <TextView
-            android:id="@+id/calendarDate"
+            android:id="@+id/dateTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
