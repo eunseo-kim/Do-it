@@ -27,6 +27,7 @@ import androidx.fragment.app.ListFragment;
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.SchedulerAdapter;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
+import com.example.study_with_me.model.CalendarDecorator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,25 +41,13 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
 public class MenuScheduleManagementFragment extends ListFragment implements View.OnClickListener, OnDateSelectedListener{
-    public class CalendarDecorator implements DayViewDecorator {
-        private CalendarDay date;
-
-        @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return day.equals(date);
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
-            view.addSpan(new ForegroundColorSpan(Color.BLUE));
-        }
-    }
 
     private ListView scheduleListView;
     private Button addButton, createButton;
@@ -77,7 +66,7 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
     private String studyGroupID;
     private CalendarDay calendarDay;
     private String calendarDate; // "year/month/day" 형태의 문자열
-    private CalendarDay decorateDay;
+    private ArrayList<CalendarDay> decorateDates;
 
 
     @Nullable
@@ -90,24 +79,46 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         actionBar.setTitle("일정 관리");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        /* Button Event Listener */
         scheduleEditText = root.findViewById(R.id.scheduleEditTextView);
         addButton = (Button)root.findViewById(R.id.addScheduleButton);
         createButton = (Button)root.findViewById(R.id.createScheduleButton);
         addButton.setOnClickListener(this);
         createButton.setOnClickListener(this);
 
+        /* StudyGroup Info */
+        activity = (MainActivity) getActivity();
+        studyInfo = activity.getStudyInfo();
+        studyGroupID = (String) studyInfo.get("studyGroupID");
+
+
+        /* set Calendar View */
         scheduleListView = (ListView) root.findViewById(android.R.id.list);
         mCalendarView = (MaterialCalendarView) root.findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangedListener(this);
         dateTextView = (TextView) root.findViewById(R.id.dateTextView);
-        mCalendarView.setSelectedDate(CalendarDay.today()); // 실행 시 오늘 날짜로 시작
-        calendarDate = String.format("%d/%d/%d", CalendarDay.today().getYear(),
-                CalendarDay.today().getMonth()+1, CalendarDay.today().getDay());
 
-        activity = (MainActivity) getActivity();
-        studyInfo = activity.getStudyInfo();
-        studyGroupID = (String) studyInfo.get("studyGroupID");
+        /* initialize Calendar View */
+        calendarDay = CalendarDay.today(); // 실행 시 오늘 날짜로 시작
+        mCalendarView.setSelectedDate(calendarDay);
+        mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                calendarDay = date;
+                mCalendarView.setSelectedDate(date);
+                calendarDate = String.format("%d/%d/%d", calendarDay.getYear(),
+                        calendarDay.getMonth()+1, calendarDay.getDay());
+                dateTextView.setText(calendarDate);
+                decorateCalendar();
+                setListView();
+            }
+        });
+        calendarDate = String.format("%d/%d/%d", calendarDay.getYear(),
+                CalendarDay.today().getMonth()+1, calendarDay.getDay());
+        dateTextView.setText(calendarDate);
+        decorateDates = new ArrayList<>();
         scheduleList = new ArrayList<>();
+        decorateCalendar();
 
         setListView();
         return root;
@@ -131,6 +142,7 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         } else {
             final String schedule = scheduleEditText.getText().toString();
             studyGroupRef.child(studyGroupID).child("calendar").child(calendarDate).push().setValue(schedule);
+            decorateCalendar();
             setListView();
         }
     }
@@ -179,12 +191,28 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         final int month = calendarDay.getMonth()+1;
         final int day = calendarDay.getDay();
         calendarDate = String.format("%d/%d/%d", year, month, day);
+        dateTextView.setText(calendarDate);
 
         setListView();
     }
 
     private void decorateCalendar() {
+        decorateDates.clear();
         final int year = calendarDay.getYear();
         final int month = calendarDay.getMonth()+1;
+        studyGroupRef.child(studyGroupID).child("calendar")
+                .child(String.valueOf(year))
+                .child(String.valueOf(month))
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                for (DataSnapshot Day : task.getResult().getChildren()) {
+                    int day = Integer.parseInt(Day.getKey().toString());
+                    CalendarDay cDay = new CalendarDay(year, month-1, day);
+                    decorateDates.add(cDay);
+                }
+                mCalendarView.addDecorators(new CalendarDecorator(decorateDates));
+            }
+        });
     }
 }
