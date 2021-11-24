@@ -2,6 +2,7 @@ package com.example.study_with_me;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +26,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.SchedulerAdapter;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
@@ -49,8 +55,10 @@ import java.util.Map;
 
 public class MenuScheduleManagementFragment extends ListFragment implements View.OnClickListener, OnDateSelectedListener{
 
-    private ListView scheduleListView;
-    private Button addButton, createButton;
+    private SwipeMenuListView scheduleListView;
+    private Button addButton;
+    private Button createButton;
+    private ImageView deleteButton;
     private TextView scheduleEditText;
     private MaterialCalendarView mCalendarView;
     private TextView dateTextView;
@@ -93,7 +101,7 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
 
 
         /* set Calendar View */
-        scheduleListView = (ListView) root.findViewById(android.R.id.list);
+        scheduleListView = (SwipeMenuListView) root.findViewById(android.R.id.list);
         mCalendarView = (MaterialCalendarView) root.findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangedListener(this);
         dateTextView = (TextView) root.findViewById(R.id.dateTextView);
@@ -147,11 +155,8 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         }
     }
 
-    public void deleteButtonClicked() {
 
-    }
-
-    /** Fragment 안에서 발생하는 모든 클릭 이벤트를 처리 **/
+    /** Fragment 안에서 발생하는 클릭 이벤트를처리 **/
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
@@ -161,24 +166,56 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
             case R.id.createScheduleButton:
                 createButtonClicked();
                 break;
-            case R.id.deleteButton:
-                deleteButtonClicked();
-                break;
         }
     }
 
     private void setListView() {
         final SchedulerAdapter schedulerAdapter = new SchedulerAdapter(getActivity(), scheduleList);
-
         scheduleList.clear();
         studyGroupRef.child(studyGroupID).child("calendar").child(calendarDate)
-            .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 for (DataSnapshot schedule : task.getResult().getChildren()) {
                     scheduleList.add(schedule.getValue(String.class));
                 }
                 scheduleListView.setAdapter(schedulerAdapter);
+            }
+        });
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                SwipeMenuItem deleteItem = new SwipeMenuItem(activity.getApplicationContext());
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(182, 182,182)));
+                deleteItem.setWidth(168);
+                deleteItem.setTitle("취소");
+                deleteItem.setTitleSize(14);
+                deleteItem.setTitleColor(Color.WHITE);
+                menu.addMenuItem(deleteItem);
+
+                SwipeMenuItem removeItem = new SwipeMenuItem(activity.getApplicationContext());
+                removeItem.setBackground(new ColorDrawable(Color.rgb(253, 139,139)));
+                removeItem.setWidth(168);
+                removeItem.setTitle("삭제");
+                removeItem.setTitleSize(14);
+                removeItem.setTitleColor(Color.WHITE);
+                menu.addMenuItem(removeItem);
+            }
+        };
+        scheduleListView.setMenuCreator(creator);
+
+        scheduleListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                if (index == 1) {
+                    scheduleList.remove(position);
+                    studyGroupRef.child(studyGroupID).child("calendar").child(calendarDate).setValue(scheduleList);
+                    mCalendarView.removeDecorators();
+                    decorateCalendar();
+                    schedulerAdapter.notifyDataSetChanged();
+                }
+                return false;
             }
         });
     }
