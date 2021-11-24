@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/studyArea"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="onClick"
+    android:orientation="vertical">
+
+    <!--출석 시간, 등록 장소 table-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/studyRecuit"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/gray_box_radius"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="모집중"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/studyField"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/gray_box_radius"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="프로그래밍"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <TableRow>
+
+            <TextView
+                android:id="@+id/studyTitle"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:text="모바일 프로그래밍"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/studyPeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="4 / 5" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/right_arrow" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/studyRegisterDay"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:text="2021.10.15"
+                android:textColor="#9D9D9D" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

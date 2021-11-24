@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/myStudyRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_line"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/started"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:button="@null"
+                android:checked="true"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="진행중"
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
+
+            <RadioButton
+                android:id="@+id/waiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:button="@null"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="대기중"
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
+
+            <RadioButton
+                android:id="@+id/closing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:button="@null"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="마감설정"
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
+
+            <RadioButton
+                android:id="@+id/finished"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:button="@null"
+                android:background="@drawable/selector_top_menu_button"
+                android:textColor="@drawable/selector_top_menu_text"
+                android:text="종료됨"
+                android:textAlignment="center"
+                android:onClick="myStudyRoomTabClicked"/>
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_line"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+</LinearLayout>

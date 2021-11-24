@@ -8,9 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Study_With_Me">
+        android:theme="@style/Theme.Study_With_Me"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,17 +19,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.BulletActivity"
             android:label="BulletActivity"></activity>
         <activity android:name=".activity.BulletNotificationActivity"
             android:label="BulletNotificationActivity"></activity>
         <activity android:name=".activity.EvaluateMemberActivity"
             android:label="EvaluateMemberActivity"></activity>
+        <activity android:name=".activity.MyStudyRoomActivity"></activity>
         <activity android:name=".activity.StudySearchActivity"></activity>
-        <activity android:name=".activity.AlarmActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>
-
+        <activity android:name=".activity.AlarmActivity"></activity>
+        <activity android:name=".activity.StudyPostActivityMessage"></activity>
+        <activity android:name=".activity.StudyRegisterActivity"/>
+        <activity android:name=".activity.StudyRegisterCompleteActivity"></activity>
+        <activity android:name=".activity.SignUpActivity"></activity>
+        <activity android:name=".activity.FindPasswordActivity"></activity>
+        <activity android:name=".activity.MyPageActivity" />
+        <activity android:name=".activity.EditUserInfoActivity"/>
     </application>
 
 </manifest>

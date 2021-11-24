@@ -1,227 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView22"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/border_line"
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="분야"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/studyType"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/studyTypeProgramming"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="프로그래밍"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyTypeEmployment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="취업"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyTypeLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="어학"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/ectCategoryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:onClick="ectButtonClicked"
+                android:text="기타"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="인원"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/studyMemberNum"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/studyMemberNumTwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="2명"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyMemberNumThree"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="3명"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyMemberNumFour"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="4명"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/ectPeopleCountButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:onClick="ectButtonClicked"
+                android:text="기타"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="스터디 기간"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/studyTerm"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/studyTermOneMonth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="1개월"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyTermTwoMonth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="2개월"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/studyTermSixMonth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:text="6개월"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/ectDateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_radio_button"
+                android:button="@null"
+                android:onClick="ectButtonClicked"
+                android:text="기타"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/border_line">
+
+        <EditText
+            android:id="@+id/studyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border_line"
+            android:hint="스터디 이름을 입력해주세요."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/studyDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/border_line"
+            android:gravity="top"
+            android:hint="스터디에 대한 간단한 설명을 추가해주세요."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/studyRegisterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="분야"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.120000005" />
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:text="추가하기"/>
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="인원"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.287" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1명"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347" />
-
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2명"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.274"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.349" />
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3명"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347" />
-
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4명"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.633"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.345" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="스터디 기간"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.457" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1개월"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51" />
-
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2개월"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.291"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51" />
-
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="6개월"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51" />
-
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="기타"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.66"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51" />
-
-    <TextView
-        android:id="@+id/textView33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="프로그래밍"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
-
-    <TextView
-        android:id="@+id/textView34"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="취업"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.367"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
-
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="어학"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
-
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="기타"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.719"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="제목"
-        android:background="@null"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.658" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="350dp"
-        android:layout_height="174dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@null"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="내용을 입력하세요"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

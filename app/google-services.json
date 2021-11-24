@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "516587859372",
+    "firebase_url": "https://studywithme-b93ee-default-rtdb.firebaseio.com",
+    "project_id": "studywithme-b93ee",
+    "storage_bucket": "studywithme-b93ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516587859372:android:198563a5178c0552365e09",
+        "android_client_info": {
+          "package_name": "com.example.study_with_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516587859372-9iu567u0hsqnmpdjqfo3cjlr40lalv47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.study_with_me",
+            "certificate_hash": "c01eda92329a0abcc2ab23e2ae708f4f6e562579"
+          }
+        },
+        {
+          "client_id": "516587859372-hddiuqgh7qfhpdda10aq6d5gfa49qt4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh9W2CQ8eP39TC8_5rTtOxrljyY-kTSpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516587859372-hddiuqgh7qfhpdda10aq6d5gfa49qt4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
