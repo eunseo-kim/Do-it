@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -156,17 +157,30 @@ public class AlarmActivity extends AppCompatActivity {
                 Applicant applicant = applicants.get(position);
                 String appStudyGroupID = applicant.getStudyGroupID();
                 String appUserID = applicant.getUserID();
-                // setJoinCount(appUserID);
 
                 switch (index) {
                     case 0:
-                        databaseReference.child("studygroups")
-                                .child(appStudyGroupID).child("memberList")
-                                .push().setValue(appUserID);
+                        // appStudyGroup의 memberList 가져오기
+                        studyGroupRef.child(appStudyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Map<String, String> memberList = (Map<String, String>) task.getResult().child("memberList").getValue();
+                                long memberCount = (long) task.getResult().child("member").getValue();
+                                long memberListSize = memberList.size();
+                                if (memberCount > memberListSize) {
+                                    databaseReference.child("studygroups")
+                                            .child(appStudyGroupID).child("memberList")
+                                            .push().setValue(appUserID);
 
-                        databaseReference.child("users")
-                                .child(appUserID).child("studyGroupIDList")
-                                .push().setValue(appStudyGroupID);
+                                    databaseReference.child("users")
+                                            .child(appUserID).child("studyGroupIDList")
+                                            .push().setValue(appStudyGroupID);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "정원을 초과했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                     default:
                         Query query = databaseReference.child("studygroups")
                                 .child(appStudyGroupID).child("applicantList")
