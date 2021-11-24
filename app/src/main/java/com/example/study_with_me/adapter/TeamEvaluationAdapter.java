@@ -2,9 +2,6 @@ package com.example.study_with_me.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.study_with_me.R;
 import com.example.study_with_me.activity.EvaluateMemberActivity;
-import com.example.study_with_me.model.MemberSampledata;
-import com.example.study_with_me.model.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
