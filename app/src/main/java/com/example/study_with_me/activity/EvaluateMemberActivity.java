@@ -32,6 +32,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = database.getReference();
     private DatabaseReference userRef = databaseReference.child("users");
+    private DatabaseReference studyRef = databaseReference.child("studygroups");
 
     private RatingBar evalRatingBar;
     private EditText evalComment;
@@ -42,7 +43,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     private float memberRating;
     private String comment;
     private float existRating;
-    private int joinCount;
+    private int ratingCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +70,10 @@ public class EvaluateMemberActivity extends AppCompatActivity {
 
     /** 평가하는 user의 스터디 참여 횟수 얻기 **/
     private void setUserInfo() {
-        Log.d("userID >>> ", evalUserID);
-        userRef.child(evalUserID).child("joinCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        userRef.child(evalUserID).child("ratingCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+                ratingCount = Integer.parseInt(task.getResult().getValue().toString());
             }
         });
         userRef.child(evalUserID).child("rating").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -86,7 +86,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
 
     /** DB에 입력한 정보 등록 **/
     private void registerInfoOnDB() {
-        userRef.child(evalUserID).child("rating").setValue((memberRating+existRating) / joinCount);
+        userRef.child(evalUserID).child("rating").setValue((memberRating+existRating) / (ratingCount+1));
     }
 
     /** rating bar에 onCilckListener 등록 **/
@@ -105,16 +105,21 @@ public class EvaluateMemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerInfoOnDB();
+                userRef.child(evalUserID).child("ratingCount").setValue(ratingCount+1);
 
-                // 버튼 클릭 불가 처리 구현
 
-                onBackPressed();
+                /**
+                 *  스터디 그룹안에 평가 멤버리스트를 넣고
+                 *  평가를 하면 그사람이름 아래에다가 평가자 ID를 넣어요. 없으면 넣고 있으면 안넣고
+                 *  근데 이 클릭 자체를 막을 수 있는지? 아 뭔소린지 딱 알았어요.
+                 */
+
             }
         });
         evalCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 뒤로가기
+                onBackPressed();
             }
         });
     }

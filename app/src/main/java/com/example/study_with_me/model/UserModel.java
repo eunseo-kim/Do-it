@@ -12,6 +12,7 @@ public class UserModel {
     public ArrayList<String> studyGroupIDList;
     public int dropCount;
     public int joinCount;
+    public int ratingCount;
     public String userID;
     public Map<String, String> appliedStudyGroupIDList;
 
@@ -22,14 +23,17 @@ public class UserModel {
         this.rating = 0.0F;
         this.dropCount = 0;
         this.joinCount = 0;
+        this.ratingCount = 0;
         studyGroupIDList = new ArrayList<>();
         appliedStudyGroupIDList = new HashMap<>();
     }
 
     public void addDropCount() { this.dropCount += 1; }
     public void addJoinCount() { this.joinCount += 1; }
+    public void addRatingCount() { this.ratingCount += 1; }
     public int getDropCount() { return this.dropCount; }
     public int getJoinCount() { return this.joinCount; }
+    public int getRatingCount() { return this.ratingCount; }
 
     public void setUsername(String name) {
         this.username = name;

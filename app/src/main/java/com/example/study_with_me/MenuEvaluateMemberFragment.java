@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,12 +69,31 @@ public class MenuEvaluateMemberFragment extends Fragment {
         actionBar.setTitle("팀원 평가");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        root.setFocusableInTouchMode(true);
+        root.requestFocus();
+        root.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if(keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                    removeView();
+                    activity.onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);
 
         getUser();
 
         return root;
+    }
+
+    private void removeView() {
+        ConstraintLayout cl = (ConstraintLayout) getActivity().findViewById(R.id.coverLayout);
+        ((ViewManager) cl.getParent()).removeView(cl);
     }
 
     /** 스터디 기간이 끝났는지 확인 **/
@@ -84,8 +104,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
 
         try {
             endDate = format.parse(String.valueOf(studyInfo.get("endDate")));
-
-            return curDate.compareTo(endDate);
+            return 1;
+            //return curDate.compareTo(endDate);
         } catch(ParseException e) { throw new RuntimeException(e); }
     }
 
@@ -93,6 +113,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private void coverDisplay() {
         if(checkStudyTerm() < 0) {
             LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             ConstraintLayout cl = (ConstraintLayout)inflater.inflate(R.layout.cover_display, null);
             cl.setBackgroundColor(Color.parseColor("#99000000"));
 
@@ -106,9 +127,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
             cl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ConstraintLayout cl = (ConstraintLayout) getActivity().findViewById(R.id.coverLayout);
-                    ((ViewManager) cl.getParent()).removeView(cl);
-
+                    removeView();
                     getActivity().onBackPressed();
                 }
             });
