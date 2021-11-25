@@ -2,6 +2,7 @@ package com.example.study_with_me;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +21,33 @@ import com.example.study_with_me.activity.AlarmActivity;
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.activity.StudySearchActivity;
+import com.example.study_with_me.adapter.AttendanceAdapter;
+import com.example.study_with_me.adapter.SchedulerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuAuthorizeAttendanceFragment extends ListFragment {
+    private MainActivity activity;
+    private ListView listView;
+    private Map<String, Object> studyInfo;
+    private String studyGroupID;
+    private ArrayList<Map<String, Object>> memberList = new ArrayList<>();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference userRef = databaseReference.child("users");
+    private String memberName;
+    private TextView attendTime, attendGPS, attendPlace, attendRange;
+    private FirebaseAuth firebaseAuth;
+    private String userID;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,42 +58,87 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         actionBar.setTitle("출석 인증");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // 멤버 출석 현황 리스트
-        ListView listView = (ListView)root.findViewById(android.R.id.list);
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
 
-        // 멤버 출석 현황 ListView의 header에 title 추가
+        activity = (MainActivity) getActivity();
+        studyInfo = activity.getStudyInfo();
+        studyGroupID = (String) studyInfo.get("studyGroupID");
+
+        attendTime = root.findViewById(R.id.attendTime);
+        attendGPS = root.findViewById(R.id.attendGPS);
+        attendPlace = root.findViewById(R.id.attendPlace);
+        attendRange = root.findViewById(R.id.attendRange);
+
+        listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
         listView.addHeaderView(headerView);
 
-        // ListView에 적용할 adapter을 생성하고 적용(임의로 memberName 리스트를 생성하여 리스트뷰에 전달해봄)
-        String[] list = {"김은서", "박정용", "고다혜", "김진욱"};
-        MainActivity activity = (MainActivity) getActivity();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, R.layout.member_attendance_item, R.id.memberName, list); //어댑터를 리스트 뷰에 적용
-        setListAdapter(adapter);
-
-
-        // [등록하기] 버튼 클릭하면 AttendanceRegisterActivity로 전환
-        Button registerButton = (Button)root.findViewById(R.id.attendRegisterButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
-                // Intent intent = new Intent(view.getContext(), AlarmActivity.class); // 임시로 알림창 되는지 확인해봄
-                view.getContext().startActivity(intent);
-            }
-        });
-
-        // [edit] 버튼 클릭 시 AttendanceRegisterActivity로 전환
-        ImageView editButton = (ImageView)root.findViewById(R.id.AttendEditButton);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
-                // Intent intent = new Intent(view.getContext(), StudySearchActivity.class);
-                view.getContext().startActivity(intent);
-            }
-        });
+        setMyAttendance();
+        getMemberList();
         return root;
     }
 
+    private void setMyAttendance() {
+        userRef.child(userID).child("attendance").child(studyGroupID)
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                Map<String, Object> attendInfo = (Map<String, Object>) task.getResult().getValue();
+                String time = (String) attendInfo.get("time");
+                String gps = (String) attendInfo.get("gps");
+                String place = (String) attendInfo.get("place");
+                String range = (String) attendInfo.get("range");
+                attendTime.setText(time);
+                attendGPS.setText(gps);
+                attendPlace.setText(place);
+                attendRange.setText(range);
+            }
+        });
+    }
+
+    private void getMemberList() {
+        memberList.clear();
+        Map<String, String> membersMap = (Map<String, String>) studyInfo.get("memberList");
+        for (Map.Entry<String, String> entry : membersMap.entrySet()) {
+            final String memberID = entry.getValue();
+            userRef.child(memberID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    memberName = (String) task.getResult().getValue();
+                }
+            });
+
+            Map<String, Object> member = new HashMap<>();
+
+            userRef.child(memberID).child("attendance").child(studyGroupID)
+                    .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    Boolean isSet = (Boolean) task.getResult().child("isSet").getValue();
+                    Boolean attend = (Boolean) task.getResult().child("attend").getValue();
+                    String gps = (String) task.getResult().child("gps").getValue();
+                    String place = (String) task.getResult().child("place").getValue();
+                    String range = (String) task.getResult().child("range").getValue();
+                    String time = (String) task.getResult().child("time").getValue();
+                    member.put("memberName", memberName);
+                    member.put("isSet", isSet);
+                    member.put("attend", attend);
+                    member.put("gps", gps);
+                    member.put("place", place);
+                    member.put("range", range);
+                    member.put("time", time);
+                    memberList.add(member);
+                    Log.d("memberList", memberList.toString());
+                    setListView();
+                }
+            });
+        }
+    }
+
+    private void setListView() {
+        Log.d("setListView", "setListview");
+        final AttendanceAdapter attendanceAdapter = new AttendanceAdapter(getActivity(), memberList);
+        listView.setAdapter(attendanceAdapter);
+    }
 }

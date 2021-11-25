@@ -279,12 +279,22 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for(DataSnapshot members : snapshot.getChildren()) {
                                         String memberID = members.getValue(String.class);
-                                        userRef.child(memberID).child("joinCount")
-                                        .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        userRef.child(memberID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+                                                joinCount = Integer.parseInt(task.getResult()
+                                                        .child("joinCount").getValue().toString());
                                                 userRef.child(memberID).child("joinCount").setValue(joinCount+1);
+
+                                                /*모집 마감을 하면 memberLIst의 각 user DB에 attendance 추가하기*/
+                                                Map<String, Object> attendanceMap = new HashMap<>();
+                                                attendanceMap.put("isSet", false);
+                                                attendanceMap.put("attend", false);
+                                                attendanceMap.put("time", "-");
+                                                attendanceMap.put("gps", "-");
+                                                attendanceMap.put("place", "-");
+                                                attendanceMap.put("range", "-");
+                                                userRef.child(memberID).child("attendance").child(studyGroupID).setValue(attendanceMap);
                                             }
                                         });
                                     }

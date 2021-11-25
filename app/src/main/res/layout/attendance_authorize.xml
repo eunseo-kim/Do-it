@@ -59,6 +59,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendTime"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
@@ -75,6 +76,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendGPS"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
@@ -91,6 +93,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendPlace"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
@@ -109,6 +112,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendRange"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
