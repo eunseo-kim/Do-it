@@ -129,6 +129,7 @@
                 app:srcCompat="@drawable/map_pin"/>
 
             <EditText
+                android:id="@+id/map_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="14dp"

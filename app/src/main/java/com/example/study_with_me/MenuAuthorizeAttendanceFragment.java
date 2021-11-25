@@ -30,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,8 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private DatabaseReference userRef = databaseReference.child("users");
     private String memberName;
     private TextView attendTime, attendGPS, attendPlace, attendRange;
+    private Map<String, Object> attendInfo;
+    private Button attendEditButton;
     private FirebaseAuth firebaseAuth;
     private String userID;
 
@@ -69,6 +72,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         attendGPS = root.findViewById(R.id.attendGPS);
         attendPlace = root.findViewById(R.id.attendPlace);
         attendRange = root.findViewById(R.id.attendRange);
+        attendEditButton = root.findViewById(R.id.AttendEditButton);
 
         listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
@@ -76,6 +80,16 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
 
         setMyAttendance();
         getMemberList();
+
+        attendEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                intent.putExtra("attendInfo", (Serializable)attendInfo);
+                view.getContext().startActivity(intent);
+            }
+        });
+
         return root;
     }
 
@@ -84,7 +98,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                Map<String, Object> attendInfo = (Map<String, Object>) task.getResult().getValue();
+                attendInfo = (Map<String, Object>) task.getResult().getValue();
                 String time = (String) attendInfo.get("time");
                 String gps = (String) attendInfo.get("gps");
                 String place = (String) attendInfo.get("place");
@@ -137,7 +151,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     }
 
     private void setListView() {
-        Log.d("setListView", "setListview");
         final AttendanceAdapter attendanceAdapter = new AttendanceAdapter(getActivity(), memberList);
         listView.setAdapter(attendanceAdapter);
     }
