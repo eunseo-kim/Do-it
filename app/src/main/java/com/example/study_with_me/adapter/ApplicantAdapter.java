@@ -1,6 +1,7 @@
 package com.example.study_with_me.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,21 +9,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.study_with_me.R;
+import com.example.study_with_me.activity.UserInfo;
 import com.example.study_with_me.model.Applicant;
-import com.example.study_with_me.model.StudyGroup;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ApplicantAdapter extends BaseAdapter {
+
     Context context;
     LayoutInflater layoutInflater;
     ArrayList<Applicant> applicants;
@@ -62,6 +58,15 @@ public class ApplicantAdapter extends BaseAdapter {
         alarmMemberName.setText(applicants.get(position).getUserName());
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
 
+        alarmMemberName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(context, "사용자 정보 보여주자구!!!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, UserInfo.class);
+
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 }

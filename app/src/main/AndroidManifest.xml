@@ -39,6 +39,7 @@
         <activity android:name=".activity.FindPasswordActivity"></activity>
         <activity android:name=".activity.MyPageActivity" />
         <activity android:name=".activity.EditUserInfoActivity"/>
+        <activity android:name=".activity.UserInfo"></activity>
     </application>
 
 </manifest>
