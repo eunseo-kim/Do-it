@@ -80,6 +80,7 @@ public class StudyGroup {
     public String getLeader() { return leader; }
     public List<Applicant> getApplicantList() { return applicantList; }
     public Map<String, String> getMemberList() { return memberList; }
+    public Map<String, ArrayList> getEvalMembers() { return evalMembers; }
 
     public boolean getClosed() {
         return this.closed;
