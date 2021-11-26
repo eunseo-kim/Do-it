@@ -79,7 +79,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
                     activity.onBackPressed();
                     return true;
                 }
-                return false;
+                activity.onBackPressed();
+                return true;
             }
         });
 
@@ -175,7 +176,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
     /** 팀원들을 나타낼 리스트 뷰 설정 **/
     private void setListView() {
         /** Adapter 설정 **/
-        final TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList);
+        String studyId = String.valueOf(activity.getStudyInfo().get("studyGroupID"));
+        final TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
         evalMemberList.setAdapter(evalAdapter);
     }
 }
