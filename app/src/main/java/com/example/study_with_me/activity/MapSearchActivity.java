@@ -36,15 +36,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MapSearchActivity extends AppCompatActivity {
+public class MapSearchActivity extends AppCompatActivity{
     private String BASE_URL= "https://dapi.kakao.com/";
     private String API_KEY = "KakaoAK ae9cc095bc96cc24e11a0deaee75a793";
     private ListView mapSearchListView;
     private ArrayList<MapItem> mapSearchList;
-    private MapView mapView;
+    // private MapView mapView;
     private ViewGroup mapViewContainer;
     private EditText mapSearchEditText;
     private String preText;
+    private double x, y; // lat= y, long = x
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,6 @@ public class MapSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // mapView = new MapView(this);
-        // mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        // mapViewContainer.addView(mapView);
 
         mapSearchList = new ArrayList<>();
         mapSearchListView = findViewById(R.id.mapSearchListView);

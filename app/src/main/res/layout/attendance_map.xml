@@ -5,17 +5,40 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.8">
 
-        <RelativeLayout
-            android:id="@+id/map_view"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <!-- 시간 남으면 구현 (현재 위치로 지도 보여주고 장소 등록하기)
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:onClick="moveToCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="#FFFFFF"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/current_location"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end|bottom"/>
+
+       -->
+    </FrameLayout>
+
 
     <!--이 위치로 출석 등록-->
     <LinearLayout
@@ -32,6 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/placeRoad"
+            android:text="도로명 주소"
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
         <!-- 출석 범위 지정 -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/locationRange"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -63,4 +95,5 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
     </LinearLayout>
+
 </LinearLayout>

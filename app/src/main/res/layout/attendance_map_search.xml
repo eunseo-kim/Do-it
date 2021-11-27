@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/map_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/lightgray_box_radius"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -36,9 +36,8 @@
             android:inputType="text"/>
     </LinearLayout>
 
-
     <ListView
         android:id="@+id/mapSearchListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="fill_parent"/>
 </LinearLayout>

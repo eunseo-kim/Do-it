@@ -4,12 +4,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.ApiClient;
 import com.example.study_with_me.model.KakaoAPI;
@@ -20,13 +32,22 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.Serializable;
 import java.util.Map;
 
 
-public class MapFindActivity extends AppCompatActivity {
+public class MapFindActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener{
     String BASE_URL= "https://dapi.kakao.com/";
     String API_KEY = "KakaoAK ae9cc095bc96cc24e11a0deaee75a793";
-    MapItem mapItem;
+    private double latitude, longitude;
+    private MapItem mapItem;
+    private MapView mapView;
+    TextView placeName, placeRoad;
+    EditText locationRange;
+    /*현재 위치 GPS 권한 설정*/
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,31 +58,161 @@ public class MapFindActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("지도에서 위치 확인");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        MapView mapView = new MapView(this);
+        placeName = findViewById(R.id.placeName);
+        placeRoad = findViewById(R.id.placeRoad);
+        locationRange = findViewById(R.id.locationRange);
+
+        mapView = new MapView(this);
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
         Intent intent = getIntent();
         mapItem = (MapItem) intent.getSerializableExtra("MapItem");
-        onPOIItemSelected(mapView, mapItem);
+        placeName.setText(mapItem.place_name);
+        placeRoad.setText(mapItem.road_address_name);
+
+        latitude = Double.valueOf(mapItem.x);
+        longitude = Double.valueOf(mapItem.y);
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
+        setMapView(MARKER_POINT);
+        setMapPOIItem(MARKER_POINT);
     }
 
-    private void onPOIItemSelected(MapView mapView, MapItem mapItem) {
+    /* 지도 마커를 MARKER_POINT로 */
+    private void setMapPOIItem(MapPoint MARKER_POINT) {
         MapPOIItem marker = new MapPOIItem();
-        double latitude = Double.valueOf(mapItem.x);
-        double longitude = Double.valueOf(mapItem.y);
-        Log.d("위치", latitude + ", " + longitude);
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
-
-        /* 지도 view 중심을 검색 결과로 */
-        mapView.setMapCenterPoint(MARKER_POINT, true);
-
-        /* 지도 마커 표시 */
+        Log.d("marker name", marker.toString());
         marker.setItemName(mapItem.place_name);
         marker.setTag(0);
         marker.setMapPoint(MARKER_POINT);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
         mapView.addPOIItem(marker);
+    }
+
+    /* 지도 view 중심을 MARKER_POINT로 */
+    private void setMapView(MapPoint MARKER_POINT) {
+        mapView.setMapCenterPoint(MARKER_POINT, true);
+    }
+
+    //mapView.setCurrentLocationRadius(int meter)
+
+
+    /**현재 위치 Floating Button 클릭 메소드**/
+
+    // 시간 남으면 구현할게요~ (현재 위치로 지도 이동 + 지도 클릭해서 장소 보여주기)
+    /*  public void moveToCurrentLocation(View view) {
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithMarkerHeadingWithoutMapMoving);
+        mapView.setShowCurrentLocationMarker(true);
+
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }else {
+            checkRunTimePermission();
+        }
+    }
+
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    // GPS 활성화 설정
+    private void showDialogForLocationServiceSetting() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapFindActivity.this);
+        builder.setTitle("위치 서비스 비활성화");
+        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
+                + "위치 설정을 수정하시겠습니까?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent callGPSSettingIntent
+                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
+    void checkRunTimePermission(){
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(MapFindActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED ) {
+
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MapFindActivity.this, REQUIRED_PERMISSIONS[0])) {
+                Toast.makeText(MapFindActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(MapFindActivity.this, REQUIRED_PERMISSIONS,
+                        PERMISSIONS_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(MapFindActivity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grandResults) {
+
+        super.onRequestPermissionsResult(permsRequestCode, permissions, grandResults);
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+            boolean check_result = true;
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    break;
+                }
+            }
+            if (check_result) {
+                // mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
+                    Toast.makeText(MapFindActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    Toast.makeText(MapFindActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    */
+
+
+    @Override
+    public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
+        MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
+        longitude = mapPointGeo.longitude;
+        latitude = mapPointGeo.latitude;
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
+        setMapView(MARKER_POINT);
+        setMapPOIItem(MARKER_POINT);
+    }
+
+    @Override
+    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
+
+    }
+
+    @Override
+    public void onCurrentLocationUpdateFailed(MapView mapView) {
+
+    }
+
+    @Override
+    public void onCurrentLocationUpdateCancelled(MapView mapView) {
+
     }
 }
