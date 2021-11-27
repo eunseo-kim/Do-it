@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
 
-import java.io.Serializable;
 import java.util.Map;
 
 public class AttendanceRegisterActivity extends AppCompatActivity {
@@ -33,7 +31,7 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MapActivity.class);
+                Intent intent = new Intent(view.getContext(), MapSearchActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

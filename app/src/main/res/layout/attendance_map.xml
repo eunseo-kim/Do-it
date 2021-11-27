@@ -3,43 +3,97 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--주소 검색창-->
-    <LinearLayout
-        android:id="@+id/map_search"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/lightgray_box_radius"
-        android:padding="7dp">
+        android:layout_weight="0.8">
 
-        <ImageView
-            android:id="@+id/AttendEditButton"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <!-- 시간 남으면 구현 (현재 위치로 지도 보여주고 장소 등록하기)
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:onClick="moveToCurrentLocation"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            app:srcCompat="@drawable/map_pin"/>
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="#FFFFFF"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/current_location"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end|bottom"/>
 
-        <EditText
+       -->
+    </FrameLayout>
+
+
+    <!--이 위치로 출석 등록-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+        <TextView
+            android:id="@+id/placeName"
+            android:text="한국기술교육대학교 다산정보관"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/placeRoad"
+            android:text="도로명 주소"
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <!-- 출석 범위 지정 -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="14dp"
-            android:background="#ececec"
-            android:hint="주소를 검색해보세요"
-            android:layout_marginLeft="5dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="출석 범위  "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/locationRange"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:maxLines="1"
+                android:inputType="number"/>
+            <TextView
+                android:text="m"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/registerButton"
+            android:text="이 위치로 출석 등록"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
     </LinearLayout>
-
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
 
 </LinearLayout>
