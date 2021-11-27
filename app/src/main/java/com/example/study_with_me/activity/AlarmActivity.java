@@ -1,6 +1,5 @@
 package com.example.study_with_me.activity;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;

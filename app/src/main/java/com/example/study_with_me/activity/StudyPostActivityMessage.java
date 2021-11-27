@@ -45,8 +45,9 @@ public class StudyPostActivityMessage extends AppCompatActivity {
     private String username;
     private Map<String, Object> applicantMap;
     private Map<String, Object> studyGroup;
-    private boolean duplicate = false; // 중복된 신청자인지
-    private boolean isLeader = false;  // 리더인지
+    private boolean duplicate = false;  // 중복된 신청자인지
+    private boolean isLeader = false;   // 리더인지
+    private boolean isMember = false;   // 멤버인지
 
     Dialog dialog01;    // custom dialog
 
@@ -113,6 +114,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
         noButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "취소되었습니다.", Toast.LENGTH_SHORT).show();
+                dialog01.dismiss();
             }
         });
         dialog01.findViewById(R.id.yesButton).setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,9 @@ public class StudyPostActivityMessage extends AppCompatActivity {
             public void onClick(View view) {
                 studyGroup = (Map<String, Object>) studyGroupInfo;
                 String studyGroupID = (String) studyGroup.get("studyGroupID");
+
+                Log.d("memberList", studyGroup.get("memberList").toString());
+
                 studyGroupRef.child(studyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -131,7 +136,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                                 Map<String, Object> map = (Map<String, Object>) entry.getValue();
                                 Log.d("leader?", ""+studyGroup.get("leader").toString().equals(userID));
                                 if (map.get("userID").equals(userID)) {
-                                    Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "이미 신청한 스터디입니다.", Toast.LENGTH_SHORT).show();
                                     duplicate = true;
                                     break;
                                 }
@@ -146,7 +151,14 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                             isLeader = true;
                         }
 
-                        if(!(duplicate || isLeader)) {
+                        /*멤버로 가입된 스터디를 신청하는 경우 예외처리*/
+                        Map<String, String> mlist = (Map<String, String>) studyGroup.get("memberList");
+                        if (mlist.containsValue(userID)) {
+                            Toast.makeText(getApplicationContext(), "이미 가입된 스터디입니다.", Toast.LENGTH_SHORT).show();
+                            isMember = true;
+                        }
+
+                        if(!(duplicate || isLeader || isMember)) {
                             userRef.child(userID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -166,6 +178,7 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                                 }
                             });
                         }
+                        dialog01.dismiss();
                     }
                 });
             }

@@ -21,36 +21,51 @@ import com.example.study_with_me.model.MemberNotification;
 import com.example.study_with_me.model.MemberSampledata;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EvaluateMemberActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference = database.getReference();
     private DatabaseReference userRef = databaseReference.child("users");
+    private DatabaseReference studyRef = databaseReference.child("studygroups");
 
     private RatingBar evalRatingBar;
     private EditText evalComment;
     private Button evalRegisterBtn;
     private Button evalCancelBtn;
 
+    private String curUserID;
     private String evalUserID;
+    private String studyID;
     private float memberRating;
     private String comment;
     private float existRating;
-    private int joinCount;
+    private int ratingCount;
+    private ArrayList<String> evalMembers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_member_rating);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        curUserID = firebaseAuth.getCurrentUser().getUid();
+
         Intent intent = getIntent();
         evalUserID = intent.getStringExtra("userID");
+        studyID = intent.getStringExtra("studyID");
 
         /** 상단 액션바 설정 **/
         getSupportActionBar().setTitle("팀원 평가");
@@ -69,11 +84,10 @@ public class EvaluateMemberActivity extends AppCompatActivity {
 
     /** 평가하는 user의 스터디 참여 횟수 얻기 **/
     private void setUserInfo() {
-        Log.d("userID >>> ", evalUserID);
-        userRef.child(evalUserID).child("joinCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        userRef.child(evalUserID).child("ratingCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+                ratingCount = Integer.parseInt(task.getResult().getValue().toString());
             }
         });
         userRef.child(evalUserID).child("rating").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -86,7 +100,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
 
     /** DB에 입력한 정보 등록 **/
     private void registerInfoOnDB() {
-        userRef.child(evalUserID).child("rating").setValue((memberRating+existRating) / joinCount);
+        userRef.child(evalUserID).child("rating").setValue((memberRating+existRating) / (ratingCount+1));
     }
 
     /** rating bar에 onCilckListener 등록 **/
@@ -105,16 +119,21 @@ public class EvaluateMemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerInfoOnDB();
+                userRef.child(evalUserID).child("ratingCount").setValue(ratingCount+1);
 
-                // 버튼 클릭 불가 처리 구현
+                evalMembers.add(curUserID);
+                setEvaluatingMembers();
+                /**
+                 *  스터디 그룹안에 평가 멤버리스트를 넣고
+                 *  평가를 하면 그사람이름 아래에다가 평가자 ID를 넣어요. 없으면 넣고 있으면 안넣고
+                 */
 
-                onBackPressed();
             }
         });
         evalCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 뒤로가기
+                onBackPressed();
             }
         });
     }
@@ -122,5 +141,22 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     /** editText에 입력된 평가 가져오기 **/
     private String getComment() {
         return evalComment.getText().toString();
+    }
+
+    private void setEvaluatingMembers() {
+        studyRef.child(studyID).child("evalMembers").child(evalUserID).child("evaluating").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.getResult().getValue() == null) {
+                    studyRef.child(studyID).child("evalMembers").child(evalUserID).child("evaluating").setValue(evalMembers);
+                } else {
+                    ArrayList<String> evaluatingMembers = (ArrayList<String>) task.getResult().getValue();
+                    evaluatingMembers.add(curUserID);
+                    Set<String> evalSet = new HashSet<>(evaluatingMembers);
+                    evalMembers = new ArrayList<>(evalSet);
+                    studyRef.child(studyID).child("evalMembers").child(evalUserID).child("evaluating").setValue(evalMembers);
+                }
+            }
+        });
     }
 }

@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Study_With_Me"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.StudySearchActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,8 @@
         <activity android:name=".activity.EvaluateMemberActivity"
             android:label="EvaluateMemberActivity"></activity>
         <activity android:name=".activity.MyStudyRoomActivity"></activity>
-<!--        <activity android:name=".activity.StudySearchActivity"></activity>-->
+        <activity android:name=".activity.StudySearchActivity"></activity>
+        <activity android:name=".activity.MapSearchActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>
         <activity android:name=".activity.AlarmActivity"></activity>
@@ -40,6 +41,13 @@
         <activity android:name=".activity.MyPageActivity" />
         <activity android:name=".activity.EditUserInfoActivity"/>
         <activity android:name=".activity.UserInfo"></activity>
+        <activity android:name=".activity.HashGetter"/>
+        <activity android:name=".activity.MapFindActivity"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="0b7fd920b310e094887dcd5450cf979d"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
 
 </manifest>

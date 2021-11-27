@@ -34,6 +34,7 @@ public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference userRef = databaseReference.child("users");
 
     private TextView nameTextView, emailTextView, joinCountTextView, dropCountTextView, ratingNumber;
     private RatingBar ratingBar;
@@ -141,6 +142,10 @@ public class MyPageActivity extends AppCompatActivity {
 
     /** 회원 탈퇴 **/
     public void removeUser(View view) {
+        // DB 삭제
+        userRef.child(currentUserID).setValue(null);
+
+        // FirebaseAuth 삭제
         FirebaseUser user = firebaseAuth.getCurrentUser();
         user.delete()
             .addOnCompleteListener(new OnCompleteListener<Void>() {

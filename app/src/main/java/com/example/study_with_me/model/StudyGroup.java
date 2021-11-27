@@ -20,9 +20,9 @@ public class StudyGroup {
     private Date endDate;       // 스터디 종료 날짜
     private String leader;      // 스터디 방장 정보
     private boolean closed;     // 스터디 마감 여부
-    private ArrayList<Applicant> applicantList = new ArrayList<>();   // 스터디 신청자 리스트
-    private Map<String, String> memberList = new HashMap<>();        // 스터디 멤버 리스트
-
+    private ArrayList<Applicant> applicantList = new ArrayList<>();     // 스터디 신청자 리스트
+    private Map<String, String> memberList = new HashMap<>();           // 스터디 멤버 리스트
+    private Map<String, ArrayList> evalMembers = new HashMap<>();       // 평가 멤버리스트
 
     public StudyGroup(String studyGroupID, String leader, String name, String description,
                       String type, int numOfMember, Date startDate, Date endDate) {
@@ -80,6 +80,7 @@ public class StudyGroup {
     public String getLeader() { return leader; }
     public List<Applicant> getApplicantList() { return applicantList; }
     public Map<String, String> getMemberList() { return memberList; }
+    public Map<String, ArrayList> getEvalMembers() { return evalMembers; }
 
     public boolean getClosed() {
         return this.closed;
