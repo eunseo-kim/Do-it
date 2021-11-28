@@ -100,7 +100,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
 
     /** DB에 입력한 정보 등록 **/
     private void registerInfoOnDB() {
-        userRef.child(evalUserID).child("rating").setValue((memberRating+existRating) / (ratingCount+1));
+        userRef.child(evalUserID).child("rating").setValue((memberRating + (ratingCount * existRating)) / (ratingCount+1));
     }
 
     /** rating bar에 onCilckListener 등록 **/
@@ -120,14 +120,9 @@ public class EvaluateMemberActivity extends AppCompatActivity {
             public void onClick(View view) {
                 registerInfoOnDB();
                 userRef.child(evalUserID).child("ratingCount").setValue(ratingCount+1);
-
                 evalMembers.add(curUserID);
                 setEvaluatingMembers();
-                /**
-                 *  스터디 그룹안에 평가 멤버리스트를 넣고
-                 *  평가를 하면 그사람이름 아래에다가 평가자 ID를 넣어요. 없으면 넣고 있으면 안넣고
-                 */
-
+                finish();
             }
         });
         evalCancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +138,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
         return evalComment.getText().toString();
     }
 
+    /** 평가자 리스트에 평가자 추가 **/
     private void setEvaluatingMembers() {
         studyRef.child(studyID).child("evalMembers").child(evalUserID).child("evaluating").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -159,4 +155,5 @@ public class EvaluateMemberActivity extends AppCompatActivity {
             }
         });
     }
+
 }
