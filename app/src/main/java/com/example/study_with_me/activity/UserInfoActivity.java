@@ -35,6 +35,8 @@ public class UserInfoActivity extends AppCompatActivity {
     private String userName, userEmail;
     private float userRating;
     private int dropCount, joinCount;
+    private String applicantUserID;
+
     TextView btn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +47,34 @@ public class UserInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent= getIntent();
+        applicantUserID = intent.getStringExtra("userID");
 
-        Log.d("받은이름", intent.getStringExtra("닉네임"));
-        userName = intent.getStringExtra("닉네임");
+//        Log.d("받은이름>>", intent.getStringExtra("userID"));
+        // 회원의 userID를 받아옴
+//        userName = intent.getStringExtra("userID");
 
         nameTextView = (TextView) findViewById(R.id.userName);
-        nameTextView.setText(userName);
+        emailTextView = (TextView)findViewById(R.id.userEmail);
+        joinCountTextView = (TextView)findViewById(R.id.joinCount);
+        dropCountTextView = (TextView)findViewById(R.id.dropCount);
+        ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        ratingNumber = (TextView) findViewById(R.id.ratingNumber);
 
-        Log.d("!!", databaseReference.child("users").child("username").equalTo(userName).toString());
-
-        databaseReference.child("users").child("username").equalTo(userName).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").child(applicantUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userName = snapshot.child("username").getValue(String.class);
                 userEmail = snapshot.child("email").getValue(String.class);
-                Log.d("이메일", userEmail.toString());
-//                userRating = snapshot.child("rating").getValue(Float.class);
-//                joinCount = snapshot.child("dropCount").getValue(Integer.class);
-//                dropCount = snapshot.child("joinCount").getValue(Integer.class);
+                userRating = snapshot.child("rating").getValue(Float.class);
+                joinCount = snapshot.child("joinCount").getValue(Integer.class);
+                dropCount = snapshot.child("dropCount").getValue(Integer.class);
 
-//                emailTextView.setText(userEmail);
-//                joinCountTextView.setText(String.valueOf(joinCount));
-//                dropCountTextView.setText(String.valueOf(dropCount));
-//                ratingBar.setRating(userRating);
-//                ratingNumber.setText(String.valueOf(userRating));
+                nameTextView.setText(userName);
+                emailTextView.setText(userEmail);
+                joinCountTextView.setText(String.valueOf(joinCount));
+                dropCountTextView.setText(String.valueOf(dropCount));
+                ratingBar.setRating(userRating);
+                ratingNumber.setText(String.valueOf(userRating));
             }
 
             @Override
@@ -75,29 +82,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         });
-//        databaseReference.child("users").child(currentUserID).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-////                Log.d("과연", userName); userName 잘 나옴
-//
-//                userEmail = snapshot.child("email").getValue(String.class);
-//                Log.d("이메일", userEmail);
-////                userRating = snapshot.child("rating").getValue(Float.class);
-////                joinCount = snapshot.child("dropCount").getValue(Integer.class);
-////                dropCount = snapshot.child("joinCount").getValue(Integer.class);
-//
-////                emailTextView.setText(userEmail);
-////                joinCountTextView.setText(String.valueOf(joinCount));
-////                dropCountTextView.setText(String.valueOf(dropCount));
-////                ratingBar.setRating(userRating);
-////                ratingNumber.setText(String.valueOf(userRating));
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-
         btn1 = (TextView) findViewById(R.id.close_button);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

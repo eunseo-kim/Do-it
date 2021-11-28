@@ -62,9 +62,10 @@ public class ApplicantAdapter extends BaseAdapter {
         alarmMemberName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(context, "사용자 정보 보여주자구!!!!", Toast.LENGTH_SHORT).show();
+                String userID = applicants.get(position).getUserID();
+
                 Intent intent = new Intent(context, UserInfoActivity.class);
-                intent.putExtra("닉네임", userName);
+                intent.putExtra("userID", userID);
 
                 context.startActivity(intent);
             }

@@ -84,7 +84,6 @@ public class MyPageActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("이건", currentUserID);
                 userName = snapshot.child(USER_NAME_KEY).getValue(String.class);
                 userEmail = snapshot.child(USER_EMAIL_KEY).getValue(String.class);
                 userRating = snapshot.child(USER_RATING_KEY).getValue(Float.class);
