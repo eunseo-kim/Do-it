@@ -44,7 +44,7 @@
 
             <TextView
                 android:layout_marginBottom="10dp"
-                android:id="@+id/userEmail"
+                android:id="@+id/evaluateContents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textNoSuggestions"
@@ -193,82 +193,99 @@
 
 
     <LinearLayout
-        android:id="@+id/myStudyRoomButton"
+
+        android:id="@+id/userJoinStudyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="userJoinStudyButtonClicked"
         android:orientation="horizontal"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:onClick="myStudyRoomButtonClicked"
-        android:background="?attr/selectableItemBackground">
+        android:paddingBottom="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            app:srcCompat="@drawable/book_icon"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            app:srcCompat="@drawable/book_icon" />
 
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:backgroundTint="#00ff0000"
             android:text="참여한 스터디"
             android:textColor="@color/black"
-            android:backgroundTint="#00ff0000"
-            android:textStyle="bold"
             android:textSize="16sp"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/myStudyRoomShortCut"
-            android:src="@drawable/arrow_forward"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"/>
-    </LinearLayout>    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:onClick="myStudyRoomButtonClicked"
-    android:background="?attr/selectableItemBackground">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        app:srcCompat="@drawable/team_evaluation"
-        android:paddingLeft="10dp"/>
-
-    <Button
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:backgroundTint="#00ff0000"
-        android:text="팀원평가"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <ImageView
-        android:src="@drawable/arrow_forward"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"/>
-</LinearLayout>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/arrow_forward" />
+    </LinearLayout>
 
     <!--구분선-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
+
+    <LinearLayout
+        android:id="@+id/teamEvaluateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="teamEvaluateButtonClicked"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingLeft="10dp"
+            app:srcCompat="@drawable/team_evaluation" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="#00ff0000"
+            android:text="팀원평가"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/arrow_forward" />
+    </LinearLayout>
+
+
+
+    <!--구분선-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
