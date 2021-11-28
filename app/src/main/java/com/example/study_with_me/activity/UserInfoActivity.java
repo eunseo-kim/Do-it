@@ -60,6 +60,10 @@ public class UserInfoActivity extends AppCompatActivity {
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
         ratingNumber = (TextView) findViewById(R.id.ratingNumber);
 
+        setUserInfo();
+        buttonClick();
+    }
+    public void setUserInfo() {
         databaseReference.child("users").child(applicantUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,6 +86,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void buttonClick() {
         btn1 = (TextView) findViewById(R.id.close_button);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
