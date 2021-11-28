@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
@@ -86,12 +87,11 @@ public class MenuEvaluateMemberFragment extends Fragment {
 
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);
-
         getUser();
-
         return root;
     }
 
+    /** 덮은 화면 제거 **/
     private void removeView() {
         ConstraintLayout cl = (ConstraintLayout) getActivity().findViewById(R.id.coverLayout);
         ((ViewManager) cl.getParent()).removeView(cl);
@@ -150,7 +150,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     }
 
     /** User 정보 얻은 후 리스트에 띄우기 **/
-    private void getUser() {
+    public void getUser() {
         ArrayList<String> members = getStudyGroupMembers();
         for(int i = 0; i < members.size(); i++) {
             if(firebaseAuth.getCurrentUser().getUid().equals(members.get(i)))
@@ -177,7 +177,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private void setListView() {
         /** Adapter 설정 **/
         String studyId = String.valueOf(activity.getStudyInfo().get("studyGroupID"));
-        final TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
+        TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
+        evalAdapter.notifyDataSetChanged();
         evalMemberList.setAdapter(evalAdapter);
     }
 }

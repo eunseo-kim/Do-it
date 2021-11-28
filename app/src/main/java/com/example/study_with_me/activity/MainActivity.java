@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Adapter;
 
 import com.example.study_with_me.MenuAuthorizeAttendanceFragment;
 import com.example.study_with_me.MenuBulletFragment;
 import com.example.study_with_me.MenuEvaluateMemberFragment;
 import com.example.study_with_me.MenuScheduleManagementFragment;
 import com.example.study_with_me.R;
+import com.example.study_with_me.adapter.TeamEvaluationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.Serializable;
@@ -71,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public Map<String, Object> getStudyInfo() {
