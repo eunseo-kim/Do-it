@@ -48,7 +48,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/userEmail"
+                    android:id="@+id/evaluateContents"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -222,7 +222,7 @@
 
 
     <LinearLayout
-        android:id="@+id/myStudyRoomButton"
+        android:id="@+id/userJoinStudyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
