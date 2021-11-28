@@ -177,13 +177,10 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                                     userRef.child(userID).child("appliedStudyGroupIDList").push().setValue(studyGroupID);
                                 }
                             });
-
                         }
                         dialog01.dismiss();
                     }
                 });
-
-
             }
         });
     }
