@@ -40,7 +40,7 @@
         <activity android:name=".activity.FindPasswordActivity"></activity>
         <activity android:name=".activity.MyPageActivity" />
         <activity android:name=".activity.EditUserInfoActivity"/>
-        <activity android:name=".activity.UserInfo"></activity>
+        <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.HashGetter"/>
         <activity android:name=".activity.MapFindActivity"/>
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="0b7fd920b310e094887dcd5450cf979d"/>

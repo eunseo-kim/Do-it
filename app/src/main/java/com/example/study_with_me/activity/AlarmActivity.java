@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -25,7 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AlarmActivity extends AppCompatActivity {
@@ -36,6 +41,7 @@ public class AlarmActivity extends AppCompatActivity {
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
     private ApplicantAdapter adapter;
+
 
     private String userID;
     private ArrayList<Applicant> applicants = new ArrayList<>();
@@ -141,6 +147,17 @@ public class AlarmActivity extends AppCompatActivity {
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 menu.addMenuItem(deleteItem);
+
+//                swipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                        Log.d("과연?!", "??");
+//                        Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
+//                        Intent intent = new Intent(AlarmActivity.this, StudyPostActivityMessage.class);
+//                        intent.putExtra("userInfo", (Serializable) item);
+//                        startActivity(intent);
+//                    }
+//                });
             }
 
         };

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.study_with_me.R;
-import com.example.study_with_me.activity.UserInfo;
+import com.example.study_with_me.activity.UserInfoActivity;
 import com.example.study_with_me.model.Applicant;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,7 +35,7 @@ public class ApplicantAdapter extends BaseAdapter {
     public int getCount() { return applicants.size(); }
 
     @Override
-    public Applicant getItem(int position) { return applicants.get(position); }
+    public Object getItem(int position) { return applicants.get(position); }
 
     @Override
     public long getItemId(int position) { return position; }
@@ -57,17 +57,19 @@ public class ApplicantAdapter extends BaseAdapter {
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
 
         String userName = alarmMemberName.getText().toString();
-//        Log.d("이름", userName);
+        Log.d("이름", userName);
+
         alarmMemberName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(context, "사용자 정보 보여주자구!!!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, UserInfo.class);
+                Intent intent = new Intent(context, UserInfoActivity.class);
                 intent.putExtra("닉네임", userName);
 
                 context.startActivity(intent);
             }
-        });
+        }
+        );
         return view;
     }
 }
