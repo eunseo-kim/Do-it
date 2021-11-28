@@ -17,7 +17,7 @@
             android:layout_marginRight="10dp"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/tmp_person_icon" />
+            app:srcCompat="@drawable/tmp_person_icon"/>
 
         <LinearLayout
             android:layout_width="match_parent"
