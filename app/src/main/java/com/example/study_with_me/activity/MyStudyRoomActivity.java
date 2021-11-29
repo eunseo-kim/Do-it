@@ -292,9 +292,9 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                                 attendanceMap.put("attend", false);
                                                 attendanceMap.put("hour", "");
                                                 attendanceMap.put("minute", "");
-                                                attendanceMap.put("x", "-");
-                                                attendanceMap.put("y", "-");
-                                                attendanceMap.put("place", "-");
+                                                attendanceMap.put("x", "");
+                                                attendanceMap.put("y", "");
+                                                attendanceMap.put("place", "");
                                                 attendanceMap.put("range", "");
                                                 userRef.child(memberID).child("attendance").child(studyGroupID).setValue(attendanceMap);
                                             }

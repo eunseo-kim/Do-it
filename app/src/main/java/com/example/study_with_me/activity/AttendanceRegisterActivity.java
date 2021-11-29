@@ -102,9 +102,8 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
         timeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) {
-                    isPM = true;
-                }
+                if(isChecked) isPM = true;
+                else isPM = false;
             }
         });
 
@@ -139,13 +138,10 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
             userRef.child(userID).child("attendance").child(studyGroupID).child("x").setValue(attendInfo.get("x"));
             userRef.child(userID).child("attendance").child(studyGroupID).child("y").setValue(attendInfo.get("y"));
             userRef.child(userID).child("attendance").child(studyGroupID).child("range").setValue(range.getText().toString());
-            userRef.child(userID).child("attendance").child(studyGroupID).child("hour").setValue(String.valueOf(hour));
-            userRef.child(userID).child("attendance").child(studyGroupID).child("minute").setValue(String.valueOf(minute));
+            userRef.child(userID).child("attendance").child(studyGroupID).child("hour").setValue(String.format("%02d", hour));
+            userRef.child(userID).child("attendance").child(studyGroupID).child("minute").setValue(String.format("%02d", minute));
 
             finish();
-//            Intent intent = new Intent(AttendanceRegisterActivity.this, MainActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
         }
     }
 }
