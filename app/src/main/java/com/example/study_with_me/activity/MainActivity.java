@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     public Map<String, Object> getStudyInfo() {
         return this.studyInfo;
@@ -113,5 +109,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

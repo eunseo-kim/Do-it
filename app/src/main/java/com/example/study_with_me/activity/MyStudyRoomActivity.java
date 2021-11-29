@@ -290,10 +290,13 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                                 Map<String, Object> attendanceMap = new HashMap<>();
                                                 attendanceMap.put("isSet", false);
                                                 attendanceMap.put("attend", false);
-                                                attendanceMap.put("time", "-");
-                                                attendanceMap.put("gps", "-");
-                                                attendanceMap.put("place", "-");
-                                                attendanceMap.put("range", "-");
+                                                attendanceMap.put("hour", "");
+                                                attendanceMap.put("minute", "");
+                                                attendanceMap.put("x", "");
+                                                attendanceMap.put("y", "");
+                                                attendanceMap.put("place", "");
+                                                attendanceMap.put("range", "");
+                                                attendanceMap.put("dates", "");
                                                 userRef.child(memberID).child("attendance").child(studyGroupID).setValue(attendanceMap);
                                             }
                                         });
