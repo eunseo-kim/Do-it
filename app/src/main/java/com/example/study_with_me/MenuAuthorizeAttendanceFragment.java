@@ -1,6 +1,9 @@
 package com.example.study_with_me;
 
+import static java.lang.Math.*;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;;
@@ -31,9 +34,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private MainActivity activity;
@@ -51,6 +61,11 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private Button attendButton;
     private FirebaseAuth firebaseAuth;
     private String userID;
+    private Boolean isSet, attend;
+    private Date currentTime, registerTime;
+    private String hour, minute;
+    private long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
+    private TimeZone timeZone;
 
     @Nullable
     @Override
@@ -76,6 +91,9 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         attendEditButton = root.findViewById(R.id.AttendEditButton);
         attendButton = root.findViewById(R.id.attendButton);
 
+        timeZone = TimeZone.getTimeZone("Asia/Seoul");
+        initializeAttendButton();
+
         listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
         listView.addHeaderView(headerView);
@@ -96,15 +114,66 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         attendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
-                intent.putExtra("attendInfo", (Serializable)attendInfo);
-                intent.putExtra("studyGroupID", studyGroupID);
-                view.getContext().startActivity(intent);
+                if (!isSet) { // 등록하기 버튼
+                    Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                    intent.putExtra("attendInfo", (Serializable) attendInfo);
+                    intent.putExtra("studyGroupID", studyGroupID);
+                    view.getContext().startActivity(intent);
+                } else { // 출석하기 버튼
+
+                }
             }
         });
 
         return root;
     }
+
+    // 만약 이미 등록된 상태라면(isSet = true) [등록하기] => [출석하기]
+    private void initializeAttendButton() {
+        userRef.child(userID).child("attendance").child(studyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                isSet = task.getResult().child("isSet").getValue(Boolean.class);
+                attend = task.getResult().child("attend").getValue(Boolean.class);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HHmm", Locale.KOREAN);
+                dateFormat.setTimeZone(timeZone); // 서울로 표준시 설정
+                hour = task.getResult().child("hour").getValue(String.class);
+                minute = task.getResult().child("minute").getValue(String.class);
+                try {
+                    String currTimeStr = dateFormat.format(Calendar.getInstance(Locale.KOREAN).getTime());
+                    currentTime = dateFormat.parse(currTimeStr);
+
+                    String regTimeStr = hour + minute;
+                    registerTime = dateFormat.parse(regTimeStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                /* 출석 계획 등록을 한 경우 */
+                if (isSet) { attendButton.setText("출석하기"); }
+
+                if (attend)
+                {
+                    attendButton.setBackgroundColor(Color.GRAY);
+                    attendButton.setClickable(false);
+                    attendButton.setText("출석 완료");
+                }
+                else if (abs(currentTime.getTime() - registerTime.getTime()) <= TIME_RANGE)
+                {
+                    // 출석 아직 안하고 출석 가능 시간대인 경우
+                    attendButton.setClickable(true);
+                }
+                else
+                {
+                    attendButton.setBackgroundColor(Color.GRAY);
+                    attendButton.setClickable(false);
+                    attendButton.setText("출석 시간이 아닙니다.");
+                }
+            }
+        });
+    }
+
 
     private void setMyAttendance() {
         userRef.child(userID).child("attendance").child(studyGroupID)

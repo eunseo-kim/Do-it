@@ -41,7 +41,7 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
     private Map<String, Object> attendInfo;
     private Button registerButton;
     private TextView gps, place;
-    private EditText range;
+    private TextView range;
     private EditText hourEditText, minuteEditText;
     private ToggleButton timeToggleButton;
     private int hour, minute;
@@ -71,6 +71,7 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
         attendInfo = (Map<String, Object>) intent.getSerializableExtra("attendInfo");
         studyGroupID = intent.getStringExtra("studyGroupID");
         Log.d("attendInfo", attendInfo.toString());
+
 
         // 주소 검색창 클릭
         EditText searchView = (EditText) findViewById(R.id.map_search);
@@ -121,12 +122,11 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
         } catch (Exception e) {}
     }
 
+
     /** update database (attendance) **/
     private void registerAttendance() throws ParseException {
         if (hourEditText.getText().length() == 0 || minuteEditText.getText().length() == 0) {
             Toast.makeText(getApplicationContext(), "시간을 설정해주세요", Toast.LENGTH_SHORT).show();
-        } else if (range.getText().length() == 0) {
-            Toast.makeText(getApplicationContext(), "출석 범위를 설정해주세요", Toast.LENGTH_SHORT).show();
         } else {
             // 모든 입력이 완료된 상태
             hour = Integer.parseInt(hourEditText.getText().toString());
