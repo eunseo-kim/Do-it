@@ -99,6 +99,12 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
 
                 if (locationRange.isFocusable() && !s.toString().equals("")) {
                     int range = Integer.parseInt(locationRange.getText().toString());
+                    /* 범위 제한 (50m) => 일단 확인용으로 100m로 할게요! */
+                    if (range > 100) {
+                        range = 100;
+                        locationRange.setText(String.valueOf(range));
+                        Toast.makeText(getApplicationContext(), "최대 50m까지 설정 가능합니다.", Toast.LENGTH_SHORT).show();
+                    }
                     MapCircle mapCircle = new MapCircle(MARKER_POINT, range,R.color.strokeColor, R.color.fillColor);
                     mapView.addCircle(mapCircle);
                 }
