@@ -34,12 +34,12 @@
                 android:layout_weight="1"/>
 
             <!--출석 등록내용 edit 버튼-->
-            <!-- <ImageView
+            <ImageView
                 android:id="@+id/AttendEditButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                app:srcCompat="@drawable/edit_icon"/> -->
+                app:srcCompat="@drawable/edit_icon"/>
         </LinearLayout>
 
         <!--border bottom(구분선)-->
@@ -124,7 +124,7 @@
         <TableRow
             android:layout_weight = "1">
             <Button
-                android:id="@+id/AttendEditButton"
+                android:id="@+id/attendButton"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="등록하기" />

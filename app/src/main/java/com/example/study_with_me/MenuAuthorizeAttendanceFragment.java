@@ -47,7 +47,8 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private String memberName;
     private TextView attendTime, attendGPS, attendPlace, attendRange;
     private Map<String, Object> attendInfo;
-    private Button attendEditButton;
+    private ImageView attendEditButton;
+    private Button attendButton;
     private FirebaseAuth firebaseAuth;
     private String userID;
 
@@ -73,6 +74,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         attendPlace = root.findViewById(R.id.attendPlace);
         attendRange = root.findViewById(R.id.attendRange);
         attendEditButton = root.findViewById(R.id.AttendEditButton);
+        attendButton = root.findViewById(R.id.attendButton);
 
         listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
@@ -86,6 +88,17 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
                 intent.putExtra("attendInfo", (Serializable)attendInfo);
+                intent.putExtra("studyGroupID", studyGroupID);
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        attendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                intent.putExtra("attendInfo", (Serializable)attendInfo);
+                intent.putExtra("studyGroupID", studyGroupID);
                 view.getContext().startActivity(intent);
             }
         });
@@ -99,14 +112,16 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 attendInfo = (Map<String, Object>) task.getResult().getValue();
-                String time = (String) attendInfo.get("time");
-                String gps = (String) attendInfo.get("gps");
+                String hour = (String) attendInfo.get("hour");
+                String minute = (String) attendInfo.get("minute");
+                String x = (String) attendInfo.get("x");
+                String y = (String) attendInfo.get("y");
                 String place = (String) attendInfo.get("place");
                 String range = (String) attendInfo.get("range");
-                attendTime.setText(time);
-                attendGPS.setText(gps);
+                attendTime.setText(String.format("%s:%s", hour, minute));
+                attendGPS.setText(x + ", " + y);
                 attendPlace.setText(place);
-                attendRange.setText(range);
+                attendRange.setText(range + "m");
             }
         });
     }
@@ -131,17 +146,16 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     Boolean isSet = (Boolean) task.getResult().child("isSet").getValue();
                     Boolean attend = (Boolean) task.getResult().child("attend").getValue();
-                    String gps = (String) task.getResult().child("gps").getValue();
                     String place = (String) task.getResult().child("place").getValue();
                     String range = (String) task.getResult().child("range").getValue();
-                    String time = (String) task.getResult().child("time").getValue();
+                    String hour = (String) task.getResult().child("hour").getValue();
+                    String minute = (String) task.getResult().child("minute").getValue();
                     member.put("memberName", memberName);
                     member.put("isSet", isSet);
                     member.put("attend", attend);
-                    member.put("gps", gps);
                     member.put("place", place);
                     member.put("range", range);
-                    member.put("time", time);
+                    member.put("time", String.format("%s:%s", hour, minute));
                     memberList.add(member);
                     Log.d("memberList", memberList.toString());
                     setListView();

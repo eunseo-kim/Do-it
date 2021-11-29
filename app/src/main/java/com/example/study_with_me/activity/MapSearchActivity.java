@@ -46,6 +46,7 @@ public class MapSearchActivity extends AppCompatActivity{
     private EditText mapSearchEditText;
     private String preText;
     private double x, y; // lat= y, long = x
+    private String studyGroupID;
 
 
     @Override
@@ -57,8 +58,10 @@ public class MapSearchActivity extends AppCompatActivity{
         getSupportActionBar().setTitle("지도에서 위치 확인");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // mapView = new MapView(this);
+        Intent intent = getIntent();
+        studyGroupID = intent.getStringExtra("studyGroupID");
 
+        // mapView = new MapView(this);
         mapSearchList = new ArrayList<>();
         mapSearchListView = findViewById(R.id.mapSearchListView);
         mapSearchEditText = findViewById(R.id.mapSearchEditText);
@@ -129,6 +132,7 @@ public class MapSearchActivity extends AppCompatActivity{
                 MapItem item = (MapItem) adapter.getItem(position);
                 Intent intent = new Intent(MapSearchActivity.this, MapFindActivity.class);
                 intent.putExtra("MapItem", (Serializable) item);
+                intent.putExtra("studyGroupID", studyGroupID);
                 startActivity(intent);
             }
         });
