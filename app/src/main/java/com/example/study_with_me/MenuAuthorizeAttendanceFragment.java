@@ -22,6 +22,7 @@ import androidx.fragment.app.ListFragment;
 
 import com.example.study_with_me.activity.AlarmActivity;
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
+import com.example.study_with_me.activity.CheckingAttendanceActivity;
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.activity.StudySearchActivity;
 import com.example.study_with_me.adapter.AttendanceAdapter;
@@ -120,7 +121,11 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                     intent.putExtra("studyGroupID", studyGroupID);
                     view.getContext().startActivity(intent);
                 } else { // 출석하기 버튼
-
+                    Intent intent = new Intent(view.getContext(), CheckingAttendanceActivity.class);
+                    intent.putExtra("x", attendInfo.get("x").toString());
+                    intent.putExtra("y", attendInfo.get("y").toString());
+                    intent.putExtra("range", attendInfo.get("range").toString());
+                    view.getContext().startActivity(intent);
                 }
             }
         });
