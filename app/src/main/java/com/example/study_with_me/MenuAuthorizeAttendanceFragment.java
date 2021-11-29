@@ -125,6 +125,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                     intent.putExtra("x", attendInfo.get("x").toString());
                     intent.putExtra("y", attendInfo.get("y").toString());
                     intent.putExtra("range", attendInfo.get("range").toString());
+                    intent.putExtra("studyGroupID", studyGroupID);
                     view.getContext().startActivity(intent);
                 }
             }
@@ -151,30 +152,31 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
 
                     String regTimeStr = hour + minute;
                     registerTime = dateFormat.parse(regTimeStr);
+
+                    /* 출석 계획 등록을 한 경우 */
+                    if (isSet) { attendButton.setText("출석하기"); }
+                    if (attend)
+                    {
+                        attendButton.setBackgroundColor(Color.GRAY);
+                        attendButton.setClickable(false);
+                        attendButton.setText("출석 완료");
+                    }
+                    else if (abs(currentTime.getTime() - registerTime.getTime()) <= TIME_RANGE)
+                    {
+                        // 출석 아직 안하고 출석 가능 시간대인 경우
+                        attendButton.setClickable(true);
+                    }
+                    else
+                    {
+                        attendButton.setBackgroundColor(Color.GRAY);
+                        attendButton.setClickable(false);
+                        attendButton.setText("출석 시간이 아닙니다.");
+                    }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                /* 출석 계획 등록을 한 경우 */
-                if (isSet) { attendButton.setText("출석하기"); }
-
-                if (attend)
-                {
-                    attendButton.setBackgroundColor(Color.GRAY);
-                    attendButton.setClickable(false);
-                    attendButton.setText("출석 완료");
-                }
-                else if (abs(currentTime.getTime() - registerTime.getTime()) <= TIME_RANGE)
-                {
-                    // 출석 아직 안하고 출석 가능 시간대인 경우
-                    attendButton.setClickable(true);
-                }
-                else
-                {
-                    attendButton.setBackgroundColor(Color.GRAY);
-                    attendButton.setClickable(false);
-                    attendButton.setText("출석 시간이 아닙니다.");
-                }
             }
         });
     }

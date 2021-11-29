@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -18,6 +20,12 @@ import androidx.core.content.ContextCompat;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.GpsTracker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
@@ -28,6 +36,14 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         implements MapView.CurrentLocationEventListener{
     String BASE_URL = "https://dapi.kakao.com/";
     String API_KEY = "KakaoAK ae9cc095bc96cc24e11a0deaee75a793";
+
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private DatabaseReference userRef = databaseReference.child("users");
+    private FirebaseAuth firebaseAuth;
+    private String userID;
+    private String studyGroupID;
+
     private double latitude, longitude;
     private double currLatitude, currLongitude;
     private int range;
@@ -50,17 +66,22 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         getSupportActionBar().setTitle("출석 확인");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
+
         mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
         Intent intent = getIntent();
-        latitude = Double.valueOf(intent.getStringExtra("x"));
-        longitude = Double.valueOf(intent.getStringExtra("y"));
+        latitude = Double.valueOf(intent.getStringExtra("y"));
+        longitude = Double.valueOf(intent.getStringExtra("x"));
         range = Integer.valueOf(intent.getStringExtra("range"));
+        studyGroupID = intent.getStringExtra("studyGroupID");
+
         Log.d("latitude", String.valueOf(latitude));
 
-        MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
+        MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
         setMapView(MARKER_POINT);
         setMapPOIItem(MARKER_POINT, "내가 등록한 위치");
         setMapCircle(MARKER_POINT);
@@ -72,13 +93,34 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         } else {
             checkRunTimePermission();
         }
+    }
 
+    /** 현재 위치로 출석 인증하기 **/
+    public void checkAttendance(View view) {
         gpsTracker = new GpsTracker(CheckingAttendanceActivity.this);
         currLatitude = gpsTracker.getLatitude();
         currLongitude = gpsTracker.getLongitude();
         Log.d("현재위치:", currLatitude + ", " + currLongitude);
-        // CURR_MARKER_POINT = MapPoint.mapPointWithGeoCoord(currLongitude, currLatitude);
-        // setMapPOIItem(CURR_MARKER_POINT, "현재 위치");
+        Log.d("등록위치:", latitude + ", " + longitude);
+
+        // MARKER_POINT와 CURR_MARKER_POINT 사이의 거리가 range보다 작으면 출석 인증 완료(5초 내에)
+        Location registerLocation = new Location("register");
+        registerLocation.setLatitude(latitude);
+        registerLocation.setLongitude(longitude);
+
+        Location currentLocation = new Location("current");
+        currentLocation.setLatitude(currLatitude);
+        currentLocation.setLongitude(currLongitude);
+
+        double distance = currentLocation.distanceTo(registerLocation); // meter
+        Log.d("distance", distance + "& " + range);
+        if (distance <= range) {
+            Toast.makeText(getApplicationContext(), "인증되었습니다.", Toast.LENGTH_SHORT).show();
+            userRef.child(userID).child("attendance").child(studyGroupID).child("attend").setValue(true);
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "설정된 범위 내에서 다시 인증해주세요", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setMapCircle(MapPoint MARKER_POINT) {
