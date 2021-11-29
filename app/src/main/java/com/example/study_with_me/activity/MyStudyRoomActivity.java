@@ -296,6 +296,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                                 attendanceMap.put("y", "");
                                                 attendanceMap.put("place", "");
                                                 attendanceMap.put("range", "");
+                                                attendanceMap.put("dates", "");
                                                 userRef.child(memberID).child("attendance").child(studyGroupID).setValue(attendanceMap);
                                             }
                                         });

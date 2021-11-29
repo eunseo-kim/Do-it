@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -67,6 +68,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private String hour, minute;
     private long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
     private TimeZone timeZone;
+    private boolean dailyRegistration;    // 오늘 날짜가 dates에 등록됐는지
 
     @Nullable
     @Override
@@ -93,14 +95,37 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         attendButton = root.findViewById(R.id.attendButton);
 
         timeZone = TimeZone.getTimeZone("Asia/Seoul");
-        initializeAttendButton();
-
         listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
         listView.addHeaderView(headerView);
 
-        setMyAttendance();
-        getMemberList();
+
+        /* users-attendance-studyGroupID-dates에 오늘 Date가 없으면 attend=false로 initialize */
+        CalendarDay today = CalendarDay.today();
+        dailyRegistration = false;
+        userRef.child(userID).child("attendance").child(studyGroupID).child("dates").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                /* initialize attend */
+                for (DataSnapshot data : task.getResult().getChildren()) {
+                    if (data.getValue(String.class).equals(today.toString())) {
+                        dailyRegistration = true;
+                        break;
+                    }
+                }
+
+                if (!dailyRegistration) {
+                    userRef.child(userID).child("attendance").child(studyGroupID).child("attend").setValue(false);
+                    userRef.child(userID).child("attendance").child(studyGroupID).child("dates").push().setValue(today.toString());
+                }
+
+                /* 나머지 실행 */
+                initializeAttendButton();
+                setMyAttendance();
+                getMemberList();
+            }
+        });
+
 
         attendEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
