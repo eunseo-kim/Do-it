@@ -1,10 +1,14 @@
 package com.example.study_with_me.activity;
 
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.MapItem;
 
+import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
@@ -36,6 +41,8 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
     private Map<String, Object> attendInfo;
     private Button registerButton;
     private String studyGroupID;
+    private MapPoint MARKER_POINT;
+    private String preText;
 
     /*현재 위치 GPS 권한 설정*/
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -68,7 +75,7 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
 
         latitude = Double.valueOf(mapItem.x);
         longitude = Double.valueOf(mapItem.y);
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
+        MARKER_POINT = MapPoint.mapPointWithGeoCoord(longitude, latitude);
         setMapView(MARKER_POINT);
         setMapPOIItem(MARKER_POINT);
 
@@ -78,6 +85,26 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
             public void onClick(View view) {
                 registerButtonClicked();
             }
+        });
+
+        /* draw a MapCircle */
+        locationRange.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                preText = s.toString();
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                mapView.removeAllCircles();
+
+                if (locationRange.isFocusable() && !s.toString().equals("")) {
+                    int range = Integer.parseInt(locationRange.getText().toString());
+                    MapCircle mapCircle = new MapCircle(MARKER_POINT, range,R.color.strokeColor, R.color.fillColor);
+                    mapView.addCircle(mapCircle);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
     }
 
