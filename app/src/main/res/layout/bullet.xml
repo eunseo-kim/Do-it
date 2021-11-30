@@ -21,10 +21,12 @@
             android:layout_height="wrap_content" >
 
             <RadioButton
-                android:id="@+id/bulletMenuAllBtn"
+                android:id="@+id/bulletinAll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:button="@null"
                 android:checked="true"
                 android:background="@drawable/selector_top_menu_button"
@@ -33,50 +35,51 @@
                 android:textAlignment="center" />
 
             <RadioButton
-                android:id="@+id/bulletMenuNotiBtn"
+                android:id="@+id/bulletinNotice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:button="@null"
                 android:background="@drawable/selector_top_menu_button"
                 android:textColor="@drawable/selector_top_menu_text"
                 android:text="공지"
                 android:textAlignment="center" />
-
-            <RadioButton
-                android:id="@+id/bulletMenuPicBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:button="@null"
-                android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
-                android:text="사진"
-                android:textAlignment="center" />
-
-            <RadioButton
-                android:id="@+id/bulletMenuFileBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:button="@null"
-                android:background="@drawable/selector_top_menu_button"
-                android:textColor="@drawable/selector_top_menu_text"
-                android:text="파일"
-                android:textAlignment="center" />
         </RadioGroup>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/noPostMessage"
-        android:gravity="center"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="첫 게시글을 작성해보세요"/>
+        android:layout_height="match_parent">
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButton"
+            android:onClick="moveToCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="#FFFFFF"
+            android:layout_margin="20dp"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end|bottom"/>
+
+        <TextView
+            android:id="@+id/noPostMessage"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="첫 게시글을 작성해보세요"/>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
 </LinearLayout>

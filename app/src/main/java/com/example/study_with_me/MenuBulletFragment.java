@@ -7,23 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
+import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.BulletRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuBulletFragment extends Fragment implements View.OnClickListener{
-    TextView allBtn;
-    TextView notiBtn;
-    TextView picBtn;
-    TextView fileBtn;
-    TextView nothingText;
-    Button writeBtn;
+    RadioButton bulletinNotice, bulletinAll;
+    FloatingActionButton addButton;
     private final int ALL_BTN = 0, NOTI_BTN = 1, PIC_BTN = 2, FILE_BTN = 3;
     int selectedType = ALL_BTN;
 
@@ -32,18 +32,13 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.bullet, container, false);
 
-        allBtn = root.findViewById(R.id.bulletMenuAllBtn);
-        notiBtn = root.findViewById(R.id.bulletMenuNotiBtn);
-        picBtn = root.findViewById(R.id.bulletMenuPicBtn);
-        fileBtn = root.findViewById(R.id.bulletMenuFileBtn);
-        nothingText = root.findViewById(R.id.bulletNothingText);
-        writeBtn = root.findViewById(R.id.bulletWriteBtn);
+        bulletinNotice = root.findViewById(R.id.bulletinNotice);
+        bulletinAll = root.findViewById(R.id.bulletinAll);
+        addButton = root.findViewById(R.id.addButton);
 
-        allBtn.setOnClickListener(this);
-        notiBtn.setOnClickListener(this);
-        picBtn.setOnClickListener(this);
-        fileBtn.setOnClickListener(this);
-        writeBtn.setOnClickListener(this);
+        bulletinNotice.setOnClickListener(this);
+        bulletinAll.setOnClickListener(this);
+        addButton.setOnClickListener(this);
 
         // 상단 액션바 설정
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
@@ -55,48 +50,16 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        Intent intent;
         switch (view.getId()) {
-            case R.id.bulletWriteBtn:
-                intent = new Intent(getActivity(), BulletRegisterActivity.class);
-                intent.putExtra("type", selectedType);
+            case R.id.bulletinAll: // listView 분류를 [전체]로
+                Toast.makeText(getContext(), "전체 게시물 보기", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bulletinNotice:   // listView 분류를 [공지]로
+                Toast.makeText(getContext(), "공지사항 보기", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.addButton: // 게시글 추가 버튼
+                Intent intent = new Intent(view.getContext(), BulletRegisterActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.bulletMenuAllBtn:
-                allBtn.setTextColor(Color.BLACK);
-                notiBtn.setTextColor(Color.GRAY);
-                picBtn.setTextColor(Color.GRAY);
-                fileBtn.setTextColor(Color.GRAY);
-                nothingText.setText("등록된 글이 없습니다.");
-                writeBtn.setText("글 쓰기");
-                selectedType = ALL_BTN;
-                break;
-            case R.id.bulletMenuNotiBtn:
-                notiBtn.setTextColor(Color.BLACK);
-                allBtn.setTextColor(Color.GRAY);
-                picBtn.setTextColor(Color.GRAY);
-                fileBtn.setTextColor(Color.GRAY);
-                nothingText.setText("중요한 소식을 공지로 전해보세요");
-                writeBtn.setText("글 쓰기");
-                selectedType = NOTI_BTN;
-                break;
-            case R.id.bulletMenuPicBtn:
-                picBtn.setTextColor(Color.BLACK);
-                allBtn.setTextColor(Color.GRAY);
-                notiBtn.setTextColor(Color.GRAY);
-                fileBtn.setTextColor(Color.GRAY);
-                nothingText.setText("멤버들과 사진을 공유해보세요");
-                writeBtn.setText("사진 올리기");
-                selectedType = PIC_BTN;
-                break;
-            case R.id.bulletMenuFileBtn:
-                fileBtn.setTextColor(Color.BLACK);
-                allBtn.setTextColor(Color.GRAY);
-                picBtn.setTextColor(Color.GRAY);
-                notiBtn.setTextColor(Color.GRAY);
-                nothingText.setText("멤버들과 파일을 공유해보세요");
-                writeBtn.setText("파일 올리기");
-                selectedType = FILE_BTN;
                 break;
         }
     }

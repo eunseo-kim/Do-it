@@ -22,8 +22,6 @@
         <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.BulletActivity"
             android:label="BulletActivity"></activity>
-        <activity android:name=".activity.BulletNotificationActivity"
-            android:label="BulletNotificationActivity"></activity>
         <activity android:name=".activity.EvaluateMemberActivity"
             android:label="EvaluateMemberActivity"></activity>
         <activity android:name=".activity.MyStudyRoomActivity"></activity>

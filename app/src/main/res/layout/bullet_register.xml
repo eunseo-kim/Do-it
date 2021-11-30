@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,13 +8,12 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_line"
         android:orientation="horizontal">
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/noticeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,44 +37,83 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="0.9"
-        android:background="@android:color/transparent"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="멤버들과 공유하고 싶은 말을 남겨보세요."
-        android:inputType="textPersonName"
-        android:textAlignment="inherit"
-        android:textColor="#B5B5B5"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:background="@drawable/bottom_navigation_shadow">
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:hint="멤버들과 공유하고 싶은 말을 남겨보세요."
+            android:textColorHint="#c3c3c3"
+            android:textSize="13dp"
+            android:textColor="@color/black"/>
 
         <ImageView
-            android:id="@+id/imageIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            app:srcCompat="@drawable/image_icon"
-            android:gravity="center"
-            android:layout_marginTop="5dp"/>
-        <ImageView
-            android:id="@+id/fileIconImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            app:srcCompat="@drawable/file_icon"
-            android:gravity="center"
-            android:layout_marginTop="5dp"/>
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="300dp"
+            android:layout_margin="20dp"/>
+
 
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/uploadFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/lightgray_box_radius"
+                android:gravity="center_vertical"
+                android:text="첨부 파일"
+                android:textColor="#4E4E4E"
+                android:layout_margin="15dp"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_navigation_shadow"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/imageIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    app:srcCompat="@drawable/image_icon" />
+
+                <ImageView
+                    android:id="@+id/fileIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    app:srcCompat="@drawable/file_icon" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

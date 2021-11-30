@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,20 +44,13 @@ public class BulletNotificationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View converView, ViewGroup parent) {
-        View view = layoutInflater.inflate(R.layout.bullet_notification_item, null);
+        View view = layoutInflater.inflate(R.layout.bullet_item, null);
 
-        ImageView memberImage = (ImageView)view.findViewById(R.id.member_profile);
-        TextView memberName = (TextView)view.findViewById(R.id.alarmMemberName);
-        TextView date = (TextView)view.findViewById(R.id.notiDate);
-        TextView comment = (TextView)view.findViewById(R.id.notiComment);
-
-        memberImage.setImageResource(notiList.get(position).getMemberImage());
-        memberImage.setBackground(new ShapeDrawable(new OvalShape()));
-        memberImage.setClipToOutline(true);
-
-        memberName.setText(notiList.get(position).getName());
-        date.setText(notiList.get(position).getDate());
-        comment.setText(notiList.get(position).getComment());
+        TextView userName = (TextView)view.findViewById(R.id.userName);
+        TextView date = (TextView)view.findViewById(R.id.date);
+        TextView textView = (TextView)view.findViewById(R.id.textView);
+        ImageView imageView = view.findViewById(R.id.imageView);
+        Button fileView = view.findViewById(R.id.fileView);
 
         return view;
     }
