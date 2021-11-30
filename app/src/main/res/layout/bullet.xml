@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints"
         android:background="@drawable/border_line">
 
@@ -68,35 +68,15 @@
 
     </LinearLayout>
 
-    <!--메인부-->
-    <LinearLayout
+    <TextView
+        android:id="@+id/noPostMessage"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:text="첫 게시글을 작성해보세요"/>
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="178dp"
-            android:layout_height="200dp"
-            app:srcCompat="@drawable/nothing"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/bulletNothingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="등록된 글이 없습니다."
-            android:layout_gravity="center"/>
-
-        <Button
-            android:id="@+id/bulletWriteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="글쓰기"
-            app:rippleColor="#000000"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
