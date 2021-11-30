@@ -221,7 +221,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     public void filterClosing() throws ParseException {
         filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
-            if (sg != null) {
+            if (sg != null && sg.get("leader").equals(userID)) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
                 Date endDate = format.parse(String.valueOf(sg.get("endDate")));
                 Date currDate = new Date();

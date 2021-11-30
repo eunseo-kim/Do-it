@@ -180,12 +180,28 @@ public class AlarmActivity extends AppCompatActivity {
                         databaseReference.child("users")
                                 .child(appUserID).child("studyGroupIDList")
                                 .push().setValue(appStudyGroupID);
+
+                        userRef.child(appUserID).child("appliedStudyGroupIDList")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot groupSnapShot: snapshot.getChildren()) {
+                                    if (groupSnapShot.getValue().equals(appStudyGroupID)) {
+                                        Log.d("groupSnapShot", groupSnapShot.getValue().toString());
+                                        groupSnapShot.getRef().removeValue();
+                                        break;
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
+                        });
                     default:
-                        Query query = databaseReference.child("studygroups")
+                        Query query2 = databaseReference.child("studygroups")
                                 .child(appStudyGroupID).child("applicantList")
                                 .orderByChild("userID").equalTo(appUserID);
 
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        query2.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot groupSnapShot: snapshot.getChildren()) {
