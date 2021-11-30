@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,4 +46,18 @@ public class UserInfoJoinActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void setRadoiClicked() {
+//        RadioGroup userStudyRadioGroup = (RadioGroup) findViewById(R.id.userStudyRadioGroup);
+//        switch (userStudyRadioGroup.getCheckedRadioButtonId()) {
+//            case R.id.started:
+//                filterStarted();
+//                break;
+//            case R.id.finished:
+//                filterFinished();
+//                break;
+//        }
+    }
+
+    // 진행중 스터디 그룹 필터링
 }

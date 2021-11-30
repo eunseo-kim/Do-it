@@ -29,9 +29,7 @@ public class UserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.study_search_user_click_item);
-//        getSupportActionBar().setTitle("회원 정보");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent= getIntent();

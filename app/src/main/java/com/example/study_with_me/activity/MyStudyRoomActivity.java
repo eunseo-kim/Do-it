@@ -165,7 +165,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     }
 
     public void setRadioClicked() throws ParseException {
-        RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+        RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
         switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
             case R.id.started:
                 filterStarted();
@@ -259,7 +259,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> studyGroup = (Map<String, Object>) adapter.getItem(position);
-                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
                 if(myStudyRadioGroup.getCheckedRadioButtonId() == R.id.closing) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MyStudyRoomActivity.this)
                     .setTitle("스터디 모집을 마감하시겠습니까?")
@@ -374,7 +374,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> studyGroup = (Map<String, Object>) adapter.getItem(position);
-                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
                 if(myStudyRadioGroup.getCheckedRadioButtonId() == R.id.waiting) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MyStudyRoomActivity.this)
                     .setTitle("스터디 신청을 취소하시겠습니까?")

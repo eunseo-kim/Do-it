@@ -87,6 +87,7 @@ public class StudyGroupAdapter extends BaseAdapter {
             studyRecuit.setText(currentRecruit);
         }
 
+
         return view;
     }
 }
