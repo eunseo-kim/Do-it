@@ -133,11 +133,14 @@ public class BulletRegisterActivity extends AppCompatActivity {
             Map<String, Object> bulletinMap = new HashMap<>();
             bulletinMap.put("text", editText.getText().toString()); // 게시글
             bulletinMap.put("notice", isNotice);    // 공지인지
-            String imageUri = imagePath.toString();
-            bulletinMap.put("imageUri", imageUri); // imageUri
             bulletinMap.put("writer", userID);      // 작성자 userID
-            bulletinMap.put("fileUri", "");      // fileUri (임의로 빈 문자열 전달 => !!수정해야 돼요!!)
             bulletinMap.put("registerTime", System.currentTimeMillis());
+
+            String imageUri = "";
+            if (imagePath != null) { imageUri = imagePath.toString(); }
+            bulletinMap.put("imageUri", imageUri); // imageUri
+            bulletinMap.put("fileUri", "");      // fileUri (임의로 빈 문자열 전달 => !!수정해야 돼요!!)
+
             Log.d("bulletinMap", bulletinMap.toString());
 
             studyGroupRef.child(studyGroupID).child("bulletinBoard").push().setValue(bulletinMap);
@@ -231,10 +234,13 @@ public class BulletRegisterActivity extends AppCompatActivity {
                                 {
                                     // Image uploaded successfully
                                     // Dismiss dialog
-                                    progressDialog.dismiss();
-                                    Toast.makeText(BulletRegisterActivity.this,
-                                                    "Image Uploaded",
-                                                    Toast.LENGTH_SHORT).show();
+                                    if (progressDialog != null && !isFinishing()) {
+                                        progressDialog.dismiss();
+
+                                        Toast.makeText(BulletRegisterActivity.this,
+                                                "Image Uploaded",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             })
 
