@@ -21,7 +21,13 @@ import com.example.study_with_me.activity.BulletRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Map;
+
 public class MenuBulletFragment extends Fragment implements View.OnClickListener{
+    private MainActivity activity;
+    private Map<String, Object> studyInfo;
+    private String studyGroupID;
+
     RadioButton bulletinNotice, bulletinAll;
     FloatingActionButton addButton;
     private final int ALL_BTN = 0, NOTI_BTN = 1, PIC_BTN = 2, FILE_BTN = 3;
@@ -45,6 +51,11 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
         actionBar.setTitle("게시판");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        /* StudyGroup Info */
+        activity = (MainActivity) getActivity();
+        studyInfo = activity.getStudyInfo();
+        studyGroupID = studyInfo.get("studyGroupID").toString();
+
         return root;
     }
 
@@ -59,6 +70,7 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.addButton: // 게시글 추가 버튼
                 Intent intent = new Intent(view.getContext(), BulletRegisterActivity.class);
+                intent.putExtra("studyGroupID", studyGroupID);
                 startActivity(intent);
                 break;
         }
