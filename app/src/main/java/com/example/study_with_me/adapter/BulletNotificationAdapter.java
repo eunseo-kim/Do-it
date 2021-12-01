@@ -16,13 +16,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+
 import com.example.study_with_me.R;
-import com.example.study_with_me.model.GlideApp;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.bumptech.glide.annotation.GlideModule;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,9 +118,13 @@ public class BulletNotificationAdapter extends BaseAdapter {
                     Log.d("success", "성공");
                     Log.d("uri", uri.toString());
 
-                    GlideApp.with(imageView.getContext())
+
+                    // 이미지 uri는 가져온 거 같은데... Glide가 이미지 로더 라이브러리거든요?
+                    // 근데 에러 생기는 이유를 모르겠어요........... 일단 주석처리할게요
+                    /* GlideApp.with(imageView.getContext())
                             .load(uri)
                             .into(imageView);
+                     */
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
