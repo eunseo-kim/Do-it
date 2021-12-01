@@ -111,8 +111,12 @@ public class MyPageActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);

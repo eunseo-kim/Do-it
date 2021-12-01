@@ -199,6 +199,9 @@ public class StudySearchActivity extends AppCompatActivity {
     /** 상단 바 마이페이지, 알림 버튼 **/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);
