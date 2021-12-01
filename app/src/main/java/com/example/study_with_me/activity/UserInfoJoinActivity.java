@@ -56,11 +56,7 @@ public class UserInfoJoinActivity extends AppCompatActivity {
         myStudyRoomListView = (ListView) findViewById(R.id.userJoinStudyListView);
         getAppliedStudyGroups();
         getStudyGroups();
-//        myStudyRoomListView = (Listview)findViewById()
     }
-
-
-
 
     /** 신청한 스터디 그룹 가져오기 **/
     public void getAppliedStudyGroups() {
@@ -160,7 +156,7 @@ public class UserInfoJoinActivity extends AppCompatActivity {
                 filterStarted();
                 break;
             case R.id.finished:
-//                filterFinished();
+                filterFinished();
                 break;
         }
     }
