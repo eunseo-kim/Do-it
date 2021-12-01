@@ -139,7 +139,9 @@ public class StudySearchActivity extends AppCompatActivity {
     private void collectAllStudyGroups(Map<String, Object> studygroups) {
         for(Map.Entry<String, Object> entry : studygroups.entrySet()) {
             Map singleStudyGroup = (Map) entry.getValue();
-            studyList.add(singleStudyGroup);
+            if(!(boolean)singleStudyGroup.get("closed")){
+                studyList.add(singleStudyGroup);
+            }
         }
     }
 
