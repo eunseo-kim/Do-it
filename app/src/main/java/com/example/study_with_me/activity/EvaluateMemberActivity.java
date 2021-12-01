@@ -33,8 +33,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,17 +55,17 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     private String curUserID;
     private String evalUserID;
     private String studyID;
-    private float memberRating;
     private String comment;
+    private float memberRating;
     private float existRating;
     private int ratingCount;
     private ArrayList<String> evalMembers = new ArrayList<>();
+    private ArrayList<Map<String, String>> comments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_member_rating);
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         curUserID = firebaseAuth.getCurrentUser().getUid();
@@ -127,7 +129,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
                 userRef.child(evalUserID).child("ratingCount").setValue(ratingCount+1);
                 evalMembers.add(curUserID);
                 setEvaluatingMembers();
-
+                setComment();
                 finish();
             }
         });
@@ -139,9 +141,26 @@ public class EvaluateMemberActivity extends AppCompatActivity {
         });
     }
 
-    /** editText에 입력된 평가 가져오기 **/
-    private String getComment() {
-        return evalComment.getText().toString();
+    /** comments에 comment 추가 **/
+    private void setComment() {
+        if(evalComment.getText().toString().equals(""))
+            return;
+        Map<String, String> eComment = new HashMap<>();
+        eComment.put(curUserID, evalComment.getText().toString());
+        comments.add(eComment);
+
+        userRef.child(evalUserID).child("comments").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.getResult().getValue() == null)
+                    userRef.child(evalUserID).child("comments").setValue(comments);
+                else {
+                    ArrayList<Map<String, String>> commentList = (ArrayList<Map<String, String>>) task.getResult().getValue();
+                    commentList.add(eComment);
+                    userRef.child(evalUserID).child("comments").setValue(commentList);
+                }
+            }
+        });
     }
 
     /** 평가자 리스트에 평가자 추가 **/
