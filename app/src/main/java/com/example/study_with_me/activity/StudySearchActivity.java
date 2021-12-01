@@ -175,6 +175,7 @@ public class StudySearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StudyRegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -199,6 +200,9 @@ public class StudySearchActivity extends AppCompatActivity {
     /** 상단 바 마이페이지, 알림 버튼 **/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);

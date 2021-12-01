@@ -52,6 +52,12 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
     private int joinCount;
+    
+    private static final int ING = -4;
+    private static final int WAITING = -3;
+    private static final int CLOSING_SETTING = -2;
+    private static final int CLOSED = -1;
+    private int MODE = ING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,25 +171,29 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     }
 
     public void setRadioClicked() throws ParseException {
-        RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+        RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
         switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
             case R.id.started:
+                MODE = ING;
                 filterStarted();
                 break;
             case R.id.waiting:
+                MODE = WAITING;
                 filterWaiting();
                 break;
             case R.id.closing:
+                MODE = CLOSING_SETTING;
                 filterClosing();
                 break;
             case R.id.finished:
+                MODE = CLOSED;
                 filterFinished();
                 break;
         }
     }
 
     public void setListView(ArrayList<Map<String, Object>> studyGroupList) throws ParseException {
-        adapter = new StudyGroupAdapter(this, studyGroupList);
+        adapter = new StudyGroupAdapter(this, studyGroupList, MODE);
         myStudyRoomListView.setAdapter(adapter);
         myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -221,7 +231,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     public void filterClosing() throws ParseException {
         filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
-            if (sg != null) {
+            if (sg != null && sg.get("leader").equals(userID)) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
                 Date endDate = format.parse(String.valueOf(sg.get("endDate")));
                 Date currDate = new Date();
@@ -259,7 +269,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> studyGroup = (Map<String, Object>) adapter.getItem(position);
-                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
                 if(myStudyRadioGroup.getCheckedRadioButtonId() == R.id.closing) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MyStudyRoomActivity.this)
                     .setTitle("스터디 모집을 마감하시겠습니까?")
@@ -279,12 +289,25 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for(DataSnapshot members : snapshot.getChildren()) {
                                         String memberID = members.getValue(String.class);
-                                        userRef.child(memberID).child("joinCount")
-                                        .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        userRef.child(memberID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                                joinCount = Integer.parseInt(task.getResult().getValue().toString());
+                                                joinCount = Integer.parseInt(task.getResult()
+                                                        .child("joinCount").getValue().toString());
                                                 userRef.child(memberID).child("joinCount").setValue(joinCount+1);
+
+                                                /*모집 마감을 하면 memberLIst의 각 user DB에 attendance 추가하기*/
+                                                Map<String, Object> attendanceMap = new HashMap<>();
+                                                attendanceMap.put("isSet", false);
+                                                attendanceMap.put("attend", false);
+                                                attendanceMap.put("hour", "");
+                                                attendanceMap.put("minute", "");
+                                                attendanceMap.put("x", "");
+                                                attendanceMap.put("y", "");
+                                                attendanceMap.put("place", "");
+                                                attendanceMap.put("range", "");
+                                                attendanceMap.put("dates", "");
+                                                userRef.child(memberID).child("attendance").child(studyGroupID).setValue(attendanceMap);
                                             }
                                         });
                                     }
@@ -361,7 +384,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> studyGroup = (Map<String, Object>) adapter.getItem(position);
-                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.myStudyRadioGroup);
+                RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
                 if(myStudyRadioGroup.getCheckedRadioButtonId() == R.id.waiting) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MyStudyRoomActivity.this)
                     .setTitle("스터디 신청을 취소하시겠습니까?")
@@ -431,6 +454,9 @@ public class MyStudyRoomActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);

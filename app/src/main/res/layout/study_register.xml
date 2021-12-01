@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:background="@drawable/line_bottom"
+        android:layout_marginTop="30dp"
+        android:id="@+id/linearLayout9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/border_line"
         android:orientation="vertical"
-        android:paddingBottom="30dp">
+        android:paddingBottom="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView22"
@@ -225,12 +229,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/border_line">
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
         <EditText
             android:id="@+id/studyName"
@@ -247,7 +254,7 @@
             android:id="@+id/studyDescription"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@drawable/border_line"
+            android:background="@null"
             android:gravity="top"
             android:hint="스터디에 대한 간단한 설명을 추가해주세요."
             android:inputType="textPersonName"
@@ -256,12 +263,34 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/studyRegisterBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="추가하기"/>
+        android:background="@drawable/line_top"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+        app:layout_constraintVertical_bias="1.0">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+        <Button
+            android:id="@+id/studyRegisterBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="추가하기" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

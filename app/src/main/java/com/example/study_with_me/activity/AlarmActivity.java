@@ -1,9 +1,7 @@
 package com.example.study_with_me.activity;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,8 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
-
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -21,8 +20,6 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.ApplicantAdapter;
 import com.example.study_with_me.model.Applicant;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AlarmActivity extends AppCompatActivity {
@@ -43,12 +42,15 @@ public class AlarmActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ApplicantAdapter adapter;
 
+
     private String userID;
-    private int joinCount;
     private ArrayList<Applicant> applicants = new ArrayList<>();
+
+    Button closeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm);
 
@@ -59,7 +61,6 @@ public class AlarmActivity extends AppCompatActivity {
         if(firebaseAuth.getCurrentUser() != null){
             userID = firebaseAuth.getCurrentUser().getUid();
         }
-
         setApplicants();
     }
 
@@ -146,10 +147,21 @@ public class AlarmActivity extends AppCompatActivity {
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 menu.addMenuItem(deleteItem);
+
+//                swipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                        Log.d("과연?!", "??");
+//                        Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
+//                        Intent intent = new Intent(AlarmActivity.this, StudyPostActivityMessage.class);
+//                        intent.putExtra("userInfo", (Serializable) item);
+//                        startActivity(intent);
+//                    }
+//                });
             }
+
         };
         swipeMenuListView.setMenuCreator(creator);
-
         swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -157,36 +169,39 @@ public class AlarmActivity extends AppCompatActivity {
                 Applicant applicant = applicants.get(position);
                 String appStudyGroupID = applicant.getStudyGroupID();
                 String appUserID = applicant.getUserID();
+                // setJoinCount(appUserID);
 
                 switch (index) {
                     case 0:
-                        // appStudyGroup의 memberList 가져오기
-                        studyGroupRef.child(appStudyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                Map<String, String> memberList = (Map<String, String>) task.getResult().child("memberList").getValue();
-                                long memberCount = (long) task.getResult().child("member").getValue();
-                                long memberListSize = memberList.size();
-                                if (memberCount > memberListSize) {
-                                    databaseReference.child("studygroups")
-                                            .child(appStudyGroupID).child("memberList")
-                                            .push().setValue(appUserID);
+                        databaseReference.child("studygroups")
+                                .child(appStudyGroupID).child("memberList")
+                                .push().setValue(appUserID);
 
-                                    databaseReference.child("users")
-                                            .child(appUserID).child("studyGroupIDList")
-                                            .push().setValue(appStudyGroupID);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "정원을 초과했습니다.", Toast.LENGTH_SHORT).show();
+                        databaseReference.child("users")
+                                .child(appUserID).child("studyGroupIDList")
+                                .push().setValue(appStudyGroupID);
+
+                        userRef.child(appUserID).child("appliedStudyGroupIDList")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot groupSnapShot: snapshot.getChildren()) {
+                                    if (groupSnapShot.getValue().equals(appStudyGroupID)) {
+                                        Log.d("groupSnapShot", groupSnapShot.getValue().toString());
+                                        groupSnapShot.getRef().removeValue();
+                                        break;
+                                    }
                                 }
                             }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
                         });
-
                     default:
-                        Query query = databaseReference.child("studygroups")
+                        Query query2 = databaseReference.child("studygroups")
                                 .child(appStudyGroupID).child("applicantList")
                                 .orderByChild("userID").equalTo(appUserID);
 
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        query2.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot groupSnapShot: snapshot.getChildren()) {
@@ -215,6 +230,9 @@ public class AlarmActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);
@@ -227,4 +245,5 @@ public class AlarmActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
@@ -48,10 +49,12 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private FirebaseAuth firebaseAuth;
 
+    private TeamEvaluationAdapter evalAdapter;
     private ListView evalMemberList;
     private MainActivity activity;
     private Map<String, Object> studyInfo;
     private String uid;
+    private boolean isFirstVisit = true;
 
     public MenuEvaluateMemberFragment() {}
 
@@ -59,7 +62,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.evaluate_member, container, false);
-
+        isFirstVisit = false;
         firebaseAuth = FirebaseAuth.getInstance();
         activity = (MainActivity) getActivity();
         studyInfo = activity.getStudyInfo();
@@ -79,18 +82,18 @@ public class MenuEvaluateMemberFragment extends Fragment {
                     activity.onBackPressed();
                     return true;
                 }
-                return false;
+                activity.onBackPressed();
+                return true;
             }
         });
 
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);
-
         getUser();
-
         return root;
     }
 
+    /** 덮은 화면 제거 **/
     private void removeView() {
         ConstraintLayout cl = (ConstraintLayout) getActivity().findViewById(R.id.coverLayout);
         ((ViewManager) cl.getParent()).removeView(cl);
@@ -149,7 +152,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     }
 
     /** User 정보 얻은 후 리스트에 띄우기 **/
-    private void getUser() {
+    public void getUser() {
         ArrayList<String> members = getStudyGroupMembers();
         for(int i = 0; i < members.size(); i++) {
             if(firebaseAuth.getCurrentUser().getUid().equals(members.get(i)))
@@ -175,7 +178,16 @@ public class MenuEvaluateMemberFragment extends Fragment {
     /** 팀원들을 나타낼 리스트 뷰 설정 **/
     private void setListView() {
         /** Adapter 설정 **/
-        final TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList);
+        String studyId = String.valueOf(activity.getStudyInfo().get("studyGroupID"));
+        evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
         evalMemberList.setAdapter(evalAdapter);
+    }
+
+    /** ListView 갱신 **/
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isFirstVisit)
+            getUser();
     }
 }

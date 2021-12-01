@@ -43,25 +43,6 @@ public class StudyGroup {
         String registerTime = dateFormat.format(date);
     }
 
-
-    public StudyGroup(String studyGroupID, String leader, String name, String description,
-                      String type, int numOfMember, Date startDate,
-                      Date endDate, boolean closed,
-                      ArrayList<Applicant> applicantList,
-                      Map<String, String> memberList) {
-        this.studyGroupID = studyGroupID;
-        this.name = name;
-        this.description = description;
-        this.type = type;
-        this.numOfMember = numOfMember;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.leader = leader;
-        this.closed = closed;
-        this.applicantList = applicantList;
-        this.memberList = memberList;
-    }
-
     public String getStudyGroupID() {
         return this.studyGroupID;
     }
@@ -80,6 +61,7 @@ public class StudyGroup {
     public String getLeader() { return leader; }
     public List<Applicant> getApplicantList() { return applicantList; }
     public Map<String, String> getMemberList() { return memberList; }
+    public Map<String, ArrayList> getEvalMembers() { return evalMembers; }
 
     public boolean getClosed() {
         return this.closed;

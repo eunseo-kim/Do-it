@@ -1,6 +1,7 @@
 package com.example.study_with_me.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.study_with_me.R;
+import com.example.study_with_me.activity.UserInfoJoinActivity;
 import com.example.study_with_me.model.MemberSampledata;
 import com.example.study_with_me.model.StudyGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,13 +37,23 @@ public class StudyGroupAdapter extends BaseAdapter {
     private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
+    private int MODE;
+    private static final int ING = -4;
+    private static final int WAITING = -3;
+    private static final int CLOSING_SETTING = -2;
+    private static final int CLOSED = -1;
 
-
-    public StudyGroupAdapter(Context context, ArrayList<Map<String, Object>> studyGroupList) {
+    public StudyGroupAdapter(Context context, ArrayList<Map<String, Object>> studyGroupList, int MODE) {
         this.context = context;
         this.studyGroupList = studyGroupList;
         this.layoutInflater = LayoutInflater.from(this.context);
-        Log.d("ADAPTER : ", String.valueOf(studyGroupList.size()));
+        this.MODE = MODE;
+    }
+
+    public StudyGroupAdapter(UserInfoJoinActivity context, ArrayList<Map<String, Object>> studyGroupList) {
+        this.context = context;
+        this.studyGroupList = studyGroupList;
+        this.layoutInflater = LayoutInflater.from(this.context);
     }
 
     @Override
@@ -62,6 +74,11 @@ public class StudyGroupAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.my_study_room_item, null);
+
+        if(MODE == WAITING || MODE == CLOSING_SETTING) {
+            view.setEnabled(false);
+            view.setOnClickListener(null);
+        }
 
         TextView studyRecuit = (TextView) view.findViewById(R.id.studyRecuit);
         TextView studyField = (TextView) view.findViewById(R.id.studyField);
@@ -86,6 +103,7 @@ public class StudyGroupAdapter extends BaseAdapter {
             else currentRecruit = "모집중";
             studyRecuit.setText(currentRecruit);
         }
+
 
         return view;
     }

@@ -2,28 +2,22 @@ package com.example.study_with_me.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
-import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +62,7 @@ public class MyPageActivity extends AppCompatActivity {
         }
 
         nameTextView = (TextView) findViewById(R.id.userName);
-        emailTextView = (TextView)findViewById(R.id.userEmail);
+        emailTextView = (TextView)findViewById(R.id.evaluateContents);
         joinCountTextView = (TextView)findViewById(R.id.joinCount);
         dropCountTextView = (TextView)findViewById(R.id.dropCount);
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
@@ -117,8 +111,12 @@ public class MyPageActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.alarmBell:
                 Intent intent1 = new Intent(this, AlarmActivity.class);
                 startActivity(intent1);

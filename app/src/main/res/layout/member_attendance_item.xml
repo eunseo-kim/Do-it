@@ -32,6 +32,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/checkAttendance"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/gray_box_radius"
@@ -56,6 +57,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendTime"
                 android:layout_height="match_parent"
                 android:padding="3dp"
                 android:layout_marginLeft="10dp"
@@ -70,6 +72,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/attendPlace"
                 android:layout_height="match_parent"
                 android:padding="3dp"
                 android:scrollbars="vertical"

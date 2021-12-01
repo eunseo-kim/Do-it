@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/userStudyRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_line"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/started"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/selector_top_menu_button"
+                android:button="@null"
+                android:checked="true"
+                android:onClick="myStudyRoomTabClicked"
+                android:text="진행중"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
+
+            <RadioButton
+                android:id="@+id/finished"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/selector_top_menu_button"
+                android:button="@null"
+                android:onClick="myStudyRoomTabClicked"
+                android:text="종료됨"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_top_menu_text" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_line"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/userJoinStudyListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

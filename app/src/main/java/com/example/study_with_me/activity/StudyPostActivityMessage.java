@@ -7,8 +7,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -177,14 +181,12 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                                     userRef.child(userID).child("appliedStudyGroupIDList").push().setValue(studyGroupID);
                                 }
                             });
-
                         }
                         dialog01.dismiss();
                     }
                 });
-
-
             }
         });
     }
+
 }
