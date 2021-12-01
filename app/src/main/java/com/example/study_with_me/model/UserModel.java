@@ -15,6 +15,7 @@ public class UserModel {
     private int ratingCount;
     private String userID;
     private Map<String, String> appliedStudyGroupIDList;
+    private ArrayList<Map<String, String>> comments;
 
     public UserModel(String email, String password, String username) {
         this.email = email;
@@ -26,6 +27,7 @@ public class UserModel {
         this.ratingCount = 0;
         studyGroupIDList = new ArrayList<>();
         appliedStudyGroupIDList = new HashMap<>();
+        comments = new ArrayList<>();
     }
 
     public void addDropCount() { this.dropCount += 1; }
@@ -61,4 +63,5 @@ public class UserModel {
     public Map<String, String> getAppliedStudyGroupIDList() {
         return appliedStudyGroupIDList;
     }
+    public ArrayList<Map<String, String>> getComments() { return comments; }
 }
