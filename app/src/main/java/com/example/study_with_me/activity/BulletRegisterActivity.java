@@ -29,9 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,6 +51,7 @@ public class BulletRegisterActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private FirebaseAuth firebaseAuth;
     private String userID;
+    private String userName;
     private String studyGroupID;
 
     private ImageView imageIcon, fileIcon, imageView;
@@ -57,6 +61,7 @@ public class BulletRegisterActivity extends AppCompatActivity {
     private EditText editText;
     private Uri imagePath;
     private boolean isNotice;   // 공지글인지 여부
+    private long registerTime;
     
     private Bitmap bitmap;
     private final int PICK_IMAGE_REQUEST = 22;
@@ -92,6 +97,16 @@ public class BulletRegisterActivity extends AppCompatActivity {
         imageRef = storageReference.child("images/");
         fileRef = storageReference.child("files/");
 
+        // get current user's userName
+        userRef.child(userID)
+                .child("username")
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                userName = task.getResult().getValue(String.class);
+            }
+        });
+
         // upload image button clicked
         imageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,15 +141,14 @@ public class BulletRegisterActivity extends AppCompatActivity {
                     "게시물을 작성해주세요",
                     Toast.LENGTH_SHORT).show();
         } else {
-            // firebase Storage에 파일 등록
-            uploadImage();
-
             // realtime firebase에 [이미지 uri, 파일 uri, 작성자, 작성 시각, 게시글, 공지여부] 추가
             Map<String, Object> bulletinMap = new HashMap<>();
             bulletinMap.put("text", editText.getText().toString()); // 게시글
             bulletinMap.put("notice", isNotice);    // 공지인지
-            bulletinMap.put("writer", userID);      // 작성자 userID
-            bulletinMap.put("registerTime", System.currentTimeMillis());
+            bulletinMap.put("writerID", userID);      // 작성자 userID
+            bulletinMap.put("writerName", userName);      // 작성자 userID
+            registerTime = System.currentTimeMillis();
+            bulletinMap.put("registerTime", registerTime);
 
             String imageUri = "";
             if (imagePath != null) { imageUri = imagePath.toString(); }
@@ -143,7 +157,11 @@ public class BulletRegisterActivity extends AppCompatActivity {
 
             Log.d("bulletinMap", bulletinMap.toString());
 
-            studyGroupRef.child(studyGroupID).child("bulletinBoard").push().setValue(bulletinMap);
+            studyGroupRef.child(studyGroupID).child("bulletinBoard")
+                    .child(String.valueOf(registerTime)).setValue(bulletinMap);
+
+            // firebase Storage에 파일 등록
+            uploadImage();
 
             finish();
         }
@@ -208,19 +226,10 @@ public class BulletRegisterActivity extends AppCompatActivity {
     private void uploadImage()
     {
         if (imagePath != null) {
-
-            // Code for showing progressDialog while uploading
-            ProgressDialog progressDialog
-                    = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
             // Defining the child of storageReference
             StorageReference ref
                     = storageReference
-                    .child(
-                            "images/"
-                                    + UUID.randomUUID().toString());
+                    .child("images/" + registerTime + ".jpeg");
 
             // adding listeners on upload
             // or failure of image
@@ -234,13 +243,6 @@ public class BulletRegisterActivity extends AppCompatActivity {
                                 {
                                     // Image uploaded successfully
                                     // Dismiss dialog
-                                    if (progressDialog != null && !isFinishing()) {
-                                        progressDialog.dismiss();
-
-                                        Toast.makeText(BulletRegisterActivity.this,
-                                                "Image Uploaded",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
                                 }
                             })
 
@@ -248,9 +250,6 @@ public class BulletRegisterActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e)
                         {
-
-                            // Error, Image not uploaded
-                            progressDialog.dismiss();
                             Toast.makeText(BulletRegisterActivity.this,
                                             "Failed " + e.getMessage(),
                                             Toast.LENGTH_SHORT).show();
@@ -269,9 +268,6 @@ public class BulletRegisterActivity extends AppCompatActivity {
                                             = (100.0
                                             * taskSnapshot.getBytesTransferred()
                                             / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage(
-                                            "Uploaded "
-                                                    + (int)progress + "%");
                                 }
                             });
         }

@@ -50,6 +50,14 @@
 
     </LinearLayout>
 
+    <!-- <TextView
+        android:id="@+id/noPostMessage"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="첫 게시글을 작성해보세요"/> -->
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -67,13 +75,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="end|bottom"/>
-
-        <TextView
-            android:id="@+id/noPostMessage"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="첫 게시글을 작성해보세요"/>
 
         <ListView
             android:id="@android:id/list"
