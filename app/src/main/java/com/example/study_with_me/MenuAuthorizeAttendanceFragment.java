@@ -69,12 +69,13 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
     private TimeZone timeZone;
     private boolean dailyRegistration;    // 오늘 날짜가 dates에 등록됐는지
+    private boolean isFirstVisit = true;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.attendance_authorize, container, false);
-
+        isFirstVisit = false;
         // 상단 액션바 설정
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("출석 인증");
@@ -206,7 +207,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         });
     }
 
-
     private void setMyAttendance() {
         userRef.child(userID).child("attendance").child(studyGroupID)
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -268,5 +268,15 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private void setListView() {
         final AttendanceAdapter attendanceAdapter = new AttendanceAdapter(getActivity(), memberList);
         listView.setAdapter(attendanceAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isFirstVisit) {
+            memberList.clear();
+            setMyAttendance();
+            getMemberList();
+        }
     }
 }

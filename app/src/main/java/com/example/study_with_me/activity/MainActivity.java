@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    public FragmentManager fragmentManager = getSupportFragmentManager();
 
     // bottom Navigation의 4개의 메뉴에 들어갈 각 Fragment들
     private MenuBulletFragment bulletFragment = new MenuBulletFragment();
@@ -114,5 +114,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 }
