@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserModel {
-    public String email;
-    public String password;
-    public String username;
-    public float rating;
-    public ArrayList<String> studyGroupIDList;
-    public int dropCount;
-    public int joinCount;
-    public int ratingCount;
-    public String userID;
-    public Map<String, String> appliedStudyGroupIDList;
+    private String email;
+    private String password;
+    private String username;
+    private float rating;
+    private ArrayList<String> studyGroupIDList;
+    private int dropCount;
+    private int joinCount;
+    private int ratingCount;
+    private String userID;
+    private Map<String, String> appliedStudyGroupIDList;
 
     public UserModel(String email, String password, String username) {
         this.email = email;
