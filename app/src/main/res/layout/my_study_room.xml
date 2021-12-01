@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <RadioGroup
-            android:id="@+id/myStudyRadioGroup"
+            android:id="@+id/userStudyRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_line"
