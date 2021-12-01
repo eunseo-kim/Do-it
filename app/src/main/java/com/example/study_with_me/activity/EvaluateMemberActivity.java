@@ -1,5 +1,8 @@
 package com.example.study_with_me.activity;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.RatingBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.study_with_me.MenuEvaluateMemberFragment;
 import com.example.study_with_me.R;
@@ -59,6 +63,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_member_rating);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         curUserID = firebaseAuth.getCurrentUser().getUid();
@@ -122,6 +127,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
                 userRef.child(evalUserID).child("ratingCount").setValue(ratingCount+1);
                 evalMembers.add(curUserID);
                 setEvaluatingMembers();
+
                 finish();
             }
         });

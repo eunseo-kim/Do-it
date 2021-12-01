@@ -49,10 +49,12 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private FirebaseAuth firebaseAuth;
 
+    private TeamEvaluationAdapter evalAdapter;
     private ListView evalMemberList;
     private MainActivity activity;
     private Map<String, Object> studyInfo;
     private String uid;
+    private boolean isFirstVisit = true;
 
     public MenuEvaluateMemberFragment() {}
 
@@ -60,7 +62,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.evaluate_member, container, false);
-
+        isFirstVisit = false;
         firebaseAuth = FirebaseAuth.getInstance();
         activity = (MainActivity) getActivity();
         studyInfo = activity.getStudyInfo();
@@ -177,8 +179,15 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private void setListView() {
         /** Adapter 설정 **/
         String studyId = String.valueOf(activity.getStudyInfo().get("studyGroupID"));
-        TeamEvaluationAdapter evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
-        evalAdapter.notifyDataSetChanged();
+        evalAdapter = new TeamEvaluationAdapter(getActivity(), memberList, studyId);
         evalMemberList.setAdapter(evalAdapter);
+    }
+
+    /** ListView 갱신 **/
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isFirstVisit)
+            getUser();
     }
 }
