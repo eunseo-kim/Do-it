@@ -52,6 +52,12 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
     private int joinCount;
+    
+    private static final int ING = -4;
+    private static final int WAITING = -3;
+    private static final int CLOSING_SETTING = -2;
+    private static final int CLOSED = -1;
+    private int MODE = ING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,22 +174,26 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         RadioGroup myStudyRadioGroup = (RadioGroup)findViewById(R.id.userStudyRadioGroup);
         switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
             case R.id.started:
+                MODE = ING;
                 filterStarted();
                 break;
             case R.id.waiting:
+                MODE = WAITING;
                 filterWaiting();
                 break;
             case R.id.closing:
+                MODE = CLOSING_SETTING;
                 filterClosing();
                 break;
             case R.id.finished:
+                MODE = CLOSED;
                 filterFinished();
                 break;
         }
     }
 
     public void setListView(ArrayList<Map<String, Object>> studyGroupList) throws ParseException {
-        adapter = new StudyGroupAdapter(this, studyGroupList);
+        adapter = new StudyGroupAdapter(this, studyGroupList, MODE);
         myStudyRoomListView.setAdapter(adapter);
         myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
