@@ -222,7 +222,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             if (sg != null && sg.get("leader").equals(userID)) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
                 Date endDate = format.parse(String.valueOf(sg.get("endDate")));
                 Date currDate = new Date();
                 if (currDate.before(endDate) && !(Boolean) sg.get("closed")) {
@@ -238,7 +238,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             if (sg != null) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
                 Date endDate = format.parse(String.valueOf(sg.get("endDate")));
                 Date currDate = new Date();
                 if (endDate.before(currDate)) {
