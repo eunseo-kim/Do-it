@@ -87,6 +87,7 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         actionBar.setTitle("일정 관리");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         /* Button Event Listener */
         scheduleEditText = root.findViewById(R.id.scheduleEditTextView);
         addButton = (Button)root.findViewById(R.id.addScheduleButton);
