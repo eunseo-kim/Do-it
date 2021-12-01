@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.study_with_me.R;
+import com.example.study_with_me.activity.UserInfoJoinActivity;
 import com.example.study_with_me.model.MemberSampledata;
 import com.example.study_with_me.model.StudyGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +48,12 @@ public class StudyGroupAdapter extends BaseAdapter {
         this.studyGroupList = studyGroupList;
         this.layoutInflater = LayoutInflater.from(this.context);
         this.MODE = MODE;
+    }
+
+    public StudyGroupAdapter(UserInfoJoinActivity context, ArrayList<Map<String, Object>> studyGroupList) {
+        this.context = context;
+        this.studyGroupList = studyGroupList;
+        this.layoutInflater = LayoutInflater.from(this.context);
     }
 
     @Override
