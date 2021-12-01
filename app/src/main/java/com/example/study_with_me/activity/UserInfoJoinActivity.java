@@ -28,7 +28,7 @@ public class UserInfoJoinActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("참여 스터디 목록");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myStudyRoomListView = (Listview)findViewById()
+//        myStudyRoomListView = (Listview)findViewById();
     }
 
 
@@ -65,23 +65,23 @@ public class UserInfoJoinActivity extends AppCompatActivity {
 //                filterStarted();
                 break;
             case R.id.finished:
-                filterFinished();
+//                filterFinished();
                 break;
         }
     }
 
     public void setListView(ArrayList<Map<String, Object>> studyGroupList) throws ParseException {
         adapter = new StudyGroupAdapter(this, studyGroupList);
-        userStudyRoomListView.
+//        userStudyRoomListView.
     }
 
     // 진행중 스터디 그룹 필터링
 
     public void filterFinished() throws ParseException {
         filteredList.clear();
-        for() {
-
-        }
+//        for() {
+//
+//        }
         setListView(filteredList);
     }
 }
