@@ -13,6 +13,30 @@
         android:layout_height="wrap_content">
     </include>
 
+
+    <TextView
+        android:id="@+id/watingInfo"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EFEFEF"
+        android:gravity="center"
+        android:padding="7dp"
+        android:textSize="11dp"
+        android:text="길게 눌러서 스터디 신청을 취소할 수 있어요" />
+
+    <TextView
+        android:id="@+id/closingInfo"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EFEFEF"
+        android:gravity="center"
+        android:padding="7dp"
+        android:textSize="11dp"
+        android:text="길게 눌러서 스터디 모집을 마감할 수 있어요" />
+
+
     <ListView
         android:id="@+id/myStudyRoomListView"
         android:layout_width="match_parent"

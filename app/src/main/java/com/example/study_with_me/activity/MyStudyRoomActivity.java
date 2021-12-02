@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> filteredList = new ArrayList<>();
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
+    private TextView closingInfo, watingInfo;
     private int joinCount;
     
     private static final int ING = -4;
@@ -65,6 +67,8 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         setContentView(R.layout.my_study_room_main);
         getSupportActionBar().setTitle("내 스터디 목록");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        closingInfo = findViewById(R.id.closingInfo);
+        watingInfo = findViewById(R.id.watingInfo);
 
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getCurrentUser().getUid();
@@ -175,18 +179,26 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         switch (myStudyRadioGroup.getCheckedRadioButtonId()) {
             case R.id.started:
                 MODE = ING;
+                watingInfo.setVisibility(View.GONE);
+                closingInfo.setVisibility(View.GONE);
                 filterStarted();
                 break;
             case R.id.waiting:
                 MODE = WAITING;
+                watingInfo.setVisibility(View.VISIBLE);
+                closingInfo.setVisibility(View.GONE);
                 filterWaiting();
                 break;
             case R.id.closing:
                 MODE = CLOSING_SETTING;
+                watingInfo.setVisibility(View.GONE);
+                closingInfo.setVisibility(View.VISIBLE);
                 filterClosing();
                 break;
             case R.id.finished:
                 MODE = CLOSED;
+                watingInfo.setVisibility(View.GONE);
+                closingInfo.setVisibility(View.GONE);
                 filterFinished();
                 break;
         }
