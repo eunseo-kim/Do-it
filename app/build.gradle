@@ -62,12 +62,5 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:2.4.0'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
 
-    //glide
-    implementation ("com.github.bumptech.glide:glide:4.9.0") {
-        exclude group: "com.android.support"
-    }
-    annotationProcessor 'androidx.annotation:annotation:1.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation ("com.github.bumptech.glide:glide:4.9.0@aar") {
-        transitive = true
-    }}
+    implementation 'com.squareup.picasso:picasso:2.71828'
+}

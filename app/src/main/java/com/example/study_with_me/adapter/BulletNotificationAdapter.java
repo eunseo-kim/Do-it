@@ -2,7 +2,9 @@ package com.example.study_with_me.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +51,7 @@ public class BulletNotificationAdapter extends BaseAdapter {
     StorageReference imageRef;
 
 
+
     public BulletNotificationAdapter(Context context, ArrayList<Map<String, Object>> bulletinList) {
         this.context = context;
         this.bulletinList = bulletinList;
@@ -63,6 +70,10 @@ public class BulletNotificationAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void setItemImage(int position, Uri uri) {
+
     }
 
     @Override
@@ -88,21 +99,42 @@ public class BulletNotificationAdapter extends BaseAdapter {
         String writerName = bulletinList.get(position).get("writerName").toString();
         userName.setText(writerName);
 
-        /* set imageView */
-        imageView = view.findViewById(R.id.imageView);
-        String imagePath = bulletinList.get(position).get("imageUri").toString();
-        Log.d("imagePath", imagePath);
-
-        if (!imagePath.equals("") || imagePath != null) {
-            setImageUri();
-        }
-
         String filePath = bulletinList.get(position).get("fileUri").toString();
 
         String text = bulletinList.get(position).get("text").toString();
         textView.setText(text);
+
+        /* set imageView */
+        imageView = view.findViewById(R.id.imageView);
+        String imagePath = bulletinList.get(position).get("imageUri").toString();
+
+        setImageView();
+
+        Log.d("imagePath", imagePath);
+        Log.d("return ", "return");
+
         return view;
     }
+
+    private void setImageView() {
+        Picasso.get()
+                .load("https://firebasestorage.googleapis.com/v0/b/studywithme-b93ee.appspot.com/o/images%2F1638305437393.jpeg?alt=media&token=9368cfb5-c9aa-4160-b698-dc0d344eab36")
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(context.getApplicationContext(), "이미지", Toast.LENGTH_SHORT).show();
+                        Log.d("이미지", "...");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
+    }
+
+
 
     private void setImageUri() {
         StorageReference ref
@@ -112,19 +144,12 @@ public class BulletNotificationAdapter extends BaseAdapter {
         ref.getDownloadUrl()
             .addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onSuccess(Uri uri) {
+                public void onSuccess(Uri downloadUrl) {
                     //이미지 로드 성공시
                     Toast.makeText(context.getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
-                    Log.d("success", "성공");
-                    Log.d("uri", uri.toString());
-
-
-                    // 이미지 uri는 가져온 거 같은데... Glide가 이미지 로더 라이브러리거든요?
-                    // 근데 에러 생기는 이유를 모르겠어요........... 일단 주석처리할게요
-                    /* GlideApp.with(imageView.getContext())
-                            .load(uri)
-                            .into(imageView);
-                     */
+                    if (downloadUrl != null) {
+                        Picasso.get().load(downloadUrl.toString()).into(imageView);
+                    }
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
