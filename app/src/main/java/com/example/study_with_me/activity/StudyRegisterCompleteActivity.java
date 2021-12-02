@@ -34,4 +34,11 @@ public class StudyRegisterCompleteActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), StudySearchActivity.class);
+        startActivity(intent);
+    }
 }
