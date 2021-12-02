@@ -41,6 +41,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -203,22 +204,10 @@ public class BulletRegisterActivity extends AppCompatActivity {
 
             // Get the Uri of data
             imagePath = data.getData();
-            try {
 
-                // Setting image on image view using Bitmap
-                bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getContentResolver(),
-                                imagePath);
-                imageView.setImageBitmap(bitmap);
-            }
-
-            catch (IOException e) {
-                // Log the exception
-                e.printStackTrace();
-            }
+            // upload Image using Picasso (Image Loader Library)
+            Log.d("imagePath", imagePath.toString());
+            Picasso.get().load(imagePath.toString()).into(imageView);
         }
     }
 
