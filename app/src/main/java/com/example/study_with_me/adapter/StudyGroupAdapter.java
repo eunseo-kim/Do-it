@@ -75,11 +75,6 @@ public class StudyGroupAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.my_study_room_item, null);
 
-        if(MODE == WAITING || MODE == CLOSING_SETTING) {
-            view.setEnabled(false);
-            view.setOnClickListener(null);
-        }
-
         TextView studyRecuit = (TextView) view.findViewById(R.id.studyRecuit);
         TextView studyField = (TextView) view.findViewById(R.id.studyField);
         TextView studyTitle = (TextView) view.findViewById(R.id.studyTitle);
@@ -103,7 +98,6 @@ public class StudyGroupAdapter extends BaseAdapter {
             else currentRecruit = "모집중";
             studyRecuit.setText(currentRecruit);
         }
-
 
         return view;
     }
