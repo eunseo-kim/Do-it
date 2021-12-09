@@ -2,6 +2,7 @@ package com.example.study_with_me.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -207,6 +208,11 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     public void setListView(ArrayList<Map<String, Object>> studyGroupList) throws ParseException {
         adapter = new StudyGroupAdapter(this, studyGroupList, MODE);
         myStudyRoomListView.setAdapter(adapter);
+        if(MODE == WAITING || MODE == CLOSING_SETTING) {
+            myStudyRoomListView.setOnItemClickListener(null);
+            return;
+        }
+
         myStudyRoomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -385,7 +391,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                return false;
+                return true;
             }
         });
     }
@@ -451,7 +457,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                return false;
+                return true;
             }
         });
     }
