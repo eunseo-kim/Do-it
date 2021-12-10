@@ -36,6 +36,7 @@ public class UserModel {
     public int getDropCount() { return this.dropCount; }
     public int getJoinCount() { return this.joinCount; }
     public int getRatingCount() { return this.ratingCount; }
+    public float getRating() { return this.rating; }
 
     public void setUsername(String name) {
         this.username = name;
