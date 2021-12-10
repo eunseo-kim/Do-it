@@ -1,9 +1,14 @@
 package com.example.study_with_me.adapter;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,20 +22,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-
 import com.example.study_with_me.R;
+import com.example.study_with_me.RealPathUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firestore.v1.StructuredQuery;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -49,8 +54,6 @@ public class BulletNotificationAdapter extends BaseAdapter {
     StorageReference storageReference;
     StorageReference fileRef;
     StorageReference imageRef;
-
-
 
     public BulletNotificationAdapter(Context context, ArrayList<Map<String, Object>> bulletinList) {
         this.context = context;
@@ -105,9 +108,12 @@ public class BulletNotificationAdapter extends BaseAdapter {
         textView.setText(text);
 
         /* set imageView */
-        imageView = view.findViewById(R.id.imageView);
-        String imagePath = bulletinList.get(position).get("imageUri").toString();
+        imageView = view.findViewById(R.id.bulletImageView);
 
+        String imagePath = bulletinList.get(position).get("imageUri").toString();
+        String contentPath = RealPathUtil.getPath(context, Uri.parse(imagePath));
+        if(contentPath == null)
+            Log.d("isNull", "yes");
         setImageView();
 
         Log.d("imagePath", imagePath);
@@ -131,10 +137,7 @@ public class BulletNotificationAdapter extends BaseAdapter {
 
                     }
                 });
-
     }
-
-
 
     private void setImageUri() {
         StorageReference ref
@@ -162,12 +165,47 @@ public class BulletNotificationAdapter extends BaseAdapter {
             });
     }
 
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
+    public static String getDate(long milliSeconds, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
+    }
+
+    private void getRealPathFromURI(Uri contentURI) {
+       String[] projection = new String[]{
+               MediaStore.Images.Media._ID,
+               MediaStore.Images.Media.DISPLAY_NAME,
+               MediaStore.Images.Media.DATE_TAKEN
+       };
+
+       String selection = "${MediaStore.Images.Media.DATE_TAKEN} >= ?";
+       String[] selectionArgs = new String[] {
+               String.valueOf(registerTime)
+       };
+
+       String sortOrder = "${MediaStore.Images.Media.DATE_TAKEN} DESC";
+
+       Cursor cursor = context.getContentResolver().query(
+               MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+               projection,
+               selection,
+               selectionArgs,
+               sortOrder
+       );
+
+        int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+        int dateTakenColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN);
+        int displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+
+        while(cursor.moveToNext()) {
+            long id = cursor.getLong(idColumn);
+            Uri uri = Uri.withAppendedPath(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    String.valueOf(id)
+            );
+            Log.d("uri >>> ", uri.toString());
+       }
     }
 
 }

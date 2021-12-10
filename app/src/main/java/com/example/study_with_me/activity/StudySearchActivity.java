@@ -221,7 +221,6 @@ public class StudySearchActivity extends AppCompatActivity {
     /** 분류 필터링 **/
     public void onClick(View v) {
         filterTypeList.clear();
-        Boolean b = (Boolean) studyList.get(0).get("closed");
 
         switch (v.getId()) {
             case R.id.all:
