@@ -2,29 +2,23 @@ package com.example.study_with_me.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Adapter;
 
 import com.example.study_with_me.MenuAuthorizeAttendanceFragment;
 import com.example.study_with_me.MenuBulletFragment;
 import com.example.study_with_me.MenuEvaluateMemberFragment;
 import com.example.study_with_me.MenuScheduleManagementFragment;
 import com.example.study_with_me.R;
-import com.example.study_with_me.adapter.TeamEvaluationAdapter;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -89,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int count = fragmentManager.getBackStackEntryCount();
+
         if (count == 0) {
             super.onBackPressed();
         } else if (count == 1) {
