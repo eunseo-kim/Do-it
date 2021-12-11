@@ -5,11 +5,9 @@ import static java.lang.Math.*;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,15 +16,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
-import com.example.study_with_me.activity.AlarmActivity;
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.CheckingAttendanceActivity;
 import com.example.study_with_me.activity.MainActivity;
-import com.example.study_with_me.activity.StudySearchActivity;
 import com.example.study_with_me.adapter.AttendanceAdapter;
-import com.example.study_with_me.adapter.SchedulerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,47 +40,72 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class MenuAuthorizeAttendanceFragment extends ListFragment {
-    private MainActivity activity;
-    private ListView listView;
-    private Map<String, Object> studyInfo;
-    private String studyGroupID;
-    private ArrayList<Map<String, Object>> memberList = new ArrayList<>();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference userRef = databaseReference.child("users");
-    private String memberName;
+    private FirebaseAuth firebaseAuth;
+
+    private ListView listView;
     private TextView attendTime, attendGPS, attendPlace, attendRange;
-    private Map<String, Object> attendInfo;
     private ImageView attendEditButton;
     private Button attendButton;
-    private FirebaseAuth firebaseAuth;
+
+    private Map<String, Object> studyInfo;
+    private Map<String, Object> attendInfo;
+    private Map<String, String> membersMap = new HashMap<>();
+
+    private ArrayList<Map<String, Object>> memberList = new ArrayList<>();
+
+    private String studyGroupID;
     private String userID;
+    private String memberName;
+
     private Boolean isSet, attend;
     private Date currentTime, registerTime;
     private String hour, minute;
-    private long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
     private TimeZone timeZone;
+
     private boolean dailyRegistration;    // 오늘 날짜가 dates에 등록됐는지
     private boolean isFirstVisit = true;
+
+    private static final long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.attendance_authorize, container, false);
-        isFirstVisit = false;
+
         // 상단 액션바 설정
+        setActionBar();
+
+        /* 변수 초기화 */
+        initVariables(root);
+
+        /* users-attendance-studyGroupID-dates에 오늘 Date가 없으면 attend=false로 initialize */
+        init();
+
+        setMyAttendanceBtnListener();
+        setAttendanceBtnListener();
+
+        return root;
+    }
+
+    /** 액션바 설정 **/
+    private void setActionBar() {
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("출석 인증");
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+    /** 변수 초기화 **/
+    private void initVariables(View root) {
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getCurrentUser().getUid();
 
-        activity = (MainActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         studyInfo = activity.getStudyInfo();
         studyGroupID = (String) studyInfo.get("studyGroupID");
 
@@ -99,9 +120,10 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         listView = (ListView)root.findViewById(android.R.id.list);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.member_attendance_title, null);
         listView.addHeaderView(headerView);
+    }
 
-
-        /* users-attendance-studyGroupID-dates에 오늘 Date가 없으면 attend=false로 initialize */
+    /** 화면에 보여줄 것들 초기화 **/
+    private void init() {
         CalendarDay today = CalendarDay.today();
         dailyRegistration = false;
         userRef.child(userID).child("attendance").child(studyGroupID).child("dates").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -126,18 +148,10 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                 getMemberList();
             }
         });
+    }
 
-
-        attendEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
-                intent.putExtra("attendInfo", (Serializable)attendInfo);
-                intent.putExtra("studyGroupID", studyGroupID);
-                view.getContext().startActivity(intent);
-            }
-        });
-
+    /** 출석 버튼 리스너 **/
+    private void setAttendanceBtnListener() {
         attendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,8 +170,19 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                 }
             }
         });
+    }
 
-        return root;
+    /** 나의 출석 부분 버튼 클릭 리스너 **/
+    private void setMyAttendanceBtnListener() {
+        attendEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AttendanceRegisterActivity.class);
+                intent.putExtra("attendInfo", (Serializable)attendInfo);
+                intent.putExtra("studyGroupID", studyGroupID);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     // 만약 이미 등록된 상태라면(isSet = true) [등록하기] => [출석하기]
@@ -228,8 +253,8 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     }
 
     private void getMemberList() {
-        memberList.clear();
-        Map<String, String> membersMap = (Map<String, String>) studyInfo.get("memberList");
+        membersMap.clear();
+        membersMap = (Map<String, String>) studyInfo.get("memberList");
         for (Map.Entry<String, String> entry : membersMap.entrySet()) {
             final String memberID = entry.getValue();
             userRef.child(memberID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -258,7 +283,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                     member.put("range", range);
                     member.put("time", String.format("%s:%s", hour, minute));
                     memberList.add(member);
-                    Log.d("memberList", memberList.toString());
                     setListView();
                 }
             });
@@ -270,13 +294,19 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         listView.setAdapter(attendanceAdapter);
     }
 
+    private void refresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if(isFirstVisit) {
-            memberList.clear();
+        if(!isFirstVisit) {
             setMyAttendance();
             getMemberList();
+            refresh();
         }
+        isFirstVisit = false;
     }
 }

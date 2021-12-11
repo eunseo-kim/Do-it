@@ -18,11 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
-import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -82,10 +80,12 @@ public class MenuEvaluateMemberFragment extends Fragment {
                     activity.onBackPressed();
                     return true;
                 }
-                activity.onBackPressed();
-                return true;
+                removeView();
+
+                return false;
             }
         });
+
 
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);
@@ -96,7 +96,8 @@ public class MenuEvaluateMemberFragment extends Fragment {
     /** 덮은 화면 제거 **/
     private void removeView() {
         ConstraintLayout cl = (ConstraintLayout) getActivity().findViewById(R.id.coverLayout);
-        ((ViewManager) cl.getParent()).removeView(cl);
+        if(cl != null)
+            ((ViewManager) cl.getParent()).removeView(cl);
     }
 
     /** 스터디 기간이 끝났는지 확인 **/
