@@ -1,8 +1,10 @@
 package com.example.study_with_me.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,7 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
     private ToggleButton timeToggleButton;
     private int hour, minute;
     private boolean isPM;
+    public static final String PREFS_NAME = "MyPrefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,15 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
         studyGroupID = intent.getStringExtra("studyGroupID");
         Log.d("attendInfo", attendInfo.toString());
 
+        // SharedPreferences에서 가장 최근 입력된 시, 분 복원
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String hourText = settings.getString("hourText", "");
+        hourEditText.setText(hourText);
+        String minuteText = settings.getString("minuteText", "");
+        minuteEditText.setText(minuteText);
+
+        // 시, 분 입력 변경 감지
+        handleTextChange();
 
         // 주소 검색창 클릭
         EditText searchView = (EditText) findViewById(R.id.map_search);
@@ -120,6 +132,42 @@ public class AttendanceRegisterActivity extends AppCompatActivity {
             }
             minuteEditText.setText(attendInfo.get("minute") + "");
         } catch (Exception e) {}
+    }
+
+    private void handleTextChange() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        hourEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String hourText = hourEditText.getText().toString();
+                editor.putString("hourText", hourText);
+                editor.apply();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        minuteEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String minuteText = minuteEditText.getText().toString();
+                editor.putString("minuteText", minuteText);
+                editor.apply();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
     }
 
 
