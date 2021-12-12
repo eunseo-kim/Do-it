@@ -205,7 +205,10 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                     registerTime = dateFormat.parse(regTimeStr);
 
                     /* 출석 계획 등록을 한 경우 */
-                    if (isSet) { attendButton.setText("출석하기"); }
+                    if (isSet) {
+                        attendButton.setText("출석하기");
+                        attendButton.setBackgroundColor(Color.rgb(104, 4, 236));
+                    }
                     if (attend)
                     {
                         attendButton.setBackgroundColor(Color.GRAY);
@@ -305,6 +308,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         if(!isFirstVisit) {
             setMyAttendance();
             getMemberList();
+            initializeAttendButton();
             refresh();
         }
         isFirstVisit = false;
