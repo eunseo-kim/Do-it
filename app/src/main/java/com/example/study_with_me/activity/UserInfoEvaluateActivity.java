@@ -1,6 +1,7 @@
 package com.example.study_with_me.activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.activity.ComponentActivity;
@@ -42,7 +43,7 @@ public class UserInfoEvaluateActivity extends AppCompatActivity {
         userRef.child(userID).child("comments").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-
+//                Log.d("print>>", )
             }
         });
     }

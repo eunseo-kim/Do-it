@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Study_With_Me"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.SplachActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +48,8 @@
         <activity android:name=".activity.HashGetter"/>
         <activity android:name=".activity.MapFindActivity"/>
         <activity android:name=".activity.CheckingAttendanceActivity"/>
+        <activity android:name=".activity.LoginActivity"></activity>
+<!--        <activity android:name=".activity.SplachActivity"></activity>-->
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="0b7fd920b310e094887dcd5450cf979d"/>
 
     </application>
