@@ -70,7 +70,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private TimeZone timeZone;
 
     private boolean dailyRegistration;    // 오늘 날짜가 dates에 등록됐는지
-    private boolean isFirstVisit = true;
 
     private static final long TIME_RANGE = 600000; // 출석 인정 범위(전후 10분, 밀리초)
 
@@ -142,11 +141,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
                     userRef.child(userID).child("attendance").child(studyGroupID).child("attend").setValue(false);
                     userRef.child(userID).child("attendance").child(studyGroupID).child("dates").push().setValue(today.toString());
                 }
-
-                /* 나머지 실행 */
-                initializeAttendButton();
-                setMyAttendance();
-                getMemberList();
             }
         });
     }
@@ -257,7 +251,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     }
 
     private void getMemberList() {
-        membersMap.clear();
+        memberList.clear();
         membersMap = (Map<String, String>) studyInfo.get("memberList");
         for (Map.Entry<String, String> entry : membersMap.entrySet()) {
             final String memberID = entry.getValue();
@@ -298,21 +292,11 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         listView.setAdapter(attendanceAdapter);
     }
 
-    private void refresh() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        if(!isFirstVisit) {
-            setMyAttendance();
-            getMemberList();
-            initializeAttendButton();
-            setListView();
-            refresh();
-        }
-        isFirstVisit = false;
+        setMyAttendance();
+        getMemberList();
+        initializeAttendButton();
     }
 }
