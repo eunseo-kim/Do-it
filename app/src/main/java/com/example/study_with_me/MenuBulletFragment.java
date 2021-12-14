@@ -2,6 +2,7 @@ package com.example.study_with_me;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,6 +85,21 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
 
         bulletinList = new ArrayList<>();
         getBulletinList();
+
+        /*listView의 url 클릭 시 url 실행*/
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(bulletinList.get(i))));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("click", "onItemClick");
+                if(intent.resolveActivity(requireContext().getPackageManager()) != null) {
+                    Toast.makeText(getActivity().getApplicationContext(), "링크", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         return root;
     }
