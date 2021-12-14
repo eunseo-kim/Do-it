@@ -135,6 +135,7 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
 
 
     public void addButtonClicked() {
+        scheduleEditText.setText("");
         addButton.setVisibility(View.GONE);
         scheduleEditText.setVisibility(View.VISIBLE);
         createButton.setVisibility(View.VISIBLE);
