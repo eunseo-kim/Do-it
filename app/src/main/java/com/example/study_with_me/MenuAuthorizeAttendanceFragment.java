@@ -310,6 +310,7 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
             setMyAttendance();
             getMemberList();
             initializeAttendButton();
+            setListView();
             refresh();
         }
         isFirstVisit = false;
