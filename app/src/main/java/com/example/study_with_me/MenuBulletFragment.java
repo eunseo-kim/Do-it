@@ -48,10 +48,12 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
     private Map<String, Object> studyInfo;
     private String studyGroupID;
     private ArrayList<Map<String, Object>> bulletinList;
+    private ArrayList<Map<String, Object>> filteredList;
 
     private RadioButton bulletinNotice, bulletinAll;
     private FloatingActionButton addButton;
     private ListView listView;
+    private boolean filterNotice = false;
 
     private final int ALL_BTN = 0, NOTI_BTN = 1, PIC_BTN = 2, FILE_BTN = 3;
     int selectedType = ALL_BTN;
@@ -83,6 +85,7 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
         studyGroupID = studyInfo.get("studyGroupID").toString();
 
         bulletinList = new ArrayList<>();
+        filteredList = new ArrayList<>();
 
         /*listView의 url 클릭 시 url 실행*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,10 +109,10 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bulletinAll: // listView 분류를 [전체]로
-                Toast.makeText(getContext(), "전체 게시물 보기", Toast.LENGTH_SHORT).show();
+                getNonFilteredList();
                 break;
             case R.id.bulletinNotice:   // listView 분류를 [공지]로
-                Toast.makeText(getContext(), "공지사항 보기", Toast.LENGTH_SHORT).show();
+                getFilteredList();
                 break;
             case R.id.addButton: // 게시글 추가 버튼
                 Intent intent = new Intent(view.getContext(), BulletRegisterActivity.class);
@@ -131,14 +134,29 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
                     Log.d("bulletinItem", bulletinItem.toString());
                     bulletinList.add(0, bulletinItem);
                 }
-                setListView();
+                setListView(bulletinList);
             }
         });
     }
 
+    private void getFilteredList() {
+        filteredList.clear();
+        for(Map<String, Object> item : bulletinList) {
+            Log.d("item:", item.toString());
+            if ((Boolean)item.get("notice")) {
+                filteredList.add(item);
+            }
+        }
+        setListView(filteredList);
+    }
 
-    private void setListView() {
-        final BulletNotificationAdapter bulletNotificationAdapter = new BulletNotificationAdapter(getActivity().getApplicationContext(), bulletinList);
+    private void getNonFilteredList() {
+        setListView(bulletinList);
+    }
+
+
+    private void setListView(ArrayList list) {
+        final BulletNotificationAdapter bulletNotificationAdapter = new BulletNotificationAdapter(getActivity().getApplicationContext(), list);
         listView.setAdapter(bulletNotificationAdapter);
     }
 
