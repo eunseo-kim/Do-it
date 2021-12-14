@@ -256,7 +256,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
     private void getMemberList() {
         membersMap.clear();
         membersMap = (Map<String, String>) studyInfo.get("memberList");
-        Log.d("memgersmap >>> ", membersMap.toString());
         for (Map.Entry<String, String> entry : membersMap.entrySet()) {
             final String memberID = entry.getValue();
             userRef.child(memberID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -307,7 +306,6 @@ public class MenuAuthorizeAttendanceFragment extends ListFragment {
         if(!isFirstVisit) {
             setMyAttendance();
             getMemberList();
-            setListView();
             refresh();
         }
         isFirstVisit = false;
