@@ -22,6 +22,9 @@ import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.SearchAdapter;
 import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,6 +65,10 @@ public class StudySearchActivity extends AppCompatActivity {
 
         if(firebaseAuth.getCurrentUser() != null){
             userID = firebaseAuth.getCurrentUser().getUid();
+            FirebaseApp.initializeApp(this);
+            FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
+            firebaseAppCheck.installAppCheckProviderFactory(
+                    SafetyNetAppCheckProviderFactory.getInstance());
         }
         // 상단 메뉴바
         getSupportActionBar().setTitle("스터디 검색");
