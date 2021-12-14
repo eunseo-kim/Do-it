@@ -109,60 +109,30 @@ public class BulletNotificationAdapter extends BaseAdapter {
 
         /* set imageView */
         imageView = view.findViewById(R.id.bulletImageView);
-
-        String imagePath = bulletinList.get(position).get("imageUri").toString();
-        String contentPath = RealPathUtil.getPath(context, Uri.parse(imagePath));
-        if(contentPath == null)
-            Log.d("isNull", "yes");
-        setImageView();
-
-        Log.d("imagePath", imagePath);
-        Log.d("return ", "return");
+        String imagePath = registerTime + ".jpeg";
+        setImageView(imagePath);
 
         return view;
     }
 
-    private void setImageView() {
-        Picasso.get()
-                .load("https://firebasestorage.googleapis.com/v0/b/studywithme-b93ee.appspot.com/o/images%2F1638305437393.jpeg?alt=media&token=9368cfb5-c9aa-4160-b698-dc0d344eab36")
+    private void setImageView(String fileName) {
+        final StorageReference ref = storageReference.child("images").child(fileName);
+
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                .load(uri.toString())
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(context.getApplicationContext(), "이미지", Toast.LENGTH_SHORT).show();
-                        Log.d("이미지", "...");
+                        Toast.makeText(context.getApplicationContext(), "이미지 불러옴", Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
-                    public void onError(Exception e) {
-
-                    }
+                    public void onError(Exception e) {}
                 });
-    }
-
-    private void setImageUri() {
-        StorageReference ref
-                = storageReference
-                .child("images/" + registerTime + ".jpeg");
-
-        ref.getDownloadUrl()
-            .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri downloadUrl) {
-                    //이미지 로드 성공시
-                    Toast.makeText(context.getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
-                    if (downloadUrl != null) {
-                        Picasso.get().load(downloadUrl.toString()).into(imageView);
-                    }
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    //이미지 로드 실패시
-                    Log.d("failure", "실패");
-                    Toast.makeText(context.getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
-                }
-            });
+            }
+        });
     }
 
     public static String getDate(long milliSeconds, String dateFormat) {
@@ -171,41 +141,4 @@ public class BulletNotificationAdapter extends BaseAdapter {
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
     }
-
-    private void getRealPathFromURI(Uri contentURI) {
-       String[] projection = new String[]{
-               MediaStore.Images.Media._ID,
-               MediaStore.Images.Media.DISPLAY_NAME,
-               MediaStore.Images.Media.DATE_TAKEN
-       };
-
-       String selection = "${MediaStore.Images.Media.DATE_TAKEN} >= ?";
-       String[] selectionArgs = new String[] {
-               String.valueOf(registerTime)
-       };
-
-       String sortOrder = "${MediaStore.Images.Media.DATE_TAKEN} DESC";
-
-       Cursor cursor = context.getContentResolver().query(
-               MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-               projection,
-               selection,
-               selectionArgs,
-               sortOrder
-       );
-
-        int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
-        int dateTakenColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN);
-        int displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
-
-        while(cursor.moveToNext()) {
-            long id = cursor.getLong(idColumn);
-            Uri uri = Uri.withAppendedPath(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    String.valueOf(id)
-            );
-            Log.d("uri >>> ", uri.toString());
-       }
-    }
-
 }
