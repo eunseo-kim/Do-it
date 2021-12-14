@@ -60,7 +60,6 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.bullet, container, false);
-
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getCurrentUser().getUid();
 
@@ -84,7 +83,6 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
         studyGroupID = studyInfo.get("studyGroupID").toString();
 
         bulletinList = new ArrayList<>();
-        getBulletinList();
 
         /*listView의 url 클릭 시 url 실행*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,6 +120,7 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
     }
 
     private void getBulletinList() {
+        bulletinList.clear();
         studyGroupRef.child(studyGroupID)
                 .child("bulletinBoard")
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -143,4 +142,10 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
         listView.setAdapter(bulletNotificationAdapter);
     }
 
+    /** ListView 갱신 **/
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBulletinList();
+    }
 }
