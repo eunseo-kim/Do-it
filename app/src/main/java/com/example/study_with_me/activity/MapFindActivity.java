@@ -43,7 +43,7 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
     private String studyGroupID;
     private MapPoint MARKER_POINT;
     private String preText;
-    private int ATTENDACE_RANGE = 500;
+    private int ATTENDACE_RANGE = 100;
 
     /*현재 위치 GPS 권한 설정*/
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -102,9 +102,9 @@ public class MapFindActivity extends AppCompatActivity implements MapView.Curren
                     int range = Integer.parseInt(locationRange.getText().toString());
                     /* 범위 제한 (50m) => 일단 확인용으로 500m로 할게요! */
                     if (range > ATTENDACE_RANGE) {
-                        range = 500;
+                        range = ATTENDACE_RANGE;
                         locationRange.setText(String.valueOf(range));
-                        Toast.makeText(getApplicationContext(), "최대 50m까지 설정 가능합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "최대 100m까지 설정 가능합니다.", Toast.LENGTH_SHORT).show();
                     }
                     MapCircle mapCircle = new MapCircle(MARKER_POINT, range,R.color.strokeColor, R.color.fillColor);
                     mapView.addCircle(mapCircle);
