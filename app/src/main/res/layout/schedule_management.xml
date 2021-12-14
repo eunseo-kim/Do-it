@@ -85,6 +85,20 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/closingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:background="#6FEFEFEF"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="왼쪽으로 밀어서 일정을 삭제할 수 있어요."
+        android:textSize="11dp"/>
+
+
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
