@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.StudyGroupAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,7 +54,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> filteredList = new ArrayList<>();
     private ListView myStudyRoomListView;
     private StudyGroupAdapter adapter;
-    private TextView closingInfo, watingInfo;
+    private TextView closingInfo, watingInfo, startedInfo;
     private int joinCount;
     
     private static final int ING = -4;
@@ -70,6 +71,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         closingInfo = findViewById(R.id.closingInfo);
         watingInfo = findViewById(R.id.watingInfo);
+        startedInfo = findViewById(R.id.startedInfo);
 
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getCurrentUser().getUid();
@@ -182,24 +184,28 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                 MODE = ING;
                 watingInfo.setVisibility(View.GONE);
                 closingInfo.setVisibility(View.GONE);
+                startedInfo.setVisibility(View.VISIBLE);
                 filterStarted();
                 break;
             case R.id.waiting:
                 MODE = WAITING;
                 watingInfo.setVisibility(View.VISIBLE);
                 closingInfo.setVisibility(View.GONE);
+                startedInfo.setVisibility(View.GONE);
                 filterWaiting();
                 break;
             case R.id.closing:
                 MODE = CLOSING_SETTING;
                 watingInfo.setVisibility(View.GONE);
                 closingInfo.setVisibility(View.VISIBLE);
+                startedInfo.setVisibility(View.GONE);
                 filterClosing();
                 break;
             case R.id.finished:
                 MODE = CLOSED;
                 watingInfo.setVisibility(View.GONE);
                 closingInfo.setVisibility(View.GONE);
+                startedInfo.setVisibility(View.GONE);
                 filterFinished();
                 break;
         }
@@ -388,6 +394,46 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton("아니오", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if(myStudyRadioGroup.getCheckedRadioButtonId() == R.id.started) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MyStudyRoomActivity.this)
+                            .setTitle("스터디를 정말 탈퇴 하시겠습니까?")
+                            .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(getApplicationContext(), "스터디를 탈퇴합니다.", Toast.LENGTH_SHORT).show();
+
+                                    /*[Users-UserID-dropCount]를 1 증가*/
+                                    userRef.child(userID).child("dropCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DataSnapshot dataSnapshot) {
+                                            int newDropCount = dataSnapshot.getValue(int.class);
+                                            userRef.child(userID).child("dropCount").setValue(newDropCount + 1);
+                                        }
+                                    });
+
+                                    /*[Users-UserID-studyGroupIDList]에서 삭제*/
+                                    Query userAppliedStudyQuery = userRef.child(userID)
+                                            .child("studyGroupIDList")
+                                            .orderByValue()
+                                            .equalTo(String.valueOf(studyGroup.get("studyGroupID")));
+
+                                    userAppliedStudyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                                                userSnapshot.getRef().removeValue();
+                                            }
+                                            getStudyGroups();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {}
+                                    });
+                                }
+                            })
+                            .setNegativeButton("아니오", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
