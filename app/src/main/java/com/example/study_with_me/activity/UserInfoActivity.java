@@ -3,6 +3,9 @@ package com.example.study_with_me.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -34,9 +37,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
         Intent intent= getIntent();
         applicantUserID = intent.getStringExtra("userID");
-//        Log.d("받은이름>>", intent.getStringExtra("userID"));
-        // 회원의 userID를 받아옴
-//        userName = intent.getStringExtra("userID");
 
         nameTextView = (TextView) findViewById(R.id.userName);
         emailTextView = (TextView)findViewById(R.id.evaluateContents);
@@ -48,6 +48,7 @@ public class UserInfoActivity extends AppCompatActivity {
         setUserInfo();
         buttonClick();
     }
+
     public void setUserInfo() {
         databaseReference.child("users").child(applicantUserID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,5 +91,30 @@ public class UserInfoActivity extends AppCompatActivity {
         Intent teamEvaluateList = new Intent(view.getContext(), UserInfoEvaluateActivity.class);
         teamEvaluateList.putExtra("userID", applicantUserID);
         startActivity(teamEvaluateList);
+    }
+
+    /** 액션바 오버라이딩 **/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.alarmBell:
+                Intent intent1 = new Intent(this, AlarmActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.myPage:
+                Intent intent2 = new Intent(this, MyPageActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
