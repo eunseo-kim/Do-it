@@ -3,6 +3,7 @@ package com.example.study_with_me.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,7 +140,7 @@ public class MyPageActivity extends AppCompatActivity {
     public void signOut(View view) {
         firebaseAuth.signOut();
         Toast.makeText(MyPageActivity.this,"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, SplashActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
