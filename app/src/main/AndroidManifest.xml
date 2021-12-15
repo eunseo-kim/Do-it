@@ -51,7 +51,6 @@
         <activity android:name=".activity.MapFindActivity"/>
         <activity android:name=".activity.CheckingAttendanceActivity"/>
         <activity android:name=".activity.SplashActivity"></activity>
-<!--        <activity android:name=".activity.SplachActivity"></activity>-->
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="0b7fd920b310e094887dcd5450cf979d"/>
 
     </application>
