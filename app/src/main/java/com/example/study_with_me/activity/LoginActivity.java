@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startActivity(new Intent(this, SplashActivity.class));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         getSupportActionBar().hide();
