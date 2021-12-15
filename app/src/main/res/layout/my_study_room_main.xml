@@ -45,7 +45,7 @@
         android:gravity="center"
         android:padding="7dp"
         android:textSize="11dp"
-        android:text="길게 눌러서 스터디를 탈퇴할 수 있어요.\n단, 중도 포기 기록이 남게 되니 신중하게 선택해주시요." />
+        android:text="길게 눌러서 스터디를 탈퇴할 수 있어요.\n단, 중도 포기 기록이 남게 되니 신중하게 선택해주세요." />
 
     <ListView
         android:id="@+id/myStudyRoomListView"

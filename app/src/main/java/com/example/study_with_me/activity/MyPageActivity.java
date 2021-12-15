@@ -85,26 +85,26 @@ public class MyPageActivity extends AppCompatActivity {
     public void setUserInfo() {
         databaseReference.child("users").child(currentUserID)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userName = snapshot.child(USER_NAME_KEY).getValue(String.class);
-                userEmail = snapshot.child(USER_EMAIL_KEY).getValue(String.class);
-                userRating = snapshot.child(USER_RATING_KEY).getValue(Float.class) == null ? 0 : snapshot.child(USER_RATING_KEY).getValue(Float.class);
-                joinCount = snapshot.child(USER_JOIN_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_JOIN_KEY).getValue(Integer.class);
-                dropCount = snapshot.child(USER_DROP_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_DROP_KEY).getValue(Integer.class);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        userName = snapshot.child(USER_NAME_KEY).getValue(String.class);
+                        userEmail = snapshot.child(USER_EMAIL_KEY).getValue(String.class);
+                        userRating = snapshot.child(USER_RATING_KEY).getValue(Float.class) == null ? 0 : snapshot.child(USER_RATING_KEY).getValue(Float.class);
+                        joinCount = snapshot.child(USER_JOIN_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_JOIN_KEY).getValue(Integer.class);
+                        dropCount = snapshot.child(USER_DROP_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_DROP_KEY).getValue(Integer.class);
 
-                nameTextView.setText(userName);
-                emailTextView.setText(userEmail);
-                joinCountTextView.setText(String.valueOf(joinCount));
-                dropCountTextView.setText(String.valueOf(dropCount));
-                ratingBar.setRating(userRating);
-                ratingNumber.setText(String.valueOf(userRating));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //
-            }
-        });
+                        nameTextView.setText(userName);
+                        emailTextView.setText(userEmail);
+                        joinCountTextView.setText(String.valueOf(joinCount));
+                        dropCountTextView.setText(String.valueOf(dropCount));
+                        ratingBar.setRating(userRating);
+                        ratingNumber.setText(String.valueOf(userRating));
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //
+                    }
+                });
     }
 
     public void myStudyRoomButtonClicked(View view) {
@@ -143,7 +143,8 @@ public class MyPageActivity extends AppCompatActivity {
     public void signOut(View view) {
         firebaseAuth.signOut();
         Toast.makeText(MyPageActivity.this,"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, SplachActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -157,17 +158,17 @@ public class MyPageActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         user.delete()
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        removeStudyGroupAboutDeletedUser(curUid);
-                        Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            removeStudyGroupAboutDeletedUser(curUid);
+                            Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
     }
 
     private void removeStudyGroupAboutDeletedUser(String uid) {
