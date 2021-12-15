@@ -3,7 +3,6 @@ package com.example.study_with_me.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,10 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -143,7 +139,7 @@ public class MyPageActivity extends AppCompatActivity {
     public void signOut(View view) {
         firebaseAuth.signOut();
         Toast.makeText(MyPageActivity.this,"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, SplachActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
