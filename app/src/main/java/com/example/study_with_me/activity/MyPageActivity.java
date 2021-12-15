@@ -1,7 +1,9 @@
 package com.example.study_with_me.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
@@ -24,11 +27,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference userRef = databaseReference.child("users");
+    private DatabaseReference studyRef = databaseReference.child("studygroups");
 
     private TextView nameTextView, emailTextView, joinCountTextView, dropCountTextView, ratingNumber;
     private RatingBar ratingBar;
@@ -76,26 +85,26 @@ public class MyPageActivity extends AppCompatActivity {
     public void setUserInfo() {
         databaseReference.child("users").child(currentUserID)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userName = snapshot.child(USER_NAME_KEY).getValue(String.class);
-                userEmail = snapshot.child(USER_EMAIL_KEY).getValue(String.class);
-                userRating = snapshot.child(USER_RATING_KEY).getValue(Float.class);
-                joinCount = snapshot.child(USER_JOIN_KEY).getValue(Integer.class);
-                dropCount = snapshot.child(USER_DROP_KEY).getValue(Integer.class);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        userName = snapshot.child(USER_NAME_KEY).getValue(String.class);
+                        userEmail = snapshot.child(USER_EMAIL_KEY).getValue(String.class);
+                        userRating = snapshot.child(USER_RATING_KEY).getValue(Float.class) == null ? 0 : snapshot.child(USER_RATING_KEY).getValue(Float.class);
+                        joinCount = snapshot.child(USER_JOIN_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_JOIN_KEY).getValue(Integer.class);
+                        dropCount = snapshot.child(USER_DROP_KEY).getValue(Integer.class) == null ? 0 : snapshot.child(USER_DROP_KEY).getValue(Integer.class);
 
-                nameTextView.setText(userName);
-                emailTextView.setText(userEmail);
-                joinCountTextView.setText(String.valueOf(joinCount));
-                dropCountTextView.setText(String.valueOf(dropCount));
-                ratingBar.setRating(userRating);
-                ratingNumber.setText(String.valueOf(userRating));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //
-            }
-        });
+                        nameTextView.setText(userName);
+                        emailTextView.setText(userEmail);
+                        joinCountTextView.setText(String.valueOf(joinCount));
+                        dropCountTextView.setText(String.valueOf(dropCount));
+                        ratingBar.setRating(userRating);
+                        ratingNumber.setText(String.valueOf(userRating));
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //
+                    }
+                });
     }
 
     public void myStudyRoomButtonClicked(View view) {
@@ -142,20 +151,60 @@ public class MyPageActivity extends AppCompatActivity {
     public void removeUser(View view) {
         // DB 삭제
         userRef.child(currentUserID).setValue(null);
+        String curUid = currentUserID;
+
         // FirebaseAuth 삭제
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        user.delete()
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
-                        startActivity(intent);
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            removeStudyGroupAboutDeletedUser(curUid);
+                            Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
                     }
+                });
+    }
+
+    private void removeStudyGroupAboutDeletedUser(String uid) {
+        studyRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                Map<String, Map> map = (Map<String, Map>) task.getResult().getValue();
+                for(Map.Entry<String, Map> entry : map.entrySet()) {
+                    if(entry.getKey().contains(uid)) {
+                        studyRef.child(entry.getKey()).removeValue();
+                        continue;
+                    }
+
+                    /** memberList에서 해당 유저 삭제 **/
+                    Map<String, String> memberList = (Map<String, String>) entry.getValue().get("memberList");
+                    for(Map.Entry entry1 : memberList.entrySet()) {
+                        if(entry1.getValue().equals(uid))
+                            memberList.remove(entry1.getKey());
+                    }
+                    studyRef.child(entry.getKey()).child("memberList").setValue(memberList);
+
+                    /** applicantList에서 해당 유저 삭제 **/
+                    Map<String, Map> applicantList = (Map<String, Map>) entry.getValue().get("applicantList");
+                    if(applicantList != null) {
+                        for(Map.Entry<String, Map> info : applicantList.entrySet()) {
+                            for(Map<String, String> vals : applicantList.values()) {
+                                if(vals.get("userID").equals(uid)) {
+                                    applicantList.remove(info.getKey());
+                                }
+                            }
+                        }
+                    }
+                    studyRef.child(entry.getKey()).child("applicantList").setValue(applicantList);
                 }
-            });
+            }
+        });
     }
 
     /** 회원 정보 수정 **/

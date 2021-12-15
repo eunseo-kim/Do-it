@@ -1,8 +1,10 @@
 package com.example.study_with_me.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -81,5 +83,25 @@ public class EditUserInfoActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    /* 액션바 오버라이딩 */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.alarmBell:
+                Intent intent1 = new Intent(this, AlarmActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.myPage:
+                Intent intent2 = new Intent(this, MyPageActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
