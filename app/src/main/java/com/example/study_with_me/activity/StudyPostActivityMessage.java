@@ -58,7 +58,9 @@ public class StudyPostActivityMessage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.study_post);
+        getSupportActionBar().setTitle("스터디 정보");
 
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){

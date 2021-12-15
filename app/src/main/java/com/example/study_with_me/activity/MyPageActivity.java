@@ -142,7 +142,6 @@ public class MyPageActivity extends AppCompatActivity {
     public void removeUser(View view) {
         // DB 삭제
         userRef.child(currentUserID).setValue(null);
-
         // FirebaseAuth 삭제
         FirebaseUser user = firebaseAuth.getCurrentUser();
         user.delete()
@@ -151,6 +150,7 @@ public class MyPageActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(MyPageActivity.this,"Do it을 탈퇴합니다.", Toast.LENGTH_SHORT).show();
+
                         Intent intent = new Intent(MyPageActivity.this, LoginActivity.class);
                         startActivity(intent);
                     }
