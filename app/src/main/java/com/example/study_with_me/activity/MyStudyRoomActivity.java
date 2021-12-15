@@ -81,8 +81,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         getAppliedStudyGroups();
         getStudyGroups();
         cancelOrClose(); /*[마감설정-길게클릭-마감 팝업]*/
-
-
     }
 
 
@@ -111,7 +109,6 @@ public class MyStudyRoomActivity extends AppCompatActivity {
 
                                 if(groupsCount == temp) {
                                     try {
-                                        Log.d("setRadioClicked", "setRadioClicked");
                                         setRadioClicked();
                                     } catch (ParseException e) {
                                         e.printStackTrace();
@@ -235,7 +232,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         filteredList.clear();
         for (Map<String, Object> sg : studyGroupList) {
             if (sg != null) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
                 Date endDate = format.parse(String.valueOf(sg.get("endDate")));
                 Date currDate = new Date();
                 if (currDate.before(endDate) && (Boolean) sg.get("closed")) {
