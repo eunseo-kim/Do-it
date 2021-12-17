@@ -11,9 +11,10 @@
         android:padding="10dp">
 
         <ImageView
-            android:layout_marginRight="10dp"
+            android:id="@+id/commentUserImg"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/tmp_person_icon" />
 
         <LinearLayout

@@ -2,20 +2,15 @@ package com.example.study_with_me.adapter;
 
 import android.content.Context;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.study_with_me.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,19 +26,16 @@ public class UserCommentAdapter extends BaseAdapter {
     DatabaseReference userRef;
 
     ArrayList<Map<String, Map>> userCommentList;
-    ArrayList<String> userID = new ArrayList<>();
-    ArrayList<String> userComment = new ArrayList<>();
 
     TextView userName;
     TextView comment;
+    ImageView userImg;
 
     public UserCommentAdapter(Context context, ArrayList<Map<String, Map>> userCommentList) {
         this.context = context;
         this.userCommentList = userCommentList;
         this.layoutInflater = LayoutInflater.from(this.context);
         userRef = reference.child("users");
-
-
     }
 
     @Override
@@ -61,6 +53,7 @@ public class UserCommentAdapter extends BaseAdapter {
 
         userName = view.findViewById(R.id.commentUserName);
         comment = view.findViewById(R.id.comment);
+        userImg = view.findViewById(R.id.commentUserImg);
 
         Map<String, Map> userCommentMap = userCommentList.get(position);
         for(Map.Entry<String, Map> commentInfo : userCommentMap.entrySet()) {
@@ -69,7 +62,8 @@ public class UserCommentAdapter extends BaseAdapter {
                 comment.setText(user.toString().split("=")[1]);
             }
         }
-
+        userImg.setImageResource(R.drawable.tmp_person_icon);
+        userImg.setColorFilter(Color.BLACK);
         return view;
     }
 }
