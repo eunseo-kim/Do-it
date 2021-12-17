@@ -78,6 +78,7 @@ public class TeamEvaluationAdapter extends BaseAdapter {
                 Context c = view.getContext();
                 Intent intent = new Intent(view.getContext(), EvaluateMemberActivity.class);
                 intent.putExtra("userID", evalMemberList.get(position).keySet().toArray(new String[0])[0]);
+                intent.putExtra("username", evalMemberList.get(position).values().toArray(new String[1])[0]);
                 intent.putExtra("studyID", studyId);
                 c.startActivity(intent);
             }

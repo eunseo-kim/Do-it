@@ -1,45 +1,29 @@
 package com.example.study_with_me.activity;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.example.study_with_me.MenuEvaluateMemberFragment;
 import com.example.study_with_me.R;
-import com.example.study_with_me.adapter.TeamEvaluationAdapter;
-import com.example.study_with_me.model.MemberNotification;
-import com.example.study_with_me.model.MemberSampledata;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class EvaluateMemberActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,12 +40,12 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     private String curUserID;
     private String evalUserID;
     private String studyID;
-    private String comment;
+    private String username;
     private float memberRating;
     private float existRating;
     private int ratingCount;
     private ArrayList<String> evalMembers = new ArrayList<>();
-    private ArrayList<Map<String, String>> comments = new ArrayList<>();
+    private ArrayList<Map<String, Map>> comments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +58,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
         Intent intent = getIntent();
         evalUserID = intent.getStringExtra("userID");
         studyID = intent.getStringExtra("studyID");
+        username = intent.getStringExtra("username");
 
         /** 상단 액션바 설정 **/
         getSupportActionBar().setTitle("팀원 평가");
@@ -156,8 +141,12 @@ public class EvaluateMemberActivity extends AppCompatActivity {
     private void setComment() {
         if(evalComment.getText().toString().equals(""))
             return;
-        Map<String, String> eComment = new HashMap<>();
-        eComment.put(curUserID, evalComment.getText().toString());
+
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put(username, evalComment.getText().toString());
+
+        Map<String, Map> eComment = new HashMap<>();
+        eComment.put(curUserID, userInfo);
         comments.add(eComment);
 
         userRef.child(evalUserID).child("comments").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -166,7 +155,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
                 if(task.getResult().getValue() == null)
                     userRef.child(evalUserID).child("comments").setValue(comments);
                 else {
-                    ArrayList<Map<String, String>> commentList = (ArrayList<Map<String, String>>) task.getResult().getValue();
+                    ArrayList<Map<String, Map>> commentList = (ArrayList<Map<String, Map>>) task.getResult().getValue();
                     commentList.add(eComment);
                     userRef.child(evalUserID).child("comments").setValue(commentList);
                 }

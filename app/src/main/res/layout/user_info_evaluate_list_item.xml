@@ -27,7 +27,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:id="@+id/userName"
+                    android:id="@+id/commentUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -39,7 +39,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/evaluateContents"
+                android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

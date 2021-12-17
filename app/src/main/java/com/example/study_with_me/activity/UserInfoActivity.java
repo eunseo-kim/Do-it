@@ -49,7 +49,7 @@ public class UserInfoActivity extends AppCompatActivity {
         buttonClick();
     }
 
-    public void setUserInfo() {
+    private void setUserInfo() {
         databaseReference.child("users").child(applicantUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,7 +74,7 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
     }
-    public void buttonClick() {
+    private void buttonClick() {
         btn1 = (TextView) findViewById(R.id.close_button);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
