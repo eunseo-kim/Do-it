@@ -48,16 +48,9 @@ public class ApplicantAdapter extends BaseAdapter {
         TextView alarmMemberName = (TextView) view.findViewById(R.id.alarmMemberName);
         TextView alarmRegisterTime = (TextView) view.findViewById(R.id.alarmRegisterTime);
 
-//        Log.d("Applicant >>> ", applicants.toString());
-//        Log.d("getUserName()", "??" + applicants.get(position).getUserName());
-//        Log.d("getStudyGroupTitle()", ">" + applicants.get(position).getStudyGroupTitle());
-
         studyTitle.setText(applicants.get(position).getStudyGroupTitle());
         alarmMemberName.setText(applicants.get(position).getUserName());
         alarmRegisterTime.setText(applicants.get(position).getRegisterTime());
-
-        String userName = alarmMemberName.getText().toString();
-        Log.d("이름", userName);
 
         alarmMemberName.setOnClickListener(new View.OnClickListener() {
             @Override
