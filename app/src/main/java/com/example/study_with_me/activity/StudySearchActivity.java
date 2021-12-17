@@ -55,6 +55,7 @@ public class StudySearchActivity extends AppCompatActivity {
     private ArrayList<Map<String, Object>> filterDateList = new ArrayList<>();
 
     private boolean noCountClick = true, noDateClick = true;
+    private boolean isFirstVisit = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,14 @@ public class StudySearchActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!isFirstVisit)
+            setStudyGroupsChangedListener();
+        isFirstVisit = false;
     }
 
     /** 액션바 오버라이딩 **/
@@ -154,6 +163,7 @@ public class StudySearchActivity extends AppCompatActivity {
 
     /** DB의 studygroups에 무언가 추가되거나 변경될 시 처리하는 함수 **/
     private void setStudyGroupsChangedListener() {
+        studyList.clear();
         studyGroupRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override

@@ -46,16 +46,21 @@ public class MyStudyRoomActivity extends AppCompatActivity {
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private DatabaseReference userRef = databaseReference.child("users");
     private FirebaseAuth firebaseAuth;
+
     private String userID;
+    private int joinCount;
+    private boolean isFirstVisit = true;
+
     private Map<String, String> studyGroupIDMap = new HashMap<>();
     private Map<String, String> appliedStudyGroupIDMap = new HashMap<>();
     private ArrayList<Map<String, Object>> studyGroupList = new ArrayList<>();
     private ArrayList<Map<String, Object>> appliedStudyGroupList = new ArrayList<>();
     private ArrayList<Map<String, Object>> filteredList = new ArrayList<>();
+
     private ListView myStudyRoomListView;
-    private StudyGroupAdapter adapter;
     private TextView closingInfo, watingInfo, startedInfo;
-    private int joinCount;
+
+    private StudyGroupAdapter adapter;
     
     private static final int ING = -4;
     private static final int WAITING = -3;
@@ -83,6 +88,15 @@ public class MyStudyRoomActivity extends AppCompatActivity {
         cancelOrClose(); /*[마감설정-길게클릭-마감 팝업]*/
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!isFirstVisit){
+            getAppliedStudyGroups();
+            getStudyGroups();
+        }
+        isFirstVisit = false;
+    }
 
     /** 신청한 스터디 그룹 가져오기 **/
     public void getAppliedStudyGroups() {

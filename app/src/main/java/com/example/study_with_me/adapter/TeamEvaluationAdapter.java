@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.activity.EvaluateMemberActivity;
-import com.example.study_with_me.activity.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,10 +34,12 @@ public class TeamEvaluationAdapter extends BaseAdapter {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     DatabaseReference reference = firebaseDatabase.getReference();
     DatabaseReference studyRef;
+    DatabaseReference userRef;
 
     ArrayList<Map<String, String>> evalMemberList;
     ArrayList<String> cmpList = new ArrayList<>();
     String studyId;
+    String username;
 
     public TeamEvaluationAdapter(Context context, ArrayList<Map<String, String>> evalMemberList, String studyId) {
         this.context = context;
@@ -46,6 +47,14 @@ public class TeamEvaluationAdapter extends BaseAdapter {
         this.layoutInflater = LayoutInflater.from(this.context);
         this.studyId = studyId;
         studyRef = reference.child("studygroups");
+        userRef = reference.child("users");
+
+        userRef.child(firebaseAuth.getCurrentUser().getUid()).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                username = task.getResult().getValue().toString();
+            }
+        });
     }
 
     @Override
@@ -68,7 +77,6 @@ public class TeamEvaluationAdapter extends BaseAdapter {
         Button evalBtn = (Button) view.findViewById(R.id.evalMemberBtn);
 
         memberImage.setImageResource(R.drawable.tmp_person_icon);
-        //memberImage.setImageResource(evalMemberList.get(position).getMemberImage());
         String[] usernames = evalMemberList.get(position).values().toArray(new String[0]);
         memberName.setText(usernames[0]);
 
@@ -78,7 +86,7 @@ public class TeamEvaluationAdapter extends BaseAdapter {
                 Context c = view.getContext();
                 Intent intent = new Intent(view.getContext(), EvaluateMemberActivity.class);
                 intent.putExtra("userID", evalMemberList.get(position).keySet().toArray(new String[0])[0]);
-                intent.putExtra("username", evalMemberList.get(position).values().toArray(new String[1])[0]);
+                intent.putExtra("username", username);
                 intent.putExtra("studyID", studyId);
                 c.startActivity(intent);
             }
@@ -86,6 +94,7 @@ public class TeamEvaluationAdapter extends BaseAdapter {
         String evalMemberId = evalMemberList.get(position).keySet().toArray(new String[0])[0];
 
         setCmpList(evalMemberId, view, evalBtn);
+
         return view;
     }
 

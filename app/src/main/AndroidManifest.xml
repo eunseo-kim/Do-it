@@ -32,7 +32,8 @@
         <activity android:name=".activity.EvaluateMemberActivity"
             android:label="EvaluateMemberActivity"></activity>
         <activity android:name=".activity.MyStudyRoomActivity"></activity>
-        <activity android:name=".activity.StudySearchActivity"></activity>
+        <activity android:name=".activity.StudySearchActivity"
+            android:launchMode="singleTask"></activity>
         <activity android:name=".activity.MapSearchActivity"></activity>
         <activity android:name=".activity.BulletRegisterActivity"></activity>
         <activity android:name=".activity.AttendanceRegisterActivity"></activity>
