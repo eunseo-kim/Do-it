@@ -60,6 +60,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.evaluate_member, container, false);
+        isFirstVisit = false;
         firebaseAuth = FirebaseAuth.getInstance();
         activity = (MainActivity) getActivity();
         studyInfo = activity.getStudyInfo();
@@ -88,7 +89,6 @@ public class MenuEvaluateMemberFragment extends Fragment {
 
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);
-        getUser();
         return root;
     }
 
@@ -186,8 +186,6 @@ public class MenuEvaluateMemberFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!isFirstVisit)
-            getUser();
-        isFirstVisit = false;
+        getUser();
     }
 }
