@@ -92,7 +92,7 @@ public class TeamEvaluationAdapter extends BaseAdapter {
             }
         });
         String evalMemberId = evalMemberList.get(position).keySet().toArray(new String[0])[0];
-
+        Log.d("eval ID >>>>>>> ", evalMemberId);
         setCmpList(evalMemberId, view, evalBtn);
 
         return view;

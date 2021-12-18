@@ -52,6 +52,7 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private MainActivity activity;
     private Map<String, Object> studyInfo;
     private String uid;
+    private int idx = 0;
     private boolean isFirstVisit = true;
 
     public MenuEvaluateMemberFragment() {}
@@ -153,18 +154,20 @@ public class MenuEvaluateMemberFragment extends Fragment {
     /** User 정보 얻은 후 리스트에 띄우기 **/
     public void getUser() {
         ArrayList<String> members = getStudyGroupMembers();
+        memberList.clear();
         for(int i = 0; i < members.size(); i++) {
             if(firebaseAuth.getCurrentUser().getUid().equals(members.get(i)))
                 continue;
+
             uid = members.get(i);
+
             userRef.child(members.get(i)).child("username").get().addOnCompleteListener(
                     new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            memberList.clear();
                             Map<String, String> userInfo = new HashMap<>();
                             String username = String.valueOf(task.getResult().getValue());
-                            userInfo.put(uid, username);
+                            userInfo.put(members.get(idx++), username);
                             memberList.add(userInfo);
                             setListView();
                         }
@@ -187,5 +190,6 @@ public class MenuEvaluateMemberFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getUser();
+        idx = 0;
     }
 }

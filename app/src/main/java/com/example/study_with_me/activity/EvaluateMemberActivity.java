@@ -85,6 +85,7 @@ public class EvaluateMemberActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     /** 평가하는 user의 스터디 참여 횟수 얻기 **/
     private void setUserInfo() {
         userRef.child(evalUserID).child("ratingCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
