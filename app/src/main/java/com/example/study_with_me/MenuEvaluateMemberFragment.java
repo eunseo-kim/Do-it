@@ -1,10 +1,8 @@
 package com.example.study_with_me;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,32 +10,25 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.TeamEvaluationAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class MenuEvaluateMemberFragment extends Fragment {
     ArrayList<Map<String, String>> memberList = new ArrayList<>();
@@ -46,7 +37,6 @@ public class MenuEvaluateMemberFragment extends Fragment {
     private DatabaseReference userRef = databaseReference.child("users");
     private DatabaseReference studyGroupRef = databaseReference.child("studygroups");
     private FirebaseAuth firebaseAuth;
-
     private TeamEvaluationAdapter evalAdapter;
     private ListView evalMemberList;
     private MainActivity activity;
@@ -86,7 +76,6 @@ public class MenuEvaluateMemberFragment extends Fragment {
                 return false;
             }
         });
-
 
         /** 팀원 평가 화면의 ListView **/
         evalMemberList = (ListView) root.findViewById(R.id.evalListView);

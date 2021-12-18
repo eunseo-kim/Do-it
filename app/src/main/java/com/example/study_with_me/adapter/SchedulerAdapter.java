@@ -1,7 +1,6 @@
 package com.example.study_with_me.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.study_with_me.R;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SchedulerAdapter extends BaseAdapter {
     private ArrayList<String> scheduleList = new ArrayList<>();

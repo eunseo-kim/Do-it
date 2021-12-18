@@ -191,9 +191,7 @@
         android:layout_height="1dp"
         android:background="#cccccc"/>
 
-
     <LinearLayout
-
         android:id="@+id/userJoinStudyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -277,8 +275,6 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/arrow_forward" />
     </LinearLayout>
-
-
 
     <!--구분선-->
     <TextView

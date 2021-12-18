@@ -34,22 +34,6 @@ public class SplashActivity extends Activity {
         anim_FadeIn = AnimationUtils.loadAnimation(this, R.anim.anim_splash_fade);
         anim_ball = AnimationUtils.loadAnimation(this, R.anim.anim_splash_ball);
 
-//        anim_FadeIn.setAnimationListener(new Animation.AnimationListener() {
-//
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                startActivity(new Intent(SplachActivity.this, LoginActivity.class));
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
         studyApplication.startAnimation(anim_FadeIn);
         doIt.startAnimation(anim_ball);
     }

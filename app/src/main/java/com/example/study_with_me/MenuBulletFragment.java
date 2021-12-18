@@ -1,7 +1,6 @@
 package com.example.study_with_me;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,21 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-
-import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.BulletRegisterActivity;
 import com.example.study_with_me.activity.MainActivity;
-import com.example.study_with_me.adapter.AttendanceAdapter;
 import com.example.study_with_me.adapter.BulletNotificationAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -100,8 +92,6 @@ public class MenuBulletFragment extends Fragment implements View.OnClickListener
                 }
             }
         });
-
-
         return root;
     }
 

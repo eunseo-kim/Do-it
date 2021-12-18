@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.example.study_with_me.R;
 import com.example.study_with_me.activity.UserInfoJoinActivity;
-
 import java.util.ArrayList;
 import java.util.Map;
 
