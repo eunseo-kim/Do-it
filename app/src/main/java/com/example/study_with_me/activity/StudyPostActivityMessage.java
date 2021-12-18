@@ -3,16 +3,8 @@ package com.example.study_with_me.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,8 +13,6 @@ import android.widget.Toast;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.Applicant;
-import com.example.study_with_me.model.StudyGroup;
-import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,8 +118,6 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                 studyGroup = (Map<String, Object>) studyGroupInfo;
                 String studyGroupID = (String) studyGroup.get("studyGroupID");
 
-                Log.d("memberList", studyGroup.get("memberList").toString());
-
                 studyGroupRef.child(studyGroupID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -140,7 +127,6 @@ public class StudyPostActivityMessage extends AppCompatActivity {
                             applicantMap = (Map<String, Object>)studyGroup.get("applicantList");
                             for (Map.Entry entry : applicantMap.entrySet()) {
                                 Map<String, Object> map = (Map<String, Object>) entry.getValue();
-                                Log.d("leader?", ""+studyGroup.get("leader").toString().equals(userID));
                                 if (map.get("userID").equals(userID)) {
                                     Toast.makeText(getApplicationContext(), "이미 신청한 스터디입니다.", Toast.LENGTH_SHORT).show();
                                     duplicate = true;

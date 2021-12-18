@@ -14,14 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.study_with_me.R;
-import com.example.study_with_me.activity.LoginActivity;
 import com.example.study_with_me.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -134,7 +132,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         userID = firebaseAuth.getCurrentUser().getUid();
         UserModel usermodel = new UserModel(email, password, name);
-        Log.d("tag", "userID : " + userID);
         databaseReference.child("users").child(userID).setValue(usermodel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
