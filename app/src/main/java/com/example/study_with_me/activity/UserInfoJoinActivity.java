@@ -2,12 +2,10 @@ package com.example.study_with_me.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
@@ -20,13 +18,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class UserInfoJoinActivity extends AppCompatActivity {
@@ -83,7 +79,6 @@ public class UserInfoJoinActivity extends AppCompatActivity {
 
                                         if(groupsCount == temp) {
                                             try {
-                                                Log.d("setRadioClicked", "setRadioClicked");
                                                 setRadioClicked();
                                             } catch (ParseException e) {
                                                 e.printStackTrace();

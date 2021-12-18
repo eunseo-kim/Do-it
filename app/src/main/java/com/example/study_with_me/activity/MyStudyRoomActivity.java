@@ -2,9 +2,7 @@ package com.example.study_with_me.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -494,9 +492,7 @@ public class MyStudyRoomActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             for (DataSnapshot studySnapshot: snapshot.getChildren()) {
                                                 studySnapshot.getRef().removeValue();
-                                                Log.d("DELETE~", "DELETE");
                                             }
-                                            Log.d("PRINT~", "PRINT");
                                         }
 
                                         @Override

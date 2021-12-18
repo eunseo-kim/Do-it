@@ -19,21 +19,14 @@ import android.widget.ListView;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.MapAdapter;
-import com.example.study_with_me.adapter.SearchAdapter;
 import com.example.study_with_me.model.ApiClient;
 import com.example.study_with_me.model.KakaoAPI;
 import com.example.study_with_me.model.MapItem;
 import com.example.study_with_me.model.Place;
 import com.example.study_with_me.model.ResultSearchKeyword;
 
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class MapSearchActivity extends AppCompatActivity{
@@ -41,7 +34,6 @@ public class MapSearchActivity extends AppCompatActivity{
     private String API_KEY = "KakaoAK ae9cc095bc96cc24e11a0deaee75a793";
     private ListView mapSearchListView;
     private ArrayList<MapItem> mapSearchList;
-    // private MapView mapView;
     private ViewGroup mapViewContainer;
     private EditText mapSearchEditText;
     private String preText;
