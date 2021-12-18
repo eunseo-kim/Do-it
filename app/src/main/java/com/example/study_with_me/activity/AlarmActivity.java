@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
+
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -28,9 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AlarmActivity extends AppCompatActivity {
@@ -42,11 +38,8 @@ public class AlarmActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ApplicantAdapter adapter;
 
-
     private String userID;
     private ArrayList<Applicant> applicants = new ArrayList<>();
-
-    Button closeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +57,12 @@ public class AlarmActivity extends AppCompatActivity {
         setApplicants();
     }
 
-    /* private void setJoinCount(String uid) {
-        userRef.child(uid).child("joinCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                joinCount = Integer.parseInt(task.getResult().getValue().toString());
-            }
-        });
-    } */
-
     private void setApplicants() {
         /** DB에서 현재 사용자가 방장인 스터디 그룹 가져오기 **/
         studyGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                applicants.clear(); /* 이거 추가하니까 중복 제거됐어요 */
+                applicants.clear();
                 for (DataSnapshot studyGroupSnapshot : snapshot.getChildren()) {
                     // studyGroupSnapshot.child("leader")과 userID 비교
                     // 만약 같으면? [applicant list + 스터디 이름] 가져오기
@@ -99,7 +83,7 @@ public class AlarmActivity extends AppCompatActivity {
                         }
                     }
                 }
-                Log.d("check applicants size :",String.valueOf(applicants.size()));
+
                 setListView();
             }
             @Override
@@ -147,17 +131,6 @@ public class AlarmActivity extends AppCompatActivity {
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 menu.addMenuItem(deleteItem);
-
-//                swipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                        Log.d("과연?!", "??");
-//                        Map<String, Object> item = (Map<String, Object>) adapter.getItem(position);
-//                        Intent intent = new Intent(AlarmActivity.this, StudyPostActivityMessage.class);
-//                        intent.putExtra("userInfo", (Serializable) item);
-//                        startActivity(intent);
-//                    }
-//                });
             }
 
         };
@@ -165,11 +138,9 @@ public class AlarmActivity extends AppCompatActivity {
         swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Log.d("onMenuItemClick", "onMenuItemClick");
                 Applicant applicant = applicants.get(position);
                 String appStudyGroupID = applicant.getStudyGroupID();
                 String appUserID = applicant.getUserID();
-                // setJoinCount(appUserID);
 
                 switch (index) {
                     case 0:
@@ -220,7 +191,7 @@ public class AlarmActivity extends AppCompatActivity {
         });
     }
 
-    // 액션바 오버라이딩
+    /* 액션바 오버라이딩 */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

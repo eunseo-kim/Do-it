@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /** 스터디 등록 완료 액티비티 **/
 public class StudyRegisterCompleteActivity extends AppCompatActivity {
-    private String userID;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -21,7 +20,6 @@ public class StudyRegisterCompleteActivity extends AppCompatActivity {
         setContentView(R.layout.study_creation_complete);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        userID = firebaseAuth.getCurrentUser().getUid();
 
         Button myPageGoBtn = findViewById(R.id.myPageGoBtn);
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.study_with_me.R;
 import com.example.study_with_me.adapter.SearchAdapter;
-import com.example.study_with_me.model.StudyGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
@@ -35,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -173,7 +170,7 @@ public class StudySearchActivity extends AppCompatActivity {
                             setListView(studyList);
                             filteredStudyList = (ArrayList<Map<String, Object>>) studyList.clone();
 
-                            // 스터디 목록 없으면 addMessage("스터디를 등록해주세요")출력하도록
+                            // 스터디 목록 없으면 addMessage("스터디를 등록해주세요")출력
                             if(studyList.size() != 0) {
                                 findViewById(R.id.addMessage).setVisibility(View.INVISIBLE);
                             }
@@ -280,7 +277,7 @@ public class StudySearchActivity extends AppCompatActivity {
         filteringListView();
     }
 
-    // 각각 글에 맞는 글이 매치되어야 됨!
+    // 각각 글에 맞는 글이 매치
     public void studyAreaClicked(View view) {
         Intent intent = new Intent(this, StudyPostActivityMessage.class);
         startActivity(intent);

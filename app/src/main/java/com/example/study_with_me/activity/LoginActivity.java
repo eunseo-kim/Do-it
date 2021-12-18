@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 import com.example.study_with_me.R;
 
-import com.example.study_with_me.activity.SignUpActivity;
-import com.example.study_with_me.model.UserModel;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private FirebaseAuth firebaseAuth;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

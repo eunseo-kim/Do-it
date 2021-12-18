@@ -20,10 +20,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.study_with_me.R;
 import com.example.study_with_me.model.GpsTracker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -79,8 +76,6 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         range = Integer.valueOf(intent.getStringExtra("range"));
         studyGroupID = intent.getStringExtra("studyGroupID");
 
-        Log.d("latitude", String.valueOf(latitude));
-
         MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
         setMapView(MARKER_POINT);
         setMapPOIItem(MARKER_POINT, "내가 등록한 위치");
@@ -92,8 +87,6 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         } else {
             checkRunTimePermission();
         }
-//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
-
     }
 
     /** 현재 위치로 출석 인증하기 **/
@@ -101,8 +94,6 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         gpsTracker = new GpsTracker(CheckingAttendanceActivity.this);
         currLatitude = gpsTracker.getLatitude();
         currLongitude = gpsTracker.getLongitude();
-        Log.d("현재위치:", currLatitude + ", " + currLongitude);
-        Log.d("등록위치:", latitude + ", " + longitude);
 
         // MARKER_POINT와 CURR_MARKER_POINT 사이의 거리가 range보다 작으면 출석 인증 완료(5초 내에)
         Location registerLocation = new Location("register");
@@ -158,7 +149,6 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         double currLatitude = mapPointGeo.latitude;
         MapPoint CURR_MARKER_POINT = MapPoint.mapPointWithGeoCoord(currLongitude, currLatitude);
         setMapPOIItem(CURR_MARKER_POINT, "현재 위치");
-        Log.d("현재 위치", currLatitude + currLongitude + "");
     }
 
     @Override
@@ -195,11 +185,7 @@ public class CheckingAttendanceActivity extends AppCompatActivity
             }
 
             if (check_result) {
-                Log.d("@@@", "start");
-                //위치 값을 가져올 수 있음
-                // 여기?
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
-
             } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
@@ -275,7 +261,6 @@ public class CheckingAttendanceActivity extends AppCompatActivity
                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
                         checkRunTimePermission();
                         return;
                     }

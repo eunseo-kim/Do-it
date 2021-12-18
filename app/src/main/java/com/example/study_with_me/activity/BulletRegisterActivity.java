@@ -1,24 +1,12 @@
 package com.example.study_with_me.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import android.widget.CheckBox;
@@ -107,7 +95,6 @@ public class BulletRegisterActivity extends AppCompatActivity {
             bulletinMap.put("writerName", userName);      // 작성자 userID
             registerTime = System.currentTimeMillis();
             bulletinMap.put("registerTime", registerTime);
-            Log.d("bulletinMap", bulletinMap.toString());
 
             studyGroupRef.child(studyGroupID).child("bulletinBoard")
                     .child(String.valueOf(registerTime)).setValue(bulletinMap);
