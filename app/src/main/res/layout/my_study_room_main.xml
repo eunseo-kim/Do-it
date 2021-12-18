@@ -13,7 +13,6 @@
         android:layout_height="wrap_content">
     </include>
 
-
     <TextView
         android:id="@+id/watingInfo"
         android:visibility="gone"

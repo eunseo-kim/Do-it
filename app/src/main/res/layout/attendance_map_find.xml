@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,25 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-
-        <!-- 시간 남으면 구현 (현재 위치로 지도 보여주고 장소 등록하기)
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:onClick="moveToCurrentLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:backgroundTint="#FFFFFF"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/current_location"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="end|bottom"/>
-
-       -->
     </FrameLayout>
-
 
     <!--이 위치로 출석 등록-->
     <LinearLayout

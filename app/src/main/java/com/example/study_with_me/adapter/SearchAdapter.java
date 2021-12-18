@@ -1,7 +1,6 @@
 package com.example.study_with_me.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
 import com.example.study_with_me.R;
-import com.example.study_with_me.model.StudyGroup;
-import com.example.study_with_me.model.Studydata;
-
 import java.util.ArrayList;
 import java.util.Map;
 

@@ -1,56 +1,37 @@
 package com.example.study_with_me;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
-
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.study_with_me.activity.MainActivity;
 import com.example.study_with_me.adapter.SchedulerAdapter;
-import com.example.study_with_me.adapter.TeamEvaluationAdapter;
 import com.example.study_with_me.model.CalendarDecorator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Map;
 
 public class MenuScheduleManagementFragment extends ListFragment implements View.OnClickListener, OnDateSelectedListener{
@@ -157,7 +138,6 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
         }
     }
 
-
     /** Fragment 안에서 발생하는 클릭 이벤트를처리 **/
     @Override
     public void onClick(View view) {
@@ -221,7 +201,6 @@ public class MenuScheduleManagementFragment extends ListFragment implements View
             }
         });
     }
-
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {

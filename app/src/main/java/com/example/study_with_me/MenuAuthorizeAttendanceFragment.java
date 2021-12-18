@@ -5,7 +5,6 @@ import static java.lang.Math.*;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
-
 import com.example.study_with_me.activity.AttendanceRegisterActivity;
 import com.example.study_with_me.activity.CheckingAttendanceActivity;
 import com.example.study_with_me.activity.MainActivity;
@@ -31,7 +27,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
