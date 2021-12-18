@@ -87,12 +87,13 @@ public class CheckingAttendanceActivity extends AppCompatActivity
         setMapCircle(MARKER_POINT);
 
         // 현재 위치 보여주기
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         } else {
             checkRunTimePermission();
         }
+//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
+
     }
 
     /** 현재 위치로 출석 인증하기 **/
@@ -196,6 +197,8 @@ public class CheckingAttendanceActivity extends AppCompatActivity
             if (check_result) {
                 Log.d("@@@", "start");
                 //위치 값을 가져올 수 있음
+                // 여기?
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
 
             } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
