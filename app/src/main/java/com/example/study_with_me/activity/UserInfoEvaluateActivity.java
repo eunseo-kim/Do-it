@@ -51,10 +51,12 @@ public class UserInfoEvaluateActivity extends AppCompatActivity {
         userRef.child(userID).child("comments").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                for(Map<String, Map> commentInfo : (ArrayList<Map>) task.getResult().getValue()) {
-                   userComments.add(commentInfo);
+                if (task.getResult().getValue() != null) {
+                    for (Map<String, Map> commentInfo : (ArrayList<Map>) task.getResult().getValue()) {
+                        userComments.add(commentInfo);
+                    }
+                    userEvaluateListView.setAdapter(new UserCommentAdapter(getApplicationContext(), userComments));
                 }
-                userEvaluateListView.setAdapter(new UserCommentAdapter(getApplicationContext(), userComments));
             }
         });
     }
