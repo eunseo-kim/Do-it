@@ -27,7 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class MyPageActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -182,6 +186,7 @@ public class MyPageActivity extends AppCompatActivity {
 
                     /** memberList에서 해당 유저 삭제 **/
                     Map<String, String> memberList = (Map<String, String>) entry.getValue().get("memberList");
+
                     for(Map.Entry entry1 : memberList.entrySet()) {
                         if(entry1.getValue().equals(uid))
                             memberList.remove(entry1.getKey());
@@ -190,9 +195,11 @@ public class MyPageActivity extends AppCompatActivity {
 
                     /** applicantList에서 해당 유저 삭제 **/
                     Map<String, Map> applicantList = (Map<String, Map>) entry.getValue().get("applicantList");
+
                     if(applicantList != null) {
-                        for(Map.Entry<String, Map> info : applicantList.entrySet()) {
-                            for(Map<String, String> vals : applicantList.values()) {
+                        Map<String, Map> cloneList = new HashMap<>(applicantList);
+                        for(Map.Entry<String, Map> info : cloneList.entrySet()) {
+                            for(Map<String, String> vals : cloneList.values()) {
                                 if(vals.get("userID").equals(uid)) {
                                     applicantList.remove(info.getKey());
                                 }
